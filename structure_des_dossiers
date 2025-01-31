@@ -1,0 +1,36 @@
+projet-cine-delices/
+├── app/
+│   ├── controllers/         # Logique métier
+│   │   ├── authController.js
+│   │   ├── recipeController.js
+│   │   └── categoryController.js
+│   ├── models/             # Modèles de données
+│   │   ├── User.js
+│   │   ├── Recipe.js
+│   │   └── Category.js
+│   ├── views/              # Templates et vues
+│   │   ├── layouts/
+│   │   │   └── main.ejs
+│   │   ├── recipes/
+│   │   │   ├── index.ejs
+│   │   │   └── show.ejs
+│   │   └── auth/
+│   │       ├── login.ejs
+│   │       └── register.ejs
+│   └── routes/             # Routes de l'application
+│       ├── auth.js
+│       ├── recipes.js
+│       └── categories.js
+├── config/                 # Configuration
+│   ├── database.js
+│   └── app.js
+├── public/                 # Fichiers statiques
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   └── images/
+├── database/              # Scripts de base de données
+│   └── schema.sql
+├── package.json
+├── .env
+└── server.js 
