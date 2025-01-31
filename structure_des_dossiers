@@ -1,0 +1,59 @@
+.
+├── app/
+│   ├── controllers/
+│   │   ├── adminController.js
+│   │   ├── authController.js
+│   │   ├── recipeController.js
+│   │   ├── userController.js
+│   │   └── movieController.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Recipe.js
+│   │   ├── Movie.js
+│   │   ├── Category.js
+│   │   └── Comment.js
+│   ├── middlewares/
+│   │   ├── auth.js
+│   │   ├── admin.js
+│   │   └── upload.js
+│   ├── routes/
+│   │   ├── admin.js
+│   │   ├── auth.js
+│   │   ├── recipe.js
+│   │   └── user.js
+│   └── views/
+│       ├── partials/
+│       │   ├── header.ejs
+│       │   ├── footer.ejs
+│       │   └── nav.ejs
+│       ├── admin/
+│       │   ├── dashboard.ejs
+│       │   ├── recipes.ejs
+│       │   └── users.ejs
+│       ├── auth/
+│       │   ├── login.ejs
+│       │   └── register.ejs
+│       ├── recipes/
+│       │   ├── index.ejs
+│       │   ├── show.ejs
+│       │   └── create.ejs
+│       └── users/
+│           └── profile.ejs
+├── config/
+│   ├── database.js
+│   └── app.js
+├── public/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+├── tests/
+│   ├── integration/
+│   └── unit/
+├── .env
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
+├── package.json
+└── server.js 
