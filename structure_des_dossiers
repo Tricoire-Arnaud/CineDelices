@@ -1,36 +1,59 @@
-projet-cine-delices/
+.
 ├── app/
-│   ├── controllers/         # Logique métier
+│   ├── controllers/
+│   │   ├── adminController.js
 │   │   ├── authController.js
 │   │   ├── recipeController.js
-│   │   └── categoryController.js
-│   ├── models/             # Modèles de données
+│   │   ├── userController.js
+│   │   └── movieController.js
+│   ├── models/
 │   │   ├── User.js
 │   │   ├── Recipe.js
-│   │   └── Category.js
-│   ├── views/              # Templates et vues
-│   │   ├── layouts/
-│   │   │   └── main.ejs
-│   │   ├── recipes/
-│   │   │   ├── index.ejs
-│   │   │   └── show.ejs
-│   │   └── auth/
-│   │       ├── login.ejs
-│   │       └── register.ejs
-│   └── routes/             # Routes de l'application
-│       ├── auth.js
-│       ├── recipes.js
-│       └── categories.js
-├── config/                 # Configuration
+│   │   ├── Movie.js
+│   │   ├── Category.js
+│   │   └── Comment.js
+│   ├── middlewares/
+│   │   ├── auth.js
+│   │   ├── admin.js
+│   │   └── upload.js
+│   ├── routes/
+│   │   ├── admin.js
+│   │   ├── auth.js
+│   │   ├── recipe.js
+│   │   └── user.js
+│   └── views/
+│       ├── partials/
+│       │   ├── header.ejs
+│       │   ├── footer.ejs
+│       │   └── nav.ejs
+│       ├── admin/
+│       │   ├── dashboard.ejs
+│       │   ├── recipes.ejs
+│       │   └── users.ejs
+│       ├── auth/
+│       │   ├── login.ejs
+│       │   └── register.ejs
+│       ├── recipes/
+│       │   ├── index.ejs
+│       │   ├── show.ejs
+│       │   └── create.ejs
+│       └── users/
+│           └── profile.ejs
+├── config/
 │   ├── database.js
 │   └── app.js
-├── public/                 # Fichiers statiques
+├── public/
 │   ├── css/
 │   │   └── style.css
 │   ├── js/
+│   │   └── main.js
 │   └── images/
-├── database/              # Scripts de base de données
-│   └── schema.sql
-├── package.json
+├── tests/
+│   ├── integration/
+│   └── unit/
 ├── .env
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
+├── package.json
 └── server.js 
