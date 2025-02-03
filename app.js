@@ -4,6 +4,9 @@ const app = express();
 const sequelize = require('./config/database');
 require('dotenv').config();
 
+// Import des contrôleurs
+const mainController = require('./app/controllers/mainController');
+
 // Configuration des middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,23 +22,22 @@ const recipeRoutes = require('./app/routes/recipe');
 const userRoutes = require('./app/routes/user');
 const adminRoutes = require('./app/routes/admin');
 
-// Configuration des routes
+// Routes principales (mainController)
+app.get('/', mainController.getHome);
+app.get('/catalogue', mainController.getCatalog);
+app.get('/recherche', mainController.search);
+
+// Routes API
 app.use('/api/auth', authRoutes);
-app.use('/api', recipeRoutes);
-app.use('/api', userRoutes);
+app.use('/api/recipes', recipeRoutes);
+app.use('/api/users', userRoutes);
 app.use('/admin', adminRoutes);
 
-// Route racine
-app.get('/', (req, res) => {
-    res.render('home');
-});
-
-// Gestion des erreurs 404
+// Middleware de gestion des erreurs
 app.use((req, res, next) => {
     res.status(404).render('errors/404');
 });
 
-// Gestion des erreurs globales
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).render('errors/500');
