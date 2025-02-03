@@ -1,5 +1,5 @@
 // Contrôleur pour la gestion des utilisateurs 
-const { User, Recipe, Favorite, Comment, Rating } = require("../models");
+const { User, Recipe, Favorite, Comment, Rating, Like } = require("../models");
 const bcrypt = require("bcrypt");
 
 const userController = {
@@ -90,6 +90,115 @@ const userController = {
             res.status(500).json({ message: "Erreur lors de la récupération des commentaires" });
         }
     },
+
+    // Ajouter une recette aux favoris
+    addFavorite: async (req, res) => {
+        try {
+            const { recipeId } = req.params;
+            const id_utilisateur = req.user.id;
+
+            // Vérifier si la recette existe
+            const recipe = await Recipe.findByPk(recipeId);
+            if (!recipe) {
+                return res.status(404).json({ message: "Recette non trouvée" });
+            }
+
+            // Vérifier si déjà en favori
+            const existingFavorite = await Favorite.findOne({
+                where: { id_recette: recipeId, id_utilisateur }
+            });
+
+            if (existingFavorite) {
+                return res.status(400).json({ message: "Cette recette est déjà dans vos favoris" });
+            }
+
+            await Favorite.create({ id_recette: recipeId, id_utilisateur });
+            res.status(201).json({ message: "Recette ajoutée aux favoris" });
+        } catch (error) {
+            res.status(500).json({ message: "Erreur lors de l'ajout aux favoris" });
+        }
+    },
+
+    // Retirer une recette des favoris
+    removeFavorite: async (req, res) => {
+        try {
+            const { recipeId } = req.params;
+            const id_utilisateur = req.user.id;
+
+            const favorite = await Favorite.findOne({
+                where: { id_recette: recipeId, id_utilisateur }
+            });
+
+            if (!favorite) {
+                return res.status(404).json({ message: "Favori non trouvé" });
+            }
+
+            await favorite.destroy();
+            res.json({ message: "Recette retirée des favoris" });
+        } catch (error) {
+            res.status(500).json({ message: "Erreur lors de la suppression du favori" });
+        }
+    },
+
+    // Ajouter un commentaire à une recette
+    addComment: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { contenu } = req.body;
+            const id_utilisateur = req.user.id;
+
+            // Vérifier si la recette existe
+            const recipe = await Recipe.findByPk(id);
+            if (!recipe) {
+                return res.status(404).json({ message: "Recette non trouvée" });
+            }
+
+            const comment = await Comment.create({
+                contenu,
+                id_recette: id,
+                id_utilisateur
+            });
+
+            res.status(201).json(comment);
+        } catch (error) {
+            res.status(500).json({ message: "Erreur lors de l'ajout du commentaire" });
+        }
+    },
+
+    // Noter une recette
+    rateRecipe: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { note } = req.body;
+            const id_utilisateur = req.user.id;
+
+            // Vérifier si la recette existe
+            const recipe = await Recipe.findByPk(id);
+            if (!recipe) {
+                return res.status(404).json({ message: "Recette non trouvée" });
+            }
+
+            // Vérifier si l'utilisateur a déjà noté
+            const existingRating = await Rating.findOne({
+                where: { id_recette: id, id_utilisateur }
+            });
+
+            if (existingRating) {
+                await existingRating.update({ note });
+                res.json({ message: "Note mise à jour" });
+            } else {
+                await Rating.create({
+                    note,
+                    id_recette: id,
+                    id_utilisateur
+                });
+                res.status(201).json({ message: "Note ajoutée" });
+            }
+        } catch (error) {
+            res.status(500).json({ message: "Erreur lors de la notation" });
+        }
+    },
+
 
 
     // Supprimer son compte
