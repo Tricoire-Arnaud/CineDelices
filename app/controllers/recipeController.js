@@ -176,6 +176,96 @@ const recipeController = {
         } catch (error) {
             res.status(500).json({ message: 'Erreur lors de la gestion des favoris' });
         }
+    },
+
+    // Récupérer les recettes par film
+    getRecipesByMovie: async (req, res) => {
+        try {
+            const { movie } = req.params;
+            const recipes = await Recipe.findAll({
+                include: [{
+                    model: Movie,
+                    where: { id_oeuvre: movie },
+                    attributes: ['titre', 'type', 'annee']
+                }]
+            });
+
+            if (!recipes.length) {
+                return res.status(404).json({ message: "Aucune recette trouvée pour ce film/série" });
+            }
+
+            res.json(recipes);
+        } catch (error) {
+            res.status(500).json({ message: "Erreur lors de la récupération des recettes par film" });
+        }
+    },
+
+    // Récupérer une recette spécifique d'un film
+    getMovieRecipeById: async (req, res) => {
+        try {
+            const { movie, id } = req.params;
+            const recipe = await Recipe.findOne({
+                where: { id_recette: id },
+                include: [{
+                    model: Movie,
+                    where: { id_oeuvre: movie },
+                    attributes: ['titre', 'type', 'annee']
+                }]
+            });
+
+            if (!recipe) {
+                return res.status(404).json({ message: "Recette non trouvée pour ce film/série" });
+            }
+
+            res.json(recipe);
+        } catch (error) {
+            res.status(500).json({ message: "Erreur lors de la récupération de la recette" });
+        }
+    },
+
+    // Récupérer les recettes par catégorie
+    getRecipesByCategory: async (req, res) => {
+        try {
+            const { category } = req.params;
+            const recipes = await Recipe.findAll({
+                include: [{
+                    model: Category,
+                    where: { id_categorie: category },
+                    attributes: ['libelle']
+                }]
+            });
+
+            if (!recipes.length) {
+                return res.status(404).json({ message: "Aucune recette trouvée pour cette catégorie" });
+            }
+
+            res.json(recipes);
+        } catch (error) {
+            res.status(500).json({ message: "Erreur lors de la récupération des recettes par catégorie" });
+        }
+    },
+
+    // Récupérer une recette spécifique d'une catégorie
+    getCategoryRecipeById: async (req, res) => {
+        try {
+            const { category, id } = req.params;
+            const recipe = await Recipe.findOne({
+                where: { id_recette: id },
+                include: [{
+                    model: Category,
+                    where: { id_categorie: category },
+                    attributes: ['libelle']
+                }]
+            });
+
+            if (!recipe) {
+                return res.status(404).json({ message: "Recette non trouvée pour cette catégorie" });
+            }
+
+            res.json(recipe);
+        } catch (error) {
+            res.status(500).json({ message: "Erreur lors de la récupération de la recette" });
+        }
     }
 };
 
