@@ -111,12 +111,6 @@ async function seedDatabase() {
                 description: 'L\'histoire parallèle de Julia Child et d\'une blogueuse culinaire'
             },
             {
-                titre: 'Jiro Dreams of Sushi',
-                type: 'documentaire',
-                annee: 2011,
-                description: 'Le parcours d\'un maître sushi japonais'
-            },
-            {
                 titre: 'Le Grand Restaurant',
                 type: 'film',
                 annee: 1966,
@@ -362,7 +356,7 @@ async function seedDatabase() {
                 difficulte: 4,
                 anecdote: 'Le plat signature de M. Septime, servi avec une maladresse légendaire !',
                 image: 'sole-meuniere.jpg',
-                id_oeuvre: movies[9].id_oeuvre,
+                id_oeuvre: movies[8].id_oeuvre,
                 id_categorie: categories[1].id_categorie
             },
             {
@@ -396,7 +390,7 @@ async function seedDatabase() {
                 difficulte: 2,
                 anecdote: 'La recette secrète qui a transformé tout un village',
                 image: 'chocolat-epice.jpg',
-                id_oeuvre: movies[10].id_oeuvre,
+                id_oeuvre: movies[9].id_oeuvre,
                 id_categorie: categories[3].id_categorie
             },
             {
@@ -413,7 +407,7 @@ async function seedDatabase() {
                 difficulte: 3,
                 anecdote: 'Inspirées des recettes ancestrales mayas',
                 image: 'truffes-maya.jpg',
-                id_oeuvre: movies[10].id_oeuvre,
+                id_oeuvre: movies[9].id_oeuvre,
                 id_categorie: categories[2].id_categorie
             },
             {
@@ -430,7 +424,7 @@ async function seedDatabase() {
                 difficulte: 3,
                 anecdote: 'La recette qui a fait la réputation du restaurant',
                 image: 'italian-beef.jpg',
-                id_oeuvre: movies[11].id_oeuvre,
+                id_oeuvre: movies[10].id_oeuvre,
                 id_categorie: categories[1].id_categorie
             },
             {
@@ -447,7 +441,7 @@ async function seedDatabase() {
                 difficulte: 4,
                 anecdote: 'La recette qui rappelle ses années en cuisine gastronomique',
                 image: 'risotto.jpg',
-                id_oeuvre: movies[11].id_oeuvre,
+                id_oeuvre: movies[10].id_oeuvre,
                 id_categorie: categories[1].id_categorie
             },
             {
@@ -464,7 +458,7 @@ async function seedDatabase() {
                 difficulte: 4,
                 anecdote: 'Servi chaque année au dîner de Noël de Downton',
                 image: 'christmas-pudding.jpg',
-                id_oeuvre: movies[12].id_oeuvre,
+                id_oeuvre: movies[11].id_oeuvre,
                 id_categorie: categories[2].id_categorie
             },
             {
@@ -481,7 +475,7 @@ async function seedDatabase() {
                 difficulte: 3,
                 anecdote: 'La recette préférée de la Comtesse douairière',
                 image: 'apple-pie.jpg',
-                id_oeuvre: movies[12].id_oeuvre,
+                id_oeuvre: movies[11].id_oeuvre,
                 id_categorie: categories[2].id_categorie
             },
             {
@@ -498,7 +492,7 @@ async function seedDatabase() {
                 difficulte: 5,
                 anecdote: 'Le plat qui a transformé un simple dîner en expérience transcendante',
                 image: 'cailles.jpg',
-                id_oeuvre: movies[13].id_oeuvre,
+                id_oeuvre: movies[12].id_oeuvre,
                 id_categorie: categories[1].id_categorie
             },
             {
@@ -515,7 +509,7 @@ async function seedDatabase() {
                 difficulte: 5,
                 anecdote: 'Un des plats emblématiques du festin de Babette',
                 image: 'turtle-soup.jpg',
-                id_oeuvre: movies[13].id_oeuvre,
+                id_oeuvre: movies[12].id_oeuvre,
                 id_categorie: categories[0].id_categorie
             }
         ]);
@@ -692,11 +686,11 @@ async function seedDatabase() {
             },
             {
                 id_utilisateur: users[1].id_utilisateur,
-                id_recette: recipes[7].id_recette  // Bœuf Bourguignon
+                id_recette: recipes[4].id_recette  // Bœuf Bourguignon
             },
             {
                 id_utilisateur: users[1].id_utilisateur,
-                id_recette: recipes[8].id_recette  // Sushi à la Jiro
+                id_recette: recipes[5].id_recette  // Sole Meunière
             },
 
             // Favoris de l'utilisateur hobbit_gourmet
@@ -706,17 +700,17 @@ async function seedDatabase() {
             },
             {
                 id_utilisateur: users[2].id_utilisateur,
-                id_recette: recipes[4].id_recette  // Pain elfique Lembas
+                id_recette: recipes[6].id_recette  // Chocolat chaud épicé
             },
             {
                 id_utilisateur: users[2].id_utilisateur,
-                id_recette: recipes[5].id_recette  // Festin de Winterfell
+                id_recette: recipes[8].id_recette  // Italian Beef Sandwich
             },
 
             // Favoris de l'utilisateur foodie_expert
             {
                 id_utilisateur: users[3].id_utilisateur,
-                id_recette: recipes[9].id_recette  // Sole Meunière
+                id_recette: recipes[5].id_recette  // Sole Meunière
             },
             {
                 id_utilisateur: users[3].id_utilisateur,
@@ -724,13 +718,13 @@ async function seedDatabase() {
             },
             {
                 id_utilisateur: users[3].id_utilisateur,
-                id_recette: recipes[6].id_recette  // Italian Beef Sandwich
+                id_recette: recipes[9].id_recette  // Risotto aux champignons
             },
 
             // Favoris de l'utilisateur gourmet_master
             {
                 id_utilisateur: users[4].id_utilisateur,
-                id_recette: recipes[10].id_recette // Chocolat chaud épicé
+                id_recette: recipes[6].id_recette  // Chocolat chaud épicé
             },
             {
                 id_utilisateur: users[4].id_utilisateur,
@@ -738,7 +732,7 @@ async function seedDatabase() {
             },
             {
                 id_utilisateur: users[4].id_utilisateur,
-                id_recette: recipes[11].id_recette // Pudding de Noël
+                id_recette: recipes[10].id_recette // Pudding de Noël
             }
         ]);
 
