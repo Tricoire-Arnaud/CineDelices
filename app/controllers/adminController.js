@@ -4,8 +4,6 @@ const {
   Recipe,
   Movie,
   Category,
-  Ingredient,
-  Utensil,
 } = require("../models");
 
 const adminController = {
@@ -82,30 +80,6 @@ const adminController = {
       res
         .status(500)
         .json({ message: "Erreur lors de la suppression de l'utilisateur" });
-    }
-  },
-
-  // Récupère la liste de tous les ingrédients disponibles
-  manageIngredients: async (req, res) => {
-    try {
-      const ingredients = await Ingredient.findAll();
-      res.json(ingredients);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Erreur lors de la récupération des ingrédients" });
-    }
-  },
-
-  // Récupère la liste de tous les ustensiles disponibles
-  manageUtensils: async (req, res) => {
-    try {
-      const utensils = await Utensil.findAll();
-      res.json(utensils);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Erreur lors de la récupération des ustensiles" });
     }
   },
 };

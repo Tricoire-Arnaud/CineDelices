@@ -48,11 +48,6 @@ const recipeController = {
     // Créer une nouvelle recette (admin uniquement)
     createRecipe: async (req, res) => {
         try {
-            // Vérifier si l'utilisateur est admin
-            if (req.user.role !== 'admin') {
-                return res.status(403).json({ message: 'Accès non autorisé' });
-            }
-
             const { 
                 titre, description, etapes, temps_preparation, 
                 temps_cuisson, difficulte, id_oeuvre, id_categorie,
@@ -91,11 +86,6 @@ const recipeController = {
     // Mettre à jour une recette (admin uniquement)
     updateRecipe: async (req, res) => {
         try {
-            // Vérifier si l'utilisateur est admin
-            if (req.user.role !== 'admin') {
-                return res.status(403).json({ message: 'Accès non autorisé' });
-            }
-
             const { id } = req.params;
             const updateData = req.body;
 
@@ -114,11 +104,6 @@ const recipeController = {
     // Supprimer une recette (admin uniquement)
     deleteRecipe: async (req, res) => {
         try {
-            // Vérifier si l'utilisateur est admin
-            if (req.user.role !== 'admin') {
-                return res.status(403).json({ message: 'Accès non autorisé' });
-            }
-
             const { id } = req.params;
             const recipe = await Recipe.findByPk(id);
             
