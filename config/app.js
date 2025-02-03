@@ -2,6 +2,14 @@ const express = require('express');
 const path = require('node:path');
 const app = express();
 require('dotenv').config();
+const {syncDatabase} = require('../app/models');
+
+// Synchroniser la base de données avant de démarrer le serveur
+syncDatabase().then(() => {
+    app.listen(port, () => {
+        console.log(`Serveur démarré sur le port ${port}`);
+    });
+});
 
 // Import des routes
 const authRoutes = require('../app/routes/auth');
@@ -45,7 +53,6 @@ const config = {
     port: process.env.PORT || 3000,
     nodeEnv: process.env.NODE_ENV || 'development',
     jwtSecret: process.env.JWT_SECRET,
-    apiLimit: process.env.API_LIMIT || '100kb',
     uploadDir: process.env.UPLOAD_DIR || 'public/uploads'
 };
 
