@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('node:path');
 const app = express();
 const sequelize = require('./config/database');
+const { initAssociations } = require('./app/models');
 require('dotenv').config();
 
 // Import des contrôleurs
@@ -49,6 +50,9 @@ const PORT = process.env.PORT || 3000;
 // Démarrage du serveur
 async function startServer() {
     try {
+        // Initialiser les associations
+        initAssociations();
+        
         // Synchronisation avec la base de données
         await sequelize.sync();
         console.log('Base de données synchronisée');

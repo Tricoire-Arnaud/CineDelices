@@ -28,8 +28,6 @@ User.hasMany(Favorite, { foreignKey: 'id_utilisateur' });
 // ============================
 // Une recette appartient à une œuvre (film/série)
 Recipe.belongsTo(Movie, { foreignKey: 'id_oeuvre' });
-// Une recette appartient à une catégorie
-Recipe.belongsTo(Category, { foreignKey: 'id_categorie' });
 // Une recette peut avoir plusieurs commentaires
 Recipe.hasMany(Comment, { foreignKey: 'id_recette' });
 // Une recette peut avoir plusieurs notes
@@ -97,6 +95,22 @@ const syncDatabase = async () => {
     }
 };
 
+// Initialiser les associations
+const initAssociations = () => {
+    const models = {
+        Category,
+        Recipe,
+        // Ajouter les autres modèles si nécessaire
+    };
+    
+    // Initialiser les associations
+    Object.values(models).forEach(model => {
+        if (model.associate) {
+            model.associate(models);
+        }
+    });
+};
+
 // Export des modèles et de la fonction de synchronisation
 module.exports = {
     sequelize,
@@ -111,5 +125,6 @@ module.exports = {
     Utensil,
     RecipeIngredient,
     RecipeUtensil,
-    syncDatabase
+    syncDatabase,
+    initAssociations
 }; 

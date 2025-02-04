@@ -70,4 +70,11 @@ const Recipe = sequelize.define('Recipe', {
     tableName: 'recettes'
 });
 
+Recipe.associate = function(models) {
+    Recipe.belongsTo(models.Category, {
+        foreignKey: 'id_categorie',
+        as: 'category'
+    });
+};
+
 module.exports = Recipe; 

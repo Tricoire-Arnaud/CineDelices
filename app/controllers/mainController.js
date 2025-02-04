@@ -1,50 +1,37 @@
 const { Recipe, Movie, Category } = require('../models');
-const { Op, fn, col, literal } = require('sequelize');
+const { Op, literal } = require('sequelize');
+
 
 const mainController = {
-    // Page d'accueil
     getHome: async (req, res) => {
         try {
-            const [featuredRecipes, latestRecipes, popularCategories] = await Promise.all([
-                // Récupérer les recettes mises en avant
+            const [latestRecipes, popularCategories] = await Promise.all([
+                // Récupère les 6 dernières recettes avec leurs relations
                 Recipe.findAll({
                     include: [
                         { model: Movie },
-                        { model: Category }
-                    ],
-                    where: { is_featured: true },
-                    limit: 6
-                }),
-
-                // Récupérer les dernières recettes
-                Recipe.findAll({
-                    include: [
-                        { model: Movie },
-                        { model: Category }
+                        { model: Category, as: 'category' }
                     ],
                     order: [['created_at', 'DESC']],
                     limit: 6
                 }),
 
-                // Récupérer les catégories populaires
+                // Récupère les 4 catégories les plus utilisées
                 Category.findAll({
-                    include: [{
-                        model: Recipe,
-                        attributes: []
-                    }],
-                    attributes: {
-                        include: [
-                            [fn('COUNT', col('Recipes.id_recette')), 'recipeCount']
+                    attributes: [
+                        'id_categorie',
+                        'libelle',
+                        [
+                            literal('(SELECT COUNT(*) FROM recettes WHERE recettes.id_categorie = "Category".id_categorie)'),
+                            'recipe_count'
                         ]
-                    },
-                    group: ['Category.id_categorie'],
-                    order: [[literal('recipeCount'), 'DESC']],
+                    ],
+                    order: [[literal('(SELECT COUNT(*) FROM recettes WHERE recettes.id_categorie = "Category".id_categorie)'), 'DESC']],
                     limit: 4
                 })
             ]);
 
             res.render('home/index', {
-                featuredRecipes,
                 latestRecipes,
                 popularCategories,
                 user: req.user
@@ -55,24 +42,27 @@ const mainController = {
         }
     },
 
-    // Page Catalogue
+
     getCatalog: async (req, res) => {
         try {
-            const { page = 1, category, sort = 'recent' } = req.query;
+            const { 
+                page = 1, 
+                category, 
+                sort = 'recent' 
+            } = req.query;
+
             const limit = 12;
             const offset = (page - 1) * limit;
-
             const whereClause = category ? { id_categorie: category } : {};
-            const orderClause = getOrderClause(sort);
 
             const [recipes, categories] = await Promise.all([
                 Recipe.findAndCountAll({
                     where: whereClause,
                     include: [
                         { model: Movie },
-                        { model: Category }
+                        { model: Category, as: 'category' }
                     ],
-                    order: orderClause,
+                    order: getSortingOrder(sort),
                     limit,
                     offset
                 }),
@@ -94,15 +84,15 @@ const mainController = {
         }
     },
 
-    // Page de recherche
+
     search: async (req, res) => {
         try {
-            const { q, type } = req.query;
-            const results = await getSearchResults(q, type);
+            const { q: searchQuery, type } = req.query;
+            const results = await searchContent(searchQuery, type);
 
             res.render('search', {
                 results,
-                query: q,
+                query: searchQuery,
                 type,
                 user: req.user
             });
@@ -113,19 +103,19 @@ const mainController = {
     }
 };
 
-// Fonctions utilitaires
-function getOrderClause(sort) {
-    switch (sort) {
-        case 'popular':
-            return [[literal('rating_avg'), 'DESC']];
-        case 'oldest':
-            return [['created_at', 'ASC']];
-        default:
-            return [['created_at', 'DESC']];
-    }
+
+function getSortingOrder(sortType) {
+    const sortingOptions = {
+        popular: [[literal('rating_avg'), 'DESC']],
+        oldest: [['created_at', 'ASC']],
+        recent: [['created_at', 'DESC']]
+    };
+
+    return sortingOptions[sortType] || sortingOptions.recent;
 }
 
-async function getSearchResults(query, type) {
+
+async function searchContent(query, type) {
     if (type === 'movies') {
         return Movie.findAll({
             where: {
@@ -144,7 +134,7 @@ async function getSearchResults(query, type) {
         },
         include: [
             { model: Movie },
-            { model: Category }
+            { model: Category, as: 'category' }
         ]
     });
 }
