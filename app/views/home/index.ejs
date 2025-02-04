@@ -1,122 +1,243 @@
+<%- include('../partials/header') %>
+  <%- include('../partials/nav') %>
 
+    <body class="">
+      <!-- Section Header -->
+      <section class="">
+        <div class="pic-header relative isolate px-6 pt-14 lg:px-8 bg-cover bg-center bg-no-repeat">
 
-<%- include('../partials/header') %> 
-<%- include('../partials/nav') %>
+          <!-- Effets graphiques -->
+          <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+            aria-hidden="true">
+            <div
+              class="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+              style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+            </div>
+          </div>
 
-<body class="">
-  <!-- Hero Section -->
-  <section class="">
-    <h2 class="">La magie du cinéma dans votre assiette</h2>
-    <p class="">
-      Découvrez et partagez des recettes légendaires inspirées de vos films et
-      séries préférés
-    </p>
-    <div class="">
-      <div class="">
-        <input
-          type="text"
-          class=""
-          placeholder="Recherche par recette ou par Film & Série"
-        />
-        <button class="">Rechercher</button>
-      </div>
-    </div>
-  </section>
+          <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+            <div class="text-center">
+              <h1 class="text-5xl font-bold text-black tracking-tight text-balance sm:text-7xl">
+                La magie du cinéma dans votre assiette
+              </h1>
+              <p class="header-paragraphe mt-8 text-lg font-medium text-pretty sm:text-xl/8">
+                Découvrez et partagez des recettes légendaires inspirées de vos films et séries préférés
+              </p>
+              <div class="mt-10 flex items-center justify-center gap-x-6">
+                <a href="#" class="text-sm/6 font-semibold bg-orange-500 border-2 text-white px-6 py-2 rounded mt-10">
+                  Voir les recettes<span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
 
-  <!-- Comment ca fonctionne -->
-  <section class="">
-    <div class="">
-      <h3 class="">Comment ca fonctionne</h3>
-      <div class="">
-        <div>
-          <div class="">1</div>
-          <p class="">Sélectionnez une œuvre culte</p>
+          <!-- Effet graphique bas -->
+          <div
+            class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+            aria-hidden="true">
+            <div
+              class="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+              style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+            </div>
+          </div>
         </div>
-        <div>
-          <div class="">2</div>
-          <p class="">Découvrez la recette associée</p>
-        </div>
-        <div>
-          <div class="">3</div>
-          <p class="">Chauffez votre poêle</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- Catégories -->
-  <section class="">
-    <div class="">
-      <div class="">
-        <div class="">
-          <img src="" alt="" class="" />
-          <h4 class="">Recettes cultes, inspirées de films classiques</h4>
-          <p class="">
-            Revisitez les plats légendaires de films iconiques. De la
-            Ratatouille de Rémy à la fameuse tarte aux cerises de Twin Peaks,
-            laissez-vous séduire par des créations devenues des classiques
-            culinaires.
-          </p>
-        </div>
 
-        <div class="">
-          <img src="" alt="" class="" />
-          <h4 class="">Séries gourmandes</h4>
-          <p class="">
-            Plongez dans l'univers des séries avec des recettes aussi
-            captivantes que vos épisodes préférés. Retrouvez des plats inspirés
-            de Game of Thrones, Friends ou encore Breaking Bad.
-          </p>
+      <!-- Recherche-->
+      <div class="hidden md:flex justify-between items-center border-2 rounded-lg p-4">
+        <!-- Barre de recherche par Film & Série -->
+        <div class="flex flex-col w-1/2 p-2">
+          <label class="text-gray-600">Recherche par Film & Série</label>
+          <div class="relative">
+            <input type="text" placeholder="Enter search terms" class="w-full p-3 border rounded-lg shadow-sm">
+            <span class="absolute right-3 top-3 text-red-500"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                width="25" height="25" viewBox="0 0 50 50" style="fill:#FD7E14;">
+                <path
+                  d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z">
+                </path>
+              </svg>
+            </span>
+          </div>
         </div>
 
-        <div class="">
-          <img src="" alt="" class="" />
-          <h4 class="">Desserts fantastiques</h4>
-          <p class="">
-            Revisitez la tarte iconique de Twin Peaks...
-          </p>
+        <!-- Barre de recherche par Recette -->
+        <div class="flex flex-col w-1/2 p-2">
+          <label class="text-gray-600">Recherche par recette</label>
+          <div class="relative">
+            <input type="text" placeholder="Enter search terms" class="w-full p-3 border rounded-lg shadow-sm">
+            <span class="absolute right-3 top-3 text-red-500"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                width="25" height="25" viewBox="0 0 50 50" style="fill:#FD7E14;">
+                <path
+                  d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z">
+                </path>
+              </svg></span>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- cartes recettes -->
-  <section class="">
-    <div class="">
-      <h3 class="">Les recettes à ne pas manquer</h3>
-      <div class="">
-        <button class="">Tous</button>
-        <button class="">Entrées</button>
-        <button class="">Plats</button>
-        <button class="">Desserts</button>
+        <!-- Bouton de recherche -->
+        <button class="bg-orange-500 text-white px-6 py-3 rounded-lg shadow-md">Rechercher</button>
       </div>
 
-  <section class="">
-    <div class="">
-      <div class="">
-        <article>
-            <img > => Css : relative
-              <div > => Css : absolute
-               <p>Plat principal</p> => Css : relative
-               </div>
-            <main>
-                <h4>Ratatouille</h4>
-                <p>Ratatouille (film)</p>
-                <p>La fameuse ......</p>
-            </main>
-            <footer>
-                <button><a href="./recette.html">Voir la recette</a></button>
-            </footer>
-        </article>
+      <!-- Version mobile -->
 
-        <!-- Ejs -->
+      <div class="md:hidden flex items-center border-2 rounded-lg p-3 shadow-md relative w-full">
+        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
+            <path fill="#FD7E14"
+              d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z">
+            </path>
+          </svg>
+        </span>
+        <input type="text" placeholder="Recherche par recette ou par Film & Série"
+          class="w-full p-2 pl-10 border-none focus:outline-none rounded-lg">
+        <button class="bg-orange-500 text-white px-4 py-2 rounded-lg ml-2">Rechercher</button>
       </div>
-    </div>
-  </section>
 
-  
 
-<!-- Footer -->
+      <!-- Comment ca fonctionne -->
+      <section class="text-center">
+        <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Comment ça fonctionne</h2>
+        <div class="mt-10 grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
 
-  <%- include('../partials/footer') %>
+          <!-- Étape 1 -->
+          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+            <div
+              class="text-3xl font-semibold text-gray-900 sm:text-5xl border-2 border-orange-500 rounded-lg w-16 h-16 flex items-center justify-center mx-auto">
+              1
+            </div>
+            <p class="text-base text-gray-700">Sélectionnez une œuvre culte</p>
+          </div>
+          <!-- Étape 2 -->
+          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+            <div
+              class="text-3xl font-semibold text-gray-900 sm:text-5xl border-2 border-orange-500 rounded-lg w-16 h-16 flex items-center justify-center mx-auto">
+              2
+            </div>
+            <p class="text-base text-gray-700">Découvrez la recette associée</p>
+          </div>
 
+          <!-- Étape 3 -->
+          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+            <div
+              class="text-3xl font-semibold text-gray-900 sm:text-5xl border-2 border-orange-500 rounded-lg w-16 h-16 flex items-center justify-center mx-auto">
+              3
+            </div>
+            <p class="text-base text-gray-700">Chauffez votre poêle</p>
+          </div>
+      </section>
+
+      <!-- Catégories -->
+      <div class="container mx-auto px-4 py-10">
+        <div class="grid gap-6 md:grid-cols-3 bg-orange-50 p-6 rounded-3xl">
+
+          <!-- Carte 1 -->
+          <div class="flex flex-col items-center md:items-start">
+            <img src="/images/beer.jpg" alt="Image recette classique"
+              class="rounded-lg w-full md:w-auto max-h-48 object-cover">
+            <div class="mt-4 text-center md:text-left">
+              <h2 class="text-lg font-bold text-orange-700">Recettes cultes, inspirées de films classiques</h2>
+              <p class="text-gray-700 mt-2">
+                Revisitez les plats légendaires de films iconiques. De la Ratatouille de Rémy à la fameuse tarte aux
+                cerises de Twin Peaks, laissez-vous séduire par des créations devenues des classiques culinaires.
+              </p>
+            </div>
+          </div>
+
+          <!-- Carte 2 -->
+          <div class="flex flex-col items-center md:items-start">
+            <div class="text-center md:text-left">
+              <h2 class="text-lg font-bold text-orange-700">Séries gourmandes</h2>
+              <p class="text-gray-700 mt-2">
+                Plongez dans l'univers des séries avec des recettes aussi captivantes que vos épisodes préférés.
+                Retrouvez des plats inspirés de Game of Thrones, Friends ou encore Breaking Bad.
+              </p>
+            </div>
+            <img src="/images/cheese-cake.jpg" alt="Image séries gourmandes"
+              class="rounded-lg w-full md:w-auto mt-4 max-h-48 object-cover">
+          </div>
+
+          <!-- Carte 3 -->
+          <div class="flex flex-col items-center md:items-start">
+            <img src="/images/donut.jpg" alt="Image desserts fantastiques"
+              class="rounded-lg w-full md:w-auto max-h-48 object-cover">
+            <div class="mt-4 text-center md:text-left">
+              <h2 class="text-lg font-bold text-orange-700">Desserts fantastiques</h2>
+              <p class="text-gray-700 mt-2">
+                Succombez à la gourmandise avec des douceurs sorties tout droit de mondes imaginaires : les Pies dorées
+                d’Harry Potter, les friandises de Charlie et la Chocolaterie, et bien plus encore.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Statistiques -->
+      <section class="text-center">
+        <div class="mt-10 grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+
+          <!-- Recettes -->
+          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+            <div
+              class="text-3xl font-semibold text-gray-900 sm:text-5xl w-16 h-16 flex items-center justify-center mx-auto">
+              Recettes Détaillées
+            </div>
+            <p class="text-base text-gray-700">Des instructions pas à pas et des anecdotes sur vos scènes cultes
+              préférées</p>
+          </div>
+          <!-- Communauté -->
+          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+            <div
+              class="text-3xl font-semibold text-gray-900 sm:text-5xl  w-16 h-16 flex items-center justify-center mx-auto">
+              Communauté Passionnée
+            </div>
+            <p class="text-base text-gray-700">Partagez vos créations et échangez avec d'autres cinéphiles gourmands</p>
+          </div>
+
+          <!--  Expérience Unique -->
+          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+            <div
+              class="text-3xl font-semibold text-gray-900 sm:text-5xl  w-16 h-16 flex items-center justify-center mx-auto">
+              Expérience Unique
+            </div>
+            <p class="text-base text-gray-700">Vivez une immersion totale entre gastronomie et cinéma</p>
+          </div>
+      </section>
+
+      <!-- cartes recettes -->
+      <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Dernières recettes</h2>
+      <div id="recipes-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+        <% latestRecipes.forEach(recipe=> { %>
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden border relative">
+            <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>" class="w-full h-48 object-cover">
+
+            <div class="p-4">
+              <span class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full absolute top-3 right-3">
+                <%= recipe.category.libelle %> 
+              </span>
+
+              <h3 class="text-lg font-semibold text-orange-500">
+                <%= recipe.titre %>
+              </h3>
+              <p class="text-gray-500 text-sm">
+                <%= recipe.description %>
+              </p>
+
+              <div class="flex items-center justify-between text-gray-500 text-xs mt-3">
+                <div class="flex items-center">
+                  ⭐⭐⭐⭐⭐ (<%= recipe.reviews %>)
+                </div>
+                <span>⏳ <%= recipe.temps_preparation %> min</span>
+              </div>
+
+              <button class="w-full mt-3 bg-orange-500 text-white text-sm py-2 rounded-md">Voir la recette</button>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+
+            <!-- Footer -->
+
+            <%- include('../partials/footer') %>
