@@ -1,0 +1,82 @@
+<%- include('../partials/header') %>
+<%- include('../partials/nav') %> 
+   
+
+
+  <!-- Barre de recherche et informations -->
+  <section class="">
+    <form class="">
+      <label for="search" class="">Chercher une recette</label>
+      <input type="search" id="search" name="search" placeholder="Chercher une recette" class="">
+      <button type="submit" class="">Rechercher</button>
+    </form>
+
+    <p class="">Affichage de 1 à 12 sur 24 Recette(s)</p>
+    <p class="">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+      incididunt ut labore et dolore magna aliqua.
+    </p>
+  </section>
+
+  <!-- Filtres et tri -->
+  <section class="">
+    <div class="">
+      <button class="">Tous</button>
+      <button class="">Entrées</button>
+      <button class="">Plat principal</button>
+      <button class="">Dessert</button>
+      <button class="">Boissons</button>
+    </div>
+    <div class="">
+      <label for="sort" class="">Trier par</label>
+      <select id="sort" name="sort" class="">
+        <option value="recent">Les plus récentes</option>
+        <option value="populaires">Les plus populaires</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Liste des recettes -->
+  <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+    <% recipes.forEach(recipe => { %>
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden border relative">
+        <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>" class="w-full h-48 object-cover">
+      
+        <div class="p-4">
+          <span class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full absolute top-3 right-3">
+            <%= recipe.category ? recipe.category.libelle : "Sans catégorie" %>
+          </span>
+      
+          <h3 class="text-lg font-semibold text-orange-500">
+            <%= recipe.titre %>
+          </h3>
+          <p class="text-gray-500 text-sm">
+            <%= recipe.description %>
+          </p>
+      
+          <div class="flex items-center justify-between text-gray-500 text-xs mt-3">
+            <div class="flex items-center">
+              ⭐⭐⭐⭐⭐ (<%= recipe.reviews || 0 %>)
+            </div>
+            <span>⏳ <%= recipe.temps_preparation %> min</span>
+          </div>
+      
+          <button class="w-full mt-3 bg-orange-500 text-white text-sm py-2 rounded-md">Voir la recette</button>
+        </div>
+      </div>
+    <% }) %>
+  </main>
+  
+
+    
+    <!-- <article class="">
+      <img src="ratatouille.jpg" alt="Ratatouille" class="">
+      <div class="">
+        <h2 class="">Ratatouille</h2>
+        <p class="">Ratatouille (2007)</p>
+        <p class="">La fameuse ratatouille qui a conquis le coeur de tous !</p>
+        <a href="#" class="">Voir la recette</a>
+      </div>
+    </article> -->
+  
+<%- include('../partials/footer') %>

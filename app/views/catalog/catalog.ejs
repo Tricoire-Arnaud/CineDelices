@@ -1,3 +1,5 @@
+<!-- Cette page ne marche pas car dans les routes, recipes/catalog marche uniquement-->
+
 <%- include('../partials/header') %>
 <%- include('../partials/nav') %> 
    
@@ -38,6 +40,14 @@
 
   <!-- Liste des recettes -->
   <main class="">
+
+    <div id="recipes-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+      <% recipes.forEach(recipe => { %>
+        <%- include('../partials/recipe-card', { recipe }) %>
+      <% }) %>
+    </div>
+
+
     <article class="">
       <img src="ratatouille.jpg" alt="Ratatouille" class="">
       <div class="">
