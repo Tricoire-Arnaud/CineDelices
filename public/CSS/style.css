@@ -1,0 +1,19 @@
+/* Corps de texte */
+html {
+    font-family: 'roboto', sans-serif;
+}
+/* titres */
+h1,h2,h3,h4 {
+    font-family: 'montserrat alternates', sans-serif;
+}
+
+/* logo */
+.logo-div{
+    display: flex;
+    justify-content: left; 
+    align-items: center;
+    width: 7rem;
+}
+
+/* nav */
+

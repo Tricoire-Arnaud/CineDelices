@@ -19,6 +19,5 @@ router.delete('/favoris/:recipeId', userController.removeFavorite);
 // Gestion des commentaires
 router.post('/recette/:id/comment', userController.addComment);
 router.post('/recette/:id/note', userController.rateRecipe);
-router.post('/recette/:id/like', userController.likeRecipe);
 
 module.exports = router; 

@@ -1,1 +1,29 @@
 <!-- Navigation du site --> 
+
+
+<!-- Bouton Burger pour Mobile -->
+<button id="menu-toggler" class="lg:hidden p-2 text-black">
+    ☰
+</button>
+
+<!-- Menu Navigation (Desktop + Mobile) -->
+<nav class="hidden lg:block text-black">
+    <ul class="flex space-x-4">
+        <li><a href="./catalogue.html" class="hover:text-orange-400">Catalogue</a></li>
+        <li><a href="./boutique.html" class="hover:text-orange-400">Films & Séries</a></li>
+        <li><a href="./contact.html" class="hover:text-orange-400 border-2 border-black px-6 py-2 rounded">Connexion</a></li>
+        <li><a href="./contact.html" class="hover:text-black-400 bg-orange-500 border-2 text-white px-6 py-2 rounded">Inscription</a></li>
+    </ul>
+</nav>
+</div>
+
+<!-- Menu Mobile -->
+<nav id="menu-burger" class="fixed inset-0 bg-gray-900 bg-opacity-90 text-white hidden flex flex-col items-center justify-center space-y-6">
+    <button id="close-menu-burger" class="absolute top-5 right-5 text-2xl">✖</button>
+    <a href="./catalogue.html" class="text-lg">Catalogue</a>
+    <a href="./boutique.html" class="text-lg">Films & Séries</a>
+    <a href="./contact.html" class="text-lg">Connexion</a>
+    <a href="./contact.html" class="text-lg">Inscription</a>
+</nav>
+</header>
+
