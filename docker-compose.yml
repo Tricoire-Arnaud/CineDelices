@@ -31,6 +31,22 @@ services:
     # C'est l'équivalent de l'option --name de docker run
     container_name: cinedelices-app
 
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    # notre conteneur app utilise le service db
+    # qui doit donc être lancé avant l'application
+    # on peut indiquer que l'app dépend de db
+    depends_on:
+      db:
+        condition: service_healthy
+
+    env_file:
+      - .env.docker-compose
+
+    command: npm run setup
+
   # service pour la base de données
   db:
     # on peut donner directement des instructions de construction :
@@ -69,10 +85,3 @@ services:
       # on monte le volume local cinedelice-volume
       # comme volume de /var/lib/postgresql/data
       - cinedelices-volume:/var/lib/postgresql/data
-
-# dans Docker, on peut créer des volumes pour la 
-# persistance des données (pour ne pas perdre les données).
-# Dans ce cas les données sont sauvegardées sur le système hôtes,
-# mais c'est Docker qui gère tout !
-volumes:
-  cinedelices-volume:
