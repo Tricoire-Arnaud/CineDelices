@@ -1,28 +1,28 @@
 <!-- Page de connexion --> 
 <%- include('../partials/header') %>
 
-<body class=" bg-cover bg-center" 
-      style="background-image: url('/image/header.jpg');">
-  <main class="bg-white p-6 rounded-2xl shadow-md w-full max-w-sm flex items-center justify-center min-h-screen " >
-    <h1 class="text-2xl font-bold text-center mb-4 text-orange-600">Content de te revoir !</h1>
-    <p class="text-center text-orange-400 mb-6">Entrez vos identifiants pour accéder à votre compte</p>
+<div class=" pic-header-login relative bg-cover bg-center bg-no-repeat min-h-screen flex items-center justify-center"> <!-- Centrer le contenu -->
+    <main class="bg-white p-6 rounded-2xl shadow-md w-full max-w-sm">
+      <h1 class="text-2xl font-bold text-center mb-4 text-orange-600">Content de te revoir !</h1>
+      <p class="text-center text-orange-400 mb-6">Entrez vos identifiants pour accéder à votre compte</p>
 
-    <form class="space-y-4">
-      <label class="block">
-        <span class="text-sm text-black">Adresse email</span>
-        <input type="email" placeholder="Entrez votre email" class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none focus:ring-black">
-      </label>
+      <form class="space-y-4">
+        <label class="block">
+          <span class="text-sm text-black">Adresse email</span>
+          <input type="email" placeholder="Entrez votre email" class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none focus:ring-black">
+        </label>
 
-      <label class="block">
-        <span class="text-sm text-black">Mot de passe</span>
-        <input type="password" placeholder="Entrez votre mot de passe" class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none">
-        <span><a href="#" class="text-sm text-black block mt-2 text-right">Mot de passe oublié ?</a></span>
-      </label>
+        <label class="block">
+          <span class="text-sm text-black">Mot de passe</span>
+          <input type="password" placeholder="Entrez votre mot de passe" class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none">
+          <span><a href="#" class="text-sm text-black block mt-2 text-right">Mot de passe oublié ?</a></span>
+        </label>
 
-      <button type="submit" class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">Se connecter</button>
-      <p class="text-sm text-center mt-4">Vous n'avez pas de compte ? <a href="#" class="text-orange-500">Inscrivez-vous</a></p>
-    </form>
-  </main>
-</body>
+        <button type="submit" class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">Se connecter</button>
+        <p class="text-sm text-center mt-4">Vous n'avez pas de compte ? <a href="/inscription" class="text-orange-500">Inscrivez-vous</a></p>
+      </form>
+    </main>
+  </div>
+
 
 <%- include('../partials/footer') %>
