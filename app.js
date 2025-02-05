@@ -27,6 +27,7 @@ const adminRoutes = require('./app/routes/admin');
 app.get('/', mainController.getHome);
 app.get('/catalogue', mainController.getCatalog);
 app.get('/recherche', mainController.search);
+app.get('/films-series', mainController.moviesTvShows);
 
 // Routes API
 app.use('/api/auth', authRoutes);

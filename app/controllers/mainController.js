@@ -138,8 +138,8 @@ const mainController = {
             });
 
             res.render('Movie&Tvshow/movie&Tvshow', {
-                featuredMovieRecipes,
-                featuredTvShowRecipes,
+                // featuredMovieRecipes,
+                // featuredTvShowRecipes,
                 recentMovieRecipes,
                 recentTvShowRecipes
             });
