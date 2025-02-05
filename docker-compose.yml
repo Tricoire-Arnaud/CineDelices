@@ -52,6 +52,7 @@ services:
     # on peut donner directement des instructions de construction :
     # on utilise l'image postgres pour ce service, 
     # on n'est pas obligé de passer par un Dockerfile
+
     image: postgres:17
     container_name: cinedelices-db
 
@@ -85,3 +86,10 @@ services:
       # on monte le volume local cinedelice-volume
       # comme volume de /var/lib/postgresql/data
       - cinedelices-volume:/var/lib/postgresql/data
+
+# dans Docker, on peut créer des volumes pour la 
+# persistance des données (pour ne pas perdre les données).
+# Dans ce cas les données sont sauvegardées sur le système hôtes,
+# mais c'est Docker qui gère tout !
+volumes:
+  cinedelices-volume:
