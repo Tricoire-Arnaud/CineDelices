@@ -143,98 +143,108 @@ const mainController = {
         }
     },
 
-// Page 404
-notFound: (req, res) => {
-    res.status(404).render('errors/404');
-},
+    // Page 404
+    notFound: (req, res) => {
+        res.status(404).render('errors/404');
+    },
 
     // Page 500
     serverError: (req, res) => {
         res.status(500).render('errors/500');
     },
 
-        // Page de connexion
-        getLogin: (req, res) => {
-            try {
-                // Si l'utilisateur est déjà connecté, le rediriger vers la page d'accueil
-                if (req.user) {
-                    return res.redirect('/');
-                }
-                res.render('auth/login', {
-                    error: req.flash('error'),
-                    success: req.flash('success'),
-                    user: req.user
-                });
-            } catch (error) {
-                console.error('Erreur page connexion:', error);
-                res.status(500).render('errors/500');
+    //CGU
+    getCGU: (req, res) => {
+        res.render('legal/CGU');
+    },
+
+    //mentions-legales
+    getML: (req, res) => {
+        res.render('legal/mentions-legales');
+    },
+
+    // Page de connexion
+    getLogin: (req, res) => {
+        try {
+            // Si l'utilisateur est déjà connecté, le rediriger vers la page d'accueil
+            if (req.user) {
+                return res.redirect('/');
             }
-        },
+            res.render('auth/login', {
+                error: req.flash('error'),
+                success: req.flash('success'),
+                user: req.user
+            });
+        } catch (error) {
+            console.error('Erreur page connexion:', error);
+            res.status(500).render('errors/500');
+        }
+    },
 
-            // Page d'inscription
-            getRegister: (req, res) => {
-                try {
-                    // Si l'utilisateur est déjà connecté, le rediriger vers la page d'accueil
-                    if (req.user) {
-                        return res.redirect('/');
+    // Page d'inscription
+    getRegister: (req, res) => {
+        try {
+            // Si l'utilisateur est déjà connecté, le rediriger vers la page d'accueil
+            if (req.user) {
+                return res.redirect('/');
+            }
+            res.render('auth/register', {
+                error: req.flash('error'),
+                success: req.flash('success'),
+                user: req.user
+            });
+        } catch (error) {
+            console.error('Erreur page inscription:', error);
+            res.status(500).render('errors/500');
+        }
+    },
+
+    // Page de détail d'une recette
+    getRecipeDetails: async (req, res) => {
+        try {
+            const recipeId = req.params.id;
+
+            const recipe = await Recipe.findByPk(recipeId, {
+                include: [
+                    {
+                        model: Movie,
+                        attributes: ['id_film', 'titre', 'annee', 'image']
+                    },
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id_categorie', 'libelle']
                     }
-                    res.render('auth/register', {
-                        error: req.flash('error'),
-                        success: req.flash('success'),
-                        user: req.user
-                    });
-                } catch (error) {
-                    console.error('Erreur page inscription:', error);
-                    res.status(500).render('errors/500');
-                }
-            },
+                ]
+            });
 
-                // Page de détail d'une recette
-                getRecipeDetails: async (req, res) => {
-                    try {
-                        const recipeId = req.params.id;
+            if (!recipe) {
+                return res.status(404).render('errors/404');
+            }
 
-                        const recipe = await Recipe.findByPk(recipeId, {
-                            include: [
-                                {
-                                    model: Movie,
-                                    attributes: ['id_film', 'titre', 'annee', 'image']
-                                },
-                                {
-                                    model: Category,
-                                    as: 'category',
-                                    attributes: ['id_categorie', 'libelle']
-                                }
-                            ]
-                        });
-
-                        if (!recipe) {
-                            return res.status(404).render('errors/404');
-                        }
-
-                        // Récupérer les recettes similaires (même catégorie)
-                        const similarRecipes = await Recipe.findAll({
-                            where: {
-                                id_categorie: recipe.id_categorie,
-                                id_recette: { [Op.ne]: recipe.id_recette } // Exclure la recette actuelle
-                            },
-                            include: [
-                                { model: Movie },
-                                { model: Category, as: 'category' }
-                            ],
-                            limit: 3
-                        });
-
-                        res.render('recipes/show', {
-                            recipe,
-                            similarRecipes,
-                            user: req.user
-                        });
-                    } catch (error) {
-                        console.error('Erreur détail recette:', error);
-                        res.status(500).render('errors/500');
-                    }
+            // Récupérer les recettes similaires (même catégorie)
+            const similarRecipes = await Recipe.findAll({
+                where: {
+                    id_categorie: recipe.id_categorie,
+                    id_recette: { [Op.ne]: recipe.id_recette } // Exclure la recette actuelle
                 },
+                include: [
+                    { model: Movie },
+                    { model: Category, as: 'category' }
+                ],
+                limit: 3
+            });
+
+            res.render('recipes/show', {
+                recipe,
+                similarRecipes,
+                user: req.user
+            });
+        } catch (error) {
+            console.error('Erreur détail recette:', error);
+            res.status(500).render('errors/500');
+        }
+    },
 };
 
 

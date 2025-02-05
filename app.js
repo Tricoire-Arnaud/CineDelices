@@ -26,8 +26,14 @@ const adminRoutes = require('./app/routes/admin');
 // Routes principales (mainController)
 app.get('/', mainController.getHome);
 app.get('/catalogue', mainController.getCatalog);
-app.get('/recherche', mainController.search);
+// app.get('/recherche', mainController.search);
 app.get('/films-series', mainController.moviesTvShows);
+app.get('/inscription', mainController.getRegister);
+app.get('/connexion', mainController.getLogin);
+app.get('/recette/:id', mainController.getRecipeDetails);
+app.get('/CGU', mainController.getCGU);
+app.get('/mentions-legales', mainController.getML);
+
 
 // Routes API
 app.use('/api/auth', authRoutes);
