@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Erreur 500 - Erreur Serveur</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    <div class="error-container">
-        <h1>Erreur 500</h1>
-        <p>Désolé, une erreur est survenue sur notre serveur.</p>
-        <a href="/">Retour à l'accueil</a>
+<%- include('../partials/header') %>
+
+<body class="bg-gray-100">
+
+    <div class="flex items-center justify-center min-h-screen px-4 py-8">
+        <div class="text-center bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+            <h1 class="text-6xl font-extrabold text-orange-500 mb-4">Erreur 500 </h1>
+            <p class="text-xl text-gray-600 mb-6">Désolé, une erreur est survenue sur notre serveur..</p>
+            <a href="/" class="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600 transition duration-300">Retour à l'accueil</a>
+        </div>
     </div>
+
 </body>
-</html> 
+</html>
+
+<%- include('../partials/footer') %>

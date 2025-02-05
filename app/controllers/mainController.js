@@ -45,10 +45,10 @@ const mainController = {
 
     getCatalog: async (req, res) => {
         try {
-            const { 
-                page = 1, 
-                category, 
-                sort = 'recent' 
+            const {
+                page = 1,
+                category,
+                sort = 'recent'
             } = req.query;
 
             const limit = 12;
@@ -105,24 +105,29 @@ const mainController = {
 
 
     // Page Films & Séries
+
     moviesTvShows: async (req, res) => {
         try {
             // Récupérer les recettes récentes pour les films
             const movieRecipes = await Recipe.findAll({
-                where: { type: 'movie' },
                 include: [
-                    { model: Movie },
+                    {
+                        model: Movie,
+                        where: { type: 'film' } // Filtrer sur les films
+                    },
                     { model: Category, as: 'category' }
                 ],
                 order: [['created_at', 'DESC']],
                 limit: 6
             });
-
-            // Récupérer les recettes récentes pour les séries
+           
+            // Récupérer les recettes récentes pour les series
             const tvShowRecipes = await Recipe.findAll({
-                where: { type: 'tvshow' },
                 include: [
-                    { model: Movie },
+                    {
+                        model: Movie,
+                        where: { type: 'série' } // Filtrer sur les séries
+                    },
                     { model: Category, as: 'category' }
                 ],
                 order: [['created_at', 'DESC']],
@@ -148,6 +153,16 @@ const mainController = {
     // Page 500
     serverError: (req, res) => {
         res.status(500).render('errors/500');
+    },
+
+    //CGU
+    getCGU: (req, res) => {
+        res.render('legal/CGU');
+    },
+
+    //mentions-legales
+    getML: (req, res) => {
+        res.render('legal/mentions-legales');
     },
 
     // Page de connexion
@@ -190,14 +205,14 @@ const mainController = {
     getRecipeDetails: async (req, res) => {
         try {
             const recipeId = req.params.id;
-            
+
             const recipe = await Recipe.findByPk(recipeId, {
                 include: [
-                    { 
+                    {
                         model: Movie,
                         attributes: ['id_film', 'titre', 'annee', 'image']
                     },
-                    { 
+                    {
                         model: Category,
                         as: 'category',
                         attributes: ['id_categorie', 'libelle']

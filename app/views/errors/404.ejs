@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Erreur 404 - Page Non Trouvée</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    <div class="error-container">
-        <h1>Erreur 404</h1>
-        <p>Désolé, la page que vous recherchez n'existe pas.</p>
-        <a href="/">Retour à l'accueil</a>
+<%- include('../partials/header') %>
+
+<body class="bg-gray-100">
+
+    <div class="flex items-center justify-center min-h-screen px-4 py-8">
+        <div class="text-center bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+            <h1 class="text-6xl font-extrabold text-orange-500 mb-4">Erreur 404 Page Non Trouvée</h1>
+            <p class="text-xl text-gray-600 mb-6">Désolé, la page que vous recherchez n'existe pas.</p>
+            <a href="/" class="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600 transition duration-300">Retour à l'accueil</a>
+        </div>
     </div>
+
 </body>
-</html> 
+</html>
+
+<%- include('../partials/footer') %>
