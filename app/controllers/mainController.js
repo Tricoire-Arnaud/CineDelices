@@ -110,22 +110,24 @@ const mainController = {
         try {
             // Récupérer les recettes récentes pour les films
             const movieRecipes = await Recipe.findAll({
-                where: { type: 'movie' },
                 include: [
-                    { model: Movie },
+                    {
+                        model: Movie,
+                        where: { type: 'film' } // Filtrer sur les films
+                    },
                     { model: Category, as: 'category' }
                 ],
                 order: [['created_at', 'DESC']],
                 limit: 6
             });
-
-
-
-            // Récupérer les recettes récentes pour les séries
+           
+            // Récupérer les recettes récentes pour les series
             const tvShowRecipes = await Recipe.findAll({
-                where: { type: 'tvshow' },
                 include: [
-                    { model: Movie },
+                    {
+                        model: Movie,
+                        where: { type: 'série' } // Filtrer sur les séries
+                    },
                     { model: Category, as: 'category' }
                 ],
                 order: [['created_at', 'DESC']],
