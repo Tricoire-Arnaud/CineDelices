@@ -30,3 +30,49 @@ services:
     # on peut donner un nom au conteneur qui sera créé
     # C'est l'équivalent de l'option --name de docker run
     container_name: cinedelices-app
+
+  # service pour la base de données
+  db:
+    # on peut donner directement des instructions de construction :
+    # on utilise l'image postgres pour ce service, 
+    # on n'est pas obligé de passer par un Dockerfile
+    image: postgres:17
+    container_name: cinedelices-db
+
+    # on déclare les variables d'environnement qui permettent
+    # de personnaliser l'image pour notre BDD
+    #environment:
+    #  POSTGRES_USER: 
+    #  POSTGRES_PASSWORD: 
+    #  POSTGRES_DB: 
+
+    # plutôt que de mettre des données sensibles
+    # dans le docker-compose, on peut les mettre
+    # dans un fichier d'environnement
+    env_file:
+      - .env.docker-compose
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+
+    # on peut partager un répertoire de notre projet
+    # sur notre système hôte avec le conteneur
+    # c'est un "bind mount"
+    #  - bind : lien
+    #  - mount : monter
+
+    volumes:
+      # on monte le volume local cinedelice-volume
+      # comme volume de /var/lib/postgresql/data
+      - cinedelices-volume:/var/lib/postgresql/data
+
+# dans Docker, on peut créer des volumes pour la 
+# persistance des données (pour ne pas perdre les données).
+# Dans ce cas les données sont sauvegardées sur le système hôtes,
+# mais c'est Docker qui gère tout !
+volumes:
+  cinedelices-volume:
