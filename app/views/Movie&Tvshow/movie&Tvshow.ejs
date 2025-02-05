@@ -1,38 +1,83 @@
 <%- include('../partials/header') %>
 
-<div class="max-w-6xl mx-auto px-4 py-8">
-  
-  <!-- Section Recettes Films en vedette -->
-  <section>
-    <h2 class="text-2xl font-semibold mb-4">Nos Recette de films récentes</h2>
-      
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <% movieRecipes.forEach(recipe => { %>
-        <div class="bg-gray-100 p-4 rounded-lg">
-          <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>" class="w-full h-32 object-cover rounded-md">
-          <h4 class="mt-2 font-semibold text-gray-800"><%= recipe.titre %></h4>
-          <p class="text-gray-500 text-sm"><%= recipe.date %></p>
-        </div>
-      <% }) %>
-    </div>
-    <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">Plus</button>
-  </section>
+  <div class="max-w-6xl mx-auto px-4 py-8">
 
-  <!-- Section Recettes Séries en vedette -->
-  <section class="mt-12">
-    <h2 class="text-2xl font-semibold mb-4">Nos Recette de séries récentes</h2>
-       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <% tvShowRecipes.forEach(recipe => { %>
-        <div class="bg-gray-100 p-4 rounded-lg">
-          <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>" class="w-full h-32 object-cover rounded-md">
-          <h4 class="mt-2 font-semibold text-gray-800"><%= recipe.titre %></h4>
-          <p class="text-gray-500 text-sm"><%= recipe.date %></p>
-        </div>
-      <% }) %>
-    </div>
-    <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">Plus</button>
-  </section>
+    <!-- Section Recettes Films en vedette -->
+    <section>
 
-</div>
+      <% if (noResults) { %>
+        <p>Aucun résultat pour "<%= currentQueryFilms %>"</p>
+        <% } else { %>
+          <h2 class="text-2xl font-semibold mb-4">Nos Recette de films récentes</h2>
 
-  <%- include('../partials/footer') %>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <% movieRecipes.forEach(recipe=> { %>
+              <div class="bg-gray-100 p-4 rounded-lg">
+                <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>"
+                  class="w-full h-32 object-cover rounded-md">
+                <h4 class="mt-2 font-semibold text-gray-800">
+                  <%= recipe.titre %>
+                </h4>
+                <p class="text-gray-500 text-sm">
+                  <%= recipe.date %>
+                </p>
+              </div>
+              <% }) %>
+          </div>
+          <% } %>
+    </section>
+
+    <!-- Section Recettes Séries en vedette -->
+    <section class="mt-12">
+      <h2 class="text-2xl font-semibold mb-4">Nos Recette de séries récentes</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <% tvShowRecipes.forEach(recipe=> { %>
+          <div class="bg-gray-100 p-4 rounded-lg">
+            <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>"
+              class="w-full h-32 object-cover rounded-md">
+            <h4 class="mt-2 font-semibold text-gray-800">
+              <%= recipe.titre %>
+            </h4>
+            <p class="text-gray-500 text-sm">
+              <%= recipe.date %>
+            </p>
+          </div>
+          <% }) %>
+      </div>
+    </section>
+
+   
+  <!-- Section Films et Séries correspondant à la recherche -->
+  <% if (movies.length> 0) { %>
+    <section class="mt-12">
+      <h2>Films et Séries correspondant à votre recherche</h2>
+      <div>
+        <% movies.forEach(function(movie) { %>
+          <div>
+            <h3>
+              <%= movie.titre %>
+            </h3>
+            <!-- Vérification des recettes associées -->
+            <p>Recettes liées:
+              <% if (movie.Recipes && movie.Recipes.length> 0) { %>
+                <% movie.Recipes.forEach(function(recipe) { %>
+                  <div>
+                    <p>
+                      <%= recipe.titre %>
+                    </p> <!-- Affiche le titre de la recette -->
+                    <img src="<%= recipe.image %>" alt="<%= recipe.titre %>"> <!-- Affiche l'image de la recette -->
+                  </div>
+                  <% }); %>
+                    <% } else { %>
+                      Aucune recette
+                      <% } %>
+            </p>
+          </div>
+          <% }); %>
+      </div>
+    </section>
+    <% } %>
+
+      </div>
+
+      <%- include('../partials/footer') %>

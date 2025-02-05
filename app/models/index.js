@@ -80,6 +80,10 @@ Favorite.belongsTo(User, { foreignKey: 'id_utilisateur' });
 // Permet d'accéder à la recette depuis un favori
 Favorite.belongsTo(Recipe, { foreignKey: 'id_recette' });
 
+// Permet d'accéder à la recette depuis un film/serie
+Movie.hasMany(Recipe, { foreignKey: 'id_oeuvre' });
+
+
 /**
  * Synchronise la base de données et peuple les tables
  * force: true => Supprime et recrée toutes les tables
