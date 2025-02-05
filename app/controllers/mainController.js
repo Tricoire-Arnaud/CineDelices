@@ -107,41 +107,32 @@ const mainController = {
     // Page Films & Séries
     moviesTvShows: async (req, res) => {
         try {
-            // Récupérer les recettes en vedette pour les films
-            const featuredMovieRecipes = await Recipe.findAll({
-                where: { featured: true, type: 'movie' },
-                include: ['category'],
-                limit: 1
-            });
-
-            // Récupérer les recettes en vedette pour les séries
-            const featuredTvShowRecipes = await Recipe.findAll({
-                where: { featured: true, type: 'tvshow' },
-                include: ['category'],
-                limit: 1
-            });
-
             // Récupérer les recettes récentes pour les films
-            const recentMovieRecipes = await Recipe.findAll({
+            const movieRecipes = await Recipe.findAll({
                 where: { type: 'movie' },
-                include: ['category'],
+                include: [
+                    { model: Movie },
+                    { model: Category, as: 'category' }
+                ],
                 order: [['created_at', 'DESC']],
-                limit: 3
+                limit: 6
             });
 
             // Récupérer les recettes récentes pour les séries
-            const recentTvShowRecipes = await Recipe.findAll({
+            const tvShowRecipes = await Recipe.findAll({
                 where: { type: 'tvshow' },
-                include: ['category'],
+                include: [
+                    { model: Movie },
+                    { model: Category, as: 'category' }
+                ],
                 order: [['created_at', 'DESC']],
-                limit: 2
+                limit: 6
             });
 
             res.render('Movie&Tvshow/movie&Tvshow', {
-                featuredMovieRecipes,
-                featuredTvShowRecipes,
-                recentMovieRecipes,
-                recentTvShowRecipes
+                movieRecipes,
+                tvShowRecipes,
+                user: req.user
             });
         } catch (error) {
             console.error(error);
