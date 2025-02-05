@@ -76,7 +76,7 @@ services:
       start_period: 10s
 
     # on peut partager un répertoire de notre projet
-    # sur notre système hôte avec le conteneur
+    # sur notre système hôte avec le conteneur
     # c'est un "bind mount"
     #  - bind : lien
     #  - mount : monter
