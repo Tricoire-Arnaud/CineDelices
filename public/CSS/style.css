@@ -21,6 +21,9 @@ h1,h2,h3,h4 {
 .pic-header{
     background-image: url('../images/header.jpeg');
 }
+.pic-header-login{
+    background-image: url('../images/cinema-elements.jpg');
+}
 .header-paragraphe{
     color: #F0815D;
 }

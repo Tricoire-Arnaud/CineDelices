@@ -52,7 +52,7 @@ app.use((err, req, res, next) => {
 });
 
 // Port d'écoute
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // Démarrage du serveur
 async function startServer() {
