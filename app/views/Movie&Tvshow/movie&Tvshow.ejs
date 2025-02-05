@@ -7,7 +7,7 @@
     <h2 class="text-2xl font-semibold mb-4">Nos Recette de films récentes</h2>
       
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <% recentMovieRecipes.forEach(recipe => { %>
+      <% movieRecipes.forEach(recipe => { %>
         <div class="bg-gray-100 p-4 rounded-lg">
           <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>" class="w-full h-32 object-cover rounded-md">
           <h4 class="mt-2 font-semibold text-gray-800"><%= recipe.titre %></h4>
@@ -22,7 +22,7 @@
   <section class="mt-12">
     <h2 class="text-2xl font-semibold mb-4">Nos Recette de séries récentes</h2>
        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <% recentTvShowRecipes.forEach(recipe => { %>
+      <% tvShowRecipes.forEach(recipe => { %>
         <div class="bg-gray-100 p-4 rounded-lg">
           <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>" class="w-full h-32 object-cover rounded-md">
           <h4 class="mt-2 font-semibold text-gray-800"><%= recipe.titre %></h4>
