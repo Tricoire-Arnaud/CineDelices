@@ -1,0 +1,32 @@
+# docker-compose est un fichier au format YAML
+# qui contient toutes les informations / instructions pour :
+#  - créer les images d'un projet
+#  - créer les conteneurs d'un projet
+#  - indiquer les différentes contraintes pour les conteneurs
+#  - lier / ordonner les conteneurs
+#
+# Chaque conteneur est considéré comme un service
+# qui permet de faire tourner l'application.
+#
+# L'instruction de base d'un fichier docker-compose est :
+services:
+  # notre premier service, c'est notre application (partie applicative)
+  # on peut directement lui donner un nom de service (ici app)
+  app:
+    # on indique comment construire l'image du service.
+    # On a déjà un Dockerfile pour la partie applicative :
+    # on peut le réutiliser.
+    # On indique que la construction de l'image se fait
+    # à partir du Dockerfile déjà écrit.
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # on déclare que le service doit être accessible sur le port
+    # 3000 de l'hôte qui correspond au port 3000 du conteneur.
+    # C'est l'équivalent de l'option -p de docker run
+    ports:
+      # port-hôte:port-conteneur
+      - 3000:3000
+    # on peut donner un nom au conteneur qui sera créé
+    # C'est l'équivalent de l'option --name de docker run
+    container_name: cinedelices-app
