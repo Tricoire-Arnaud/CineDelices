@@ -173,8 +173,8 @@ const mainController = {
                 return res.redirect('/');
             }
             res.render('auth/login', {
-                error: req.flash('error'),
-                success: req.flash('success'),
+                // error: req.flash('error'),
+                // success: req.flash('success'),
                 user: req.user
             });
         } catch (error) {
