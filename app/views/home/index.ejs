@@ -1,243 +1,210 @@
 <%- include('../partials/header') %>
-  <%- include('../partials/nav') %>
 
-    <body class="">
-      <!-- Section Header -->
-      <section class="">
-        <div class="pic-header relative isolate px-6 pt-14 lg:px-8 bg-cover bg-center bg-no-repeat">
+<main class="bg-gray-50">
+  <!-- Hero Section -->
+  <section class="relative isolate overflow-hidden">
+    <div class="pic-header relative bg-cover bg-center bg-no-repeat min-h-screen flex items-center">
+      <!-- Overlay gradient -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/10 backdrop-blur-[2px]"></div>
 
-          <!-- Effets graphiques -->
-          <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-            aria-hidden="true">
-            <div
-              class="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-              style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
-            </div>
-          </div>
-
-          <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-            <div class="text-center">
-              <h1 class="text-5xl font-bold text-black tracking-tight text-balance sm:text-7xl">
-                La magie du cinéma dans votre assiette
-              </h1>
-              <p class="header-paragraphe mt-8 text-lg font-medium text-pretty sm:text-xl/8">
-                Découvrez et partagez des recettes légendaires inspirées de vos films et séries préférés
-              </p>
-              <div class="mt-10 flex items-center justify-center gap-x-6">
-                <a href="#" class="text-sm/6 font-semibold bg-orange-500 border-2 text-white px-6 py-2 rounded mt-10">
-                  Voir les recettes<span aria-hidden="true">→</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Effet graphique bas -->
-          <div
-            class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-            aria-hidden="true">
-            <div
-              class="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-              style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
-            </div>
-          </div>
+      <!-- Contenu Hero -->
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-3xl mx-auto text-center">
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            La magie du cinéma dans votre assiette
+          </h1>
+          <p class="text-xl sm:text-2xl text-white/90 mb-8 font-medium">
+            Découvrez et partagez des recettes légendaires inspirées de vos films et séries préférés
+          </p>
+          <a href="#recipes" class="inline-flex items-center px-8 py-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg font-medium text-lg">
+            Voir les recettes
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-
-      <!-- Recherche-->
-      <div class="hidden md:flex justify-between items-center border-2 rounded-lg p-4">
-        <!-- Barre de recherche par Film & Série -->
-        <div class="flex flex-col w-1/2 p-2">
-          <label class="text-gray-600">Recherche par Film & Série</label>
+  <!-- Section Recherche -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+      <!-- Desktop Search -->
+      <div class="hidden md:flex max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 space-x-4 -mt-24 relative z-20">
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Films & Séries</label>
           <div class="relative">
-            <input type="text" placeholder="Enter search terms" class="w-full p-3 border rounded-lg shadow-sm">
-            <span class="absolute right-3 top-3 text-red-500"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                width="25" height="25" viewBox="0 0 50 50" style="fill:#FD7E14;">
-                <path
-                  d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z">
-                </path>
+            <input type="text" placeholder="Rechercher un film ou une série..." 
+                   class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all duration-200">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2">
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
               </svg>
             </span>
           </div>
         </div>
-
-        <!-- Barre de recherche par Recette -->
-        <div class="flex flex-col w-1/2 p-2">
-          <label class="text-gray-600">Recherche par recette</label>
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Recettes</label>
           <div class="relative">
-            <input type="text" placeholder="Enter search terms" class="w-full p-3 border rounded-lg shadow-sm">
-            <span class="absolute right-3 top-3 text-red-500"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                width="25" height="25" viewBox="0 0 50 50" style="fill:#FD7E14;">
-                <path
-                  d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z">
-                </path>
-              </svg></span>
+            <input type="text" placeholder="Rechercher une recette..." 
+                   class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all duration-200">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2">
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </span>
           </div>
         </div>
-
-        <!-- Bouton de recherche -->
-        <button class="bg-orange-500 text-white px-6 py-3 rounded-lg shadow-md">Rechercher</button>
-      </div>
-
-      <!-- Version mobile -->
-
-      <div class="md:hidden flex items-center border-2 rounded-lg p-3 shadow-md relative w-full">
-        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
-            <path fill="#FD7E14"
-              d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z">
-            </path>
-          </svg>
-        </span>
-        <input type="text" placeholder="Recherche par recette ou par Film & Série"
-          class="w-full p-2 pl-10 border-none focus:outline-none rounded-lg">
-        <button class="bg-orange-500 text-white px-4 py-2 rounded-lg ml-2">Rechercher</button>
-      </div>
-
-
-      <!-- Comment ca fonctionne -->
-      <section class="text-center">
-        <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Comment ça fonctionne</h2>
-        <div class="mt-10 grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-
-          <!-- Étape 1 -->
-          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-            <div
-              class="text-3xl font-semibold text-gray-900 sm:text-5xl border-2 border-orange-500 rounded-lg w-16 h-16 flex items-center justify-center mx-auto">
-              1
-            </div>
-            <p class="text-base text-gray-700">Sélectionnez une œuvre culte</p>
-          </div>
-          <!-- Étape 2 -->
-          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-            <div
-              class="text-3xl font-semibold text-gray-900 sm:text-5xl border-2 border-orange-500 rounded-lg w-16 h-16 flex items-center justify-center mx-auto">
-              2
-            </div>
-            <p class="text-base text-gray-700">Découvrez la recette associée</p>
-          </div>
-
-          <!-- Étape 3 -->
-          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-            <div
-              class="text-3xl font-semibold text-gray-900 sm:text-5xl border-2 border-orange-500 rounded-lg w-16 h-16 flex items-center justify-center mx-auto">
-              3
-            </div>
-            <p class="text-base text-gray-700">Chauffez votre poêle</p>
-          </div>
-      </section>
-
-      <!-- Catégories -->
-      <div class="container mx-auto px-4 py-10">
-        <div class="grid gap-6 md:grid-cols-3 bg-orange-50 p-6 rounded-3xl">
-
-          <!-- Carte 1 -->
-          <div class="flex flex-col items-center md:items-start">
-            <img src="/images/beer.jpg" alt="Image recette classique"
-              class="rounded-lg w-full md:w-auto max-h-48 object-cover">
-            <div class="mt-4 text-center md:text-left">
-              <h2 class="text-lg font-bold text-orange-700">Recettes cultes, inspirées de films classiques</h2>
-              <p class="text-gray-700 mt-2">
-                Revisitez les plats légendaires de films iconiques. De la Ratatouille de Rémy à la fameuse tarte aux
-                cerises de Twin Peaks, laissez-vous séduire par des créations devenues des classiques culinaires.
-              </p>
-            </div>
-          </div>
-
-          <!-- Carte 2 -->
-          <div class="flex flex-col items-center md:items-start">
-            <div class="text-center md:text-left">
-              <h2 class="text-lg font-bold text-orange-700">Séries gourmandes</h2>
-              <p class="text-gray-700 mt-2">
-                Plongez dans l'univers des séries avec des recettes aussi captivantes que vos épisodes préférés.
-                Retrouvez des plats inspirés de Game of Thrones, Friends ou encore Breaking Bad.
-              </p>
-            </div>
-            <img src="/images/cheese-cake.jpg" alt="Image séries gourmandes"
-              class="rounded-lg w-full md:w-auto mt-4 max-h-48 object-cover">
-          </div>
-
-          <!-- Carte 3 -->
-          <div class="flex flex-col items-center md:items-start">
-            <img src="/images/donut.jpg" alt="Image desserts fantastiques"
-              class="rounded-lg w-full md:w-auto max-h-48 object-cover">
-            <div class="mt-4 text-center md:text-left">
-              <h2 class="text-lg font-bold text-orange-700">Desserts fantastiques</h2>
-              <p class="text-gray-700 mt-2">
-                Succombez à la gourmandise avec des douceurs sorties tout droit de mondes imaginaires : les Pies dorées
-                d’Harry Potter, les friandises de Charlie et la Chocolaterie, et bien plus encore.
-              </p>
-            </div>
-          </div>
-
+        <div class="flex items-end">
+          <button class="px-8 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-all duration-200">
+            Rechercher
+          </button>
         </div>
       </div>
 
+      <!-- Mobile Search -->
+      <div class="md:hidden space-y-4 px-4">
+        <input type="text" placeholder="Rechercher une recette ou un film..." 
+               class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
+        <button class="w-full py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-all duration-200">
+          Rechercher
+        </button>
+      </div>
+    </div>
+  </section>
 
-      <!-- Statistiques -->
-      <section class="text-center">
-        <div class="mt-10 grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-
-          <!-- Recettes -->
-          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-            <div
-              class="text-3xl font-semibold text-gray-900 sm:text-5xl w-16 h-16 flex items-center justify-center mx-auto">
-              Recettes Détaillées
-            </div>
-            <p class="text-base text-gray-700">Des instructions pas à pas et des anecdotes sur vos scènes cultes
-              préférées</p>
+  <!-- Comment ça fonctionne -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-16">Comment ça fonctionne</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Étape 1 -->
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-300"></div>
+          <div class="relative bg-white p-6 rounded-2xl">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full bg-orange-500 text-white text-xl font-bold mb-6">1</div>
+            <h3 class="text-xl font-semibold mb-4">Sélectionnez une œuvre culte</h3>
+            <p class="text-gray-600">Choisissez parmi notre collection de films et séries iconiques.</p>
           </div>
-          <!-- Communauté -->
-          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-            <div
-              class="text-3xl font-semibold text-gray-900 sm:text-5xl  w-16 h-16 flex items-center justify-center mx-auto">
-              Communauté Passionnée
-            </div>
-            <p class="text-base text-gray-700">Partagez vos créations et échangez avec d'autres cinéphiles gourmands</p>
+        </div>
+
+        <!-- Étape 2 -->
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-300"></div>
+          <div class="relative bg-white p-6 rounded-2xl">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full bg-orange-500 text-white text-xl font-bold mb-6">2</div>
+            <h3 class="text-xl font-semibold mb-4">Découvrez la recette associée</h3>
+            <p class="text-gray-600">Explorez les recettes authentiques tirées de vos scènes préférées.</p>
           </div>
+        </div>
 
-          <!--  Expérience Unique -->
-          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-            <div
-              class="text-3xl font-semibold text-gray-900 sm:text-5xl  w-16 h-16 flex items-center justify-center mx-auto">
-              Expérience Unique
-            </div>
-            <p class="text-base text-gray-700">Vivez une immersion totale entre gastronomie et cinéma</p>
+        <!-- Étape 3 -->
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-300"></div>
+          <div class="relative bg-white p-6 rounded-2xl">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full bg-orange-500 text-white text-xl font-bold mb-6">3</div>
+            <h3 class="text-xl font-semibold mb-4">Cuisinez comme au cinéma</h3>
+            <p class="text-gray-600">Suivez nos instructions détaillées et devenez le chef de vos films préférés.</p>
           </div>
-      </section>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <!-- cartes recettes -->
-      <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Dernières recettes</h2>
-      <div id="recipes-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        <% latestRecipes.forEach(recipe=> { %>
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden border relative">
-            <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>" class="w-full h-48 object-cover">
+  <!-- Catégories -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="grid gap-8 md:grid-cols-3">
+        <!-- Recettes Cultes -->
+        <div class="group relative overflow-hidden rounded-2xl">
+          <img src="/images/beer.jpg" alt="Recettes cultes" class="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-black/0 flex items-end">
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-white mb-2">Recettes Cultes</h3>
+              <p class="text-white/80 text-sm">Revisitez les plats légendaires de films iconiques.</p>
+            </div>
+          </div>
+        </div>
 
-            <div class="p-4">
-              <span class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full absolute top-3 right-3">
-                <%= recipe.category.libelle %> 
+        <!-- Séries Gourmandes -->
+        <div class="group relative overflow-hidden rounded-2xl">
+          <img src="/images/cheese-cake.jpg" alt="Séries gourmandes" class="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-black/0 flex items-end">
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-white mb-2">Séries Gourmandes</h3>
+              <p class="text-white/80 text-sm">Des recettes aussi captivantes que vos séries préférées.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desserts Fantastiques -->
+        <div class="group relative overflow-hidden rounded-2xl">
+          <img src="/images/donut.jpg" alt="Desserts fantastiques" class="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-black/0 flex items-end">
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-white mb-2">Desserts Fantastiques</h3>
+              <p class="text-white/80 text-sm">Des douceurs sorties tout droit de mondes imaginaires.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dernières Recettes -->
+  <section class="py-20 bg-gray-50" id="recipes">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-16">Dernières Recettes</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <% latestRecipes.forEach(recipe => { %>
+          <article class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
+            <div class="relative aspect-video overflow-hidden">
+              <img src="/images/<%= recipe.image %>" 
+                   alt="<%= recipe.titre %>" 
+                   class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+              <span class="absolute top-4 right-4 px-3 py-1 bg-black/50 text-white text-sm rounded-full backdrop-blur-sm">
+                <%= recipe.category.libelle %>
               </span>
+            </div>
 
-              <h3 class="text-lg font-semibold text-orange-500">
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2 group-hover:text-orange-500 transition-colors duration-200">
                 <%= recipe.titre %>
               </h3>
-              <p class="text-gray-500 text-sm">
+              <p class="text-gray-600 text-sm mb-4 line-clamp-2">
                 <%= recipe.description %>
               </p>
 
-              <div class="flex items-center justify-between text-gray-500 text-xs mt-3">
+              <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
                 <div class="flex items-center">
-                  ⭐⭐⭐⭐⭐ (<%= recipe.reviews %>)
+                  <div class="flex">
+                    <% for(let i = 0; i < 5; i++) { %>
+                      <svg class="w-4 h-4 <%= i < recipe.rating ? 'text-yellow-400' : 'text-gray-300' %>" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                      </svg>
+                    <% } %>
+                  </div>
+                  <span class="ml-2">(<%= recipe.reviews %>)</span>
                 </div>
-                <span>⏳ <%= recipe.temps_preparation %> min</span>
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <%= recipe.temps_preparation %> min
+                </div>
               </div>
 
-              <button class="w-full mt-3 bg-orange-500 text-white text-sm py-2 rounded-md">Voir la recette</button>
+              <a href="/recipes/<%= recipe.id %>" 
+                 class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300 transform hover:-translate-y-0.5">
+                Voir la recette
+              </a>
             </div>
-          </div>
-          <% }) %>
+          </article>
+        <% }) %>
       </div>
+    </div>
+  </section>
+</main>
 
-            <!-- Footer -->
-
-            <%- include('../partials/footer') %>
+<%- include('../partials/footer') %>
