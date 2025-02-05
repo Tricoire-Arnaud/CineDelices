@@ -100,7 +100,147 @@ const mainController = {
             console.error('Erreur recherche:', error);
             res.status(500).render('errors/500');
         }
-    }
+    },
+
+
+
+    // Page Films & Séries
+    moviesTvShows: async (req, res) => {
+        try {
+            // Récupérer les recettes en vedette pour les films
+            const featuredMovieRecipes = await Recipe.findAll({
+                where: { featured: true, type: 'movie' },
+                include: ['category'],
+                limit: 1
+            });
+
+            // Récupérer les recettes en vedette pour les séries
+            const featuredTvShowRecipes = await Recipe.findAll({
+                where: { featured: true, type: 'tvshow' },
+                include: ['category'],
+                limit: 1
+            });
+
+            // Récupérer les recettes récentes pour les films
+            const recentMovieRecipes = await Recipe.findAll({
+                where: { type: 'movie' },
+                include: ['category'],
+                order: [['created_at', 'DESC']],
+                limit: 3
+            });
+
+            // Récupérer les recettes récentes pour les séries
+            const recentTvShowRecipes = await Recipe.findAll({
+                where: { type: 'tvshow' },
+                include: ['category'],
+                order: [['created_at', 'DESC']],
+                limit: 2
+            });
+
+            res.render('Movie&Tvshow/movie&Tvshow', {
+                featuredMovieRecipes,
+                featuredTvShowRecipes,
+                recentMovieRecipes,
+                recentTvShowRecipes
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).render('errors/500');
+        }
+    },
+
+    // Page 404
+    notFound: (req, res) => {
+        res.status(404).render('errors/404');
+    },
+
+    // Page 500
+    serverError: (req, res) => {
+        res.status(500).render('errors/500');
+    },
+
+    // Page de connexion
+    getLogin: (req, res) => {
+        try {
+            // Si l'utilisateur est déjà connecté, le rediriger vers la page d'accueil
+            if (req.user) {
+                return res.redirect('/');
+            }
+            res.render('auth/login', {
+                error: req.flash('error'),
+                success: req.flash('success'),
+                user: req.user
+            });
+        } catch (error) {
+            console.error('Erreur page connexion:', error);
+            res.status(500).render('errors/500');
+        }
+    },
+
+    // Page d'inscription
+    getRegister: (req, res) => {
+        try {
+            // Si l'utilisateur est déjà connecté, le rediriger vers la page d'accueil
+            if (req.user) {
+                return res.redirect('/');
+            }
+            res.render('auth/register', {
+                error: req.flash('error'),
+                success: req.flash('success'),
+                user: req.user
+            });
+        } catch (error) {
+            console.error('Erreur page inscription:', error);
+            res.status(500).render('errors/500');
+        }
+    },
+
+    // Page de détail d'une recette
+    getRecipeDetails: async (req, res) => {
+        try {
+            const recipeId = req.params.id;
+            
+            const recipe = await Recipe.findByPk(recipeId, {
+                include: [
+                    { 
+                        model: Movie,
+                        attributes: ['id_film', 'titre', 'annee', 'image']
+                    },
+                    { 
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id_categorie', 'libelle']
+                    }
+                ]
+            });
+
+            if (!recipe) {
+                return res.status(404).render('errors/404');
+            }
+
+            // Récupérer les recettes similaires (même catégorie)
+            const similarRecipes = await Recipe.findAll({
+                where: {
+                    id_categorie: recipe.id_categorie,
+                    id_recette: { [Op.ne]: recipe.id_recette } // Exclure la recette actuelle
+                },
+                include: [
+                    { model: Movie },
+                    { model: Category, as: 'category' }
+                ],
+                limit: 3
+            });
+
+            res.render('recipes/show', {
+                recipe,
+                similarRecipes,
+                user: req.user
+            });
+        } catch (error) {
+            console.error('Erreur détail recette:', error);
+            res.status(500).render('errors/500');
+        }
+    },
 };
 
 
