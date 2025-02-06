@@ -12,13 +12,15 @@ const authController = {
             // Vérifier si l'utilisateur existe
             const user = await User.findOne({ where: { email } });
             if (!user) {
-                return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
+                req.flash('error', 'Email ou mot de passe incorrect');
+                return res.redirect('/login');
             }
 
             // Vérifier le mot de passe
             const validPassword = await bcrypt.compare(password, user.mot_de_passe);
             if (!validPassword) {
-                return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
+                req.flash('error', 'Email ou mot de passe incorrect');
+                return res.redirect('/login');
             }
 
             // Générer le token JWT
@@ -28,14 +30,20 @@ const authController = {
                 { expiresIn: '24h' }
             );
 
-            res.json({ token, user: {
+            // Créer la session
+            req.session.user = {
                 id: user.id_utilisateur,
                 username: user.nom_utilisateur,
                 email: user.email,
                 role: user.role
-            }});
+            };
+
+            req.flash('success', 'Connexion réussie !');
+            res.redirect('/');
         } catch (error) {
-            res.status(500).json({ message: 'Erreur lors de la connexion' });
+            console.error('Erreur connexion:', error);
+            req.flash('error', 'Une erreur est survenue lors de la connexion');
+            res.redirect('/login');
         }
     },
 
@@ -52,27 +60,27 @@ const authController = {
             // Vérifier si l'email existe déjà
             const existingUser = await User.findOne({ where: { email } });
             if (existingUser) {
-                return res.status(400).json({ message: 'Cet email est déjà utilisé' });
+                req.flash('error', 'Cet email est déjà utilisé');
+                return res.redirect('/register');
             }
 
-            // Créer le nouvel utilisateur
-            const user = await User.create({
+            // Hasher le mot de passe
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            // Créer l'utilisateur
+            await User.create({
                 nom_utilisateur: username,
                 email,
-                mot_de_passe: password, // Le hash est géré par le hook beforeCreate
+                mot_de_passe: hashedPassword,
                 role: 'utilisateur'
             });
 
-            res.status(201).json({ 
-                message: 'Inscription réussie',
-                user: {
-                    id: user.id_utilisateur,
-                    username: user.nom_utilisateur,
-                    email: user.email
-                }
-            });
+            req.flash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');
+            res.redirect('/login');
         } catch (error) {
-            res.status(500).json({ message: 'Erreur lors de l\'inscription' });
+            console.error('Erreur inscription:', error);
+            req.flash('error', 'Une erreur est survenue lors de l\'inscription');
+            res.redirect('/register');
         }
     }
 };
