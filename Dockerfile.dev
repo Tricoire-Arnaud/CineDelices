@@ -1,0 +1,19 @@
+# Dockerfile pour la partie applicative du 
+#  projet Cinedelices en dev
+
+FROM node:20-alpine
+WORKDIR /app
+
+COPY ./package.json /app
+
+RUN npm i
+# on a besoin de nodemon pour relancer
+# automatiquement le serveur en dev
+RUN npm i -g nodemon
+
+COPY . /app
+
+EXPOSE 3000
+
+# on lance l'application en dev
+CMD ["nodemon", "app.js"]

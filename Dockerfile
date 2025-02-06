@@ -13,7 +13,7 @@ WORKDIR /app
 COPY ./package.json /app
 
 # on installe les dépendances
-RUN npm i
+RUN npm i --omit=dev
 
 # on copie le reste des fichiers de l'application
 COPY . /app
@@ -22,4 +22,4 @@ COPY . /app
 EXPOSE 3000
 
 # Commande de démarrage
-CMD npm run dev
+CMD ["node", "app.js"]
