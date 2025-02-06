@@ -1,1 +1,43 @@
 <!-- Tableau de bord administrateur --> 
+
+<%- include('../partials/header') %>
+
+<section class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+    <main class="bg-white p-6 rounded-2xl shadow-md w-full max-w-4xl">
+        <h1 class="text-3xl font-bold text-center text-orange-600 mb-6">Tableau de Bord Admin</h1>
+
+        <!-- Statistiques -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="bg-blue-500 text-white p-5 rounded-lg shadow">
+                <h2 class="text-lg font-semibold">Utilisateurs</h2>
+                <p class="text-3xl font-bold"><%= usersCount %></p> 
+            </div>
+            <div class="bg-gray-500 text-white p-5 rounded-lg shadow">
+                <h2 class="text-lg font-semibold">Recettes</h2>
+                <p class="text-3xl font-bold"><%= recipesCount %></p>
+            
+            </div>
+            <div class="bg-orange-500 text-white p-5 rounded-lg shadow">
+                <h2 class="text-lg font-semibold">Films & Séries</h2>
+                <p class="text-3xl font-bold"><%= moviesSeriesCount %></p>
+            
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a href="/admin/utilisateur" class="bg-blue-500 text-white py-3 px-5 rounded-lg text-center font-bold hover:bg-blue-600 transition">
+                👤 Voir les Utilisateurs
+            </a>
+            <a href="/admin/recette" class="bg-gray-500 text-white py-3 px-5 rounded-lg text-center font-bold hover:bg-gray-600 transition">
+                ➕ Ajouter une Recette
+            </a>
+            <a href="/admin/films-series" class="bg-orange-500 text-white py-3 px-5 rounded-lg text-center font-bold hover:bg-orange-600 transition">
+                ➕ Ajouter un Film/Série
+            </a>
+        </div>
+    </main>
+</section>
+
+<%- include('../partials/footer') %>
