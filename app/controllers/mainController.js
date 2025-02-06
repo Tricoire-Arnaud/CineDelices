@@ -48,8 +48,10 @@ const mainController = {
                 page = 1,
                 category,
                 sort = 'recent',
-                queryRecipes = '' // Ajout de la recherche pour les recettes
             } = req.query;
+
+            const queryRecipes  = Array.isArray(req.query.queryRecipes ) ? req.query.queryRecipes [0] : req.query.queryRecipes  || '';
+
     
             const limit = 12;
             const offset = (page - 1) * limit;
@@ -60,7 +62,9 @@ const mainController = {
     
             let recipes = [];
             let categories = [];
-    
+            
+            console.log(queryRecipes);
+            
             if (!queryRecipes) {
                 // Si aucune recherche n'est faite, récupérer les recettes avec pagination
                 [recipes, categories] = await Promise.all([
