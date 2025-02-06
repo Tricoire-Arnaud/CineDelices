@@ -37,9 +37,11 @@ app.get('/mentions-legales', mainController.getML);
 // à faire aujourd'hui :)
 app.get('/profil', mainController.getProfile);
 app.get('/ajout-recette', mainController.addRecipe);
-app.get('/admin/recette', mainController.getRecipes);
+
+app.get('/admin/recette', mainController.getRecipes); //attendre Iskander
 app.get('/admin/utilisateur', mainController.getUsers);
-app.get('/admin/tableau-de-bord', mainController.getDashboard);
+app.get('/admin/films-series', mainController.getDashboard);
+app.get('/admin/tableau-de-bord', mainController.getDashboard); // ok
 
 // Routes API
 app.use('/api/auth', authRoutes);
