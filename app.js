@@ -34,6 +34,12 @@ app.get('/recette/:id', mainController.getRecipeDetails);
 app.get('/CGU', mainController.getCGU);
 app.get('/mentions-legales', mainController.getML);
 
+// à faire aujourd'hui :)
+app.get('/profil', mainController.getProfile);
+app.get('/ajout-recette', mainController.addRecipe);
+app.get('/admin/recette', mainController.getRecipes);
+app.get('/admin/utilisateur', mainController.getUsers);
+app.get('/admin/tableau-de-bord', mainController.getDashboard);
 
 // Routes API
 app.use('/api/auth', authRoutes);

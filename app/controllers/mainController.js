@@ -283,6 +283,33 @@ const mainController = {
         res.render('legal/mentions-legales');
     },
 
+    //profil user
+    getProfile: (req, res) => {
+        res.render('users/profile');
+    },
+
+    //ajout recette user
+    addRecipe: (req, res) => {
+        res.render('users/addRecipe');
+    },
+
+
+    //listes des recettes coté admin
+    getRecipes: (req, res) => {
+        res.render('admin/recipes');
+    },
+
+    
+    //listes des users coté admin
+    getUsers: (req, res) => {
+        res.render('admin/users');
+    },
+
+    //tableau de bord coté admin
+    getDashboard: (req, res) => {
+        res.render('admin/dashboard');
+    },
+
     // Page de connexion
     getLogin: (req, res) => {
         try {
