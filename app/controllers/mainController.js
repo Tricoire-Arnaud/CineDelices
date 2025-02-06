@@ -40,35 +40,69 @@ const mainController = {
             console.error('Erreur page accueil:', error);
             res.status(500).render('errors/500');
         }
-    },
-
+    },   
 
     getCatalog: async (req, res) => {
         try {
             const {
                 page = 1,
                 category,
-                sort = 'recent'
+                sort = 'recent',
             } = req.query;
 
+            const queryRecipes  = Array.isArray(req.query.queryRecipes ) ? req.query.queryRecipes [0] : req.query.queryRecipes  || '';
+
+    
             const limit = 12;
             const offset = (page - 1) * limit;
             const whereClause = category ? { id_categorie: category } : {};
-
-            const [recipes, categories] = await Promise.all([
-                Recipe.findAndCountAll({
-                    where: whereClause,
-                    include: [
-                        { model: Movie },
-                        { model: Category, as: 'category' }
-                    ],
-                    order: getSortingOrder(sort),
-                    limit,
-                    offset
-                }),
-                Category.findAll()
-            ]);
-
+    
+            // Condition de recherche pour les recettes
+            const searchConditionRecipes = queryRecipes ? { titre: { [Op.iLike]: `%${queryRecipes}%` } } : {};
+    
+            let recipes = [];
+            let categories = [];
+            
+            console.log(queryRecipes);
+            
+            if (!queryRecipes) {
+                // Si aucune recherche n'est faite, récupérer les recettes avec pagination
+                [recipes, categories] = await Promise.all([
+                    Recipe.findAndCountAll({
+                        where: whereClause,
+                        include: [
+                            { model: Movie },
+                            { model: Category, as: 'category' }
+                        ],
+                        order: getSortingOrder(sort),
+                        limit,
+                        offset
+                    }),
+                    Category.findAll()
+                ]);
+            } else {
+                // Si une recherche est effectuée, récupérer les recettes filtrées par titre
+                [recipes, categories] = await Promise.all([
+                    Recipe.findAndCountAll({
+                        where: {
+                            ...whereClause,
+                            ...searchConditionRecipes
+                        },
+                        include: [
+                            { model: Movie },
+                            { model: Category, as: 'category' }
+                        ],
+                        order: getSortingOrder(sort),
+                        limit,
+                        offset
+                    }),
+                    Category.findAll()
+                ]);
+            }
+    
+            // Vérifier s'il y a des résultats
+            const noResults = queryRecipes && recipes.count === 0;
+    
             res.render('recipes/catalog', {
                 recipes: recipes.rows,
                 categories,
@@ -76,14 +110,17 @@ const mainController = {
                 totalPages: Math.ceil(recipes.count / limit),
                 currentCategory: category,
                 currentSort: sort,
+                currentQueryRecipes: queryRecipes,
+                noResults, // Permettra d'afficher "Aucun résultat" dans la vue
                 user: req.user
             });
+    
         } catch (error) {
             console.error('Erreur catalogue:', error);
             res.status(500).render('errors/500');
         }
     },
-
+    
 
     search: async (req, res) => {
         try {
@@ -108,42 +145,123 @@ const mainController = {
 
     moviesTvShows: async (req, res) => {
         try {
-            // Récupérer les recettes récentes pour les films
-            const movieRecipes = await Recipe.findAll({
-                include: [
-                    {
-                        model: Movie,
-                        where: { type: 'film' } // Filtrer sur les films
-                    },
-                    { model: Category, as: 'category' }
-                ],
-                order: [['created_at', 'DESC']],
-                limit: 6
-            });
-           
-            // Récupérer les recettes récentes pour les series
-            const tvShowRecipes = await Recipe.findAll({
-                include: [
-                    {
-                        model: Movie,
-                        where: { type: 'série' } // Filtrer sur les séries
-                    },
-                    { model: Category, as: 'category' }
-                ],
-                order: [['created_at', 'DESC']],
-                limit: 6
-            });
+            const { type = 'films-series' } = req.query;
+            const queryFilms = Array.isArray(req.query.queryFilms) ? req.query.queryFilms[0] : req.query.queryFilms || '';
 
+    
+            // Vérifier si le type est correct, sinon rediriger
+            if (queryFilms && type !== 'films-series') {
+                return res.redirect(`/films-series?queryFilms=${queryFilms}&type=films-series`);
+            }
+    
+            // Condition de recherche pour les films/séries
+            const searchConditionFilms = queryFilms ? { titre: { [Op.iLike]: `%${queryFilms}%` } } : {};
+            
+            // Initialiser les variables pour éviter les erreurs
+            let movies = [];
+            let movieRecipes = [];
+            let tvShowRecipes = [];
+    
+            if (!queryFilms) {
+                // Si pas de recherche, récupérer les listes de films et séries avec leurs recettes
+                movieRecipes = await Recipe.findAll({
+                    include: [
+                        {
+                            model: Movie,
+                            where: { type: 'film' } // Filtrer sur les films
+                        },
+                        { model: Category, as: 'category' }
+                    ],
+                    order: [['created_at', 'DESC']],
+                    limit: 6
+                });
+    
+                tvShowRecipes = await Recipe.findAll({
+                    include: [
+                        {
+                            model: Movie,
+                            where: { type: 'série' } // Filtrer sur les séries
+                        },
+                        { model: Category, as: 'category' }
+                    ],
+                    order: [['created_at', 'DESC']],
+                    limit: 6
+                });
+            } else {
+                // Si recherche, récupérer les films et séries correspondants
+                console.log("Query films:", queryFilms); // Ajoute cette ligne pour vérifier
+                movies = await Movie.findAll({
+                    where: {
+                        ...searchConditionFilms,
+                        type: { [Op.in]: ['film', 'série'] }
+                    },
+                    include: [{ 
+                        model: Recipe,
+                        foreignKey: 'id_oeuvre' 
+                    }] // Associer les recettes liées
+                });
+                console.log(movies); // Vérifie si les recettes sont bien incluses dans les films/séries
+
+            }
+    
+            // Vérifier s'il y a des résultats
+            const noResults = queryFilms && movies.length === 0;
+    
             res.render('Movie&Tvshow/movie&Tvshow', {
                 movieRecipes,
                 tvShowRecipes,
+                movies, // Résultats de la recherche
+                currentQueryFilms: queryFilms,
+                currentType: 'films-series',
+                noResults, // Permettra d'afficher "Aucun résultat" dans la vue
                 user: req.user
             });
+    
         } catch (error) {
             console.error(error);
             res.status(500).render('errors/500');
         }
     },
+    
+
+    // moviesTvShows: async (req, res) => {
+    //     try {
+    //         // Récupérer les recettes récentes pour les films
+    //         const movieRecipes = await Recipe.findAll({
+    //             include: [
+    //                 {
+    //                     model: Movie,
+    //                     where: { type: 'film' } // Filtrer sur les films
+    //                 },
+    //                 { model: Category, as: 'category' }
+    //             ],
+    //             order: [['created_at', 'DESC']],
+    //             limit: 6
+    //         });
+
+    //         // Récupérer les recettes récentes pour les series
+    //         const tvShowRecipes = await Recipe.findAll({
+    //             include: [
+    //                 {
+    //                     model: Movie,
+    //                     where: { type: 'série' } // Filtrer sur les séries
+    //                 },
+    //                 { model: Category, as: 'category' }
+    //             ],
+    //             order: [['created_at', 'DESC']],
+    //             limit: 6
+    //         });
+
+    //         res.render('Movie&Tvshow/movie&Tvshow', {
+    //             movieRecipes,
+    //             tvShowRecipes,
+    //             user: req.user
+    //         });
+    //     } catch (error) {
+    //         console.error(error);
+    //         res.status(500).render('errors/500');
+    //     }
+    // },
 
     // Page 404
     notFound: (req, res) => {
