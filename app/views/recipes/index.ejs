@@ -1,73 +1,107 @@
 <%- include('../partials/header') %>
 <%- include('../partials/nav') %>
 
-<main>
-  <!-- Section détails de la recette -->
-  <section class="">
-    <div class="">
-      <img src="" alt="" class="" />
-      <div class="">
-        <h2 class="">Ratatouille Provençale</h2>
-        <ul class="">
-          <li class="">🍴 Catégorie : Plat principal</li>
-          <li class="">🕒 Temps de préparation : 45 min</li>
-          <li class="">⭐ Difficulté : Facile</li>
+<main class="mx-auto max-w-4xl p-4 md:p-8">
+  <article class="rounded-lg bg-white p-6 shadow-md">
+    <img src="<%= recipe.img %>" alt="<%= recipe.name %>" class="mb-4 w-full rounded-lg" />
+    <h2 class="mb-2 text-2xl font-bold text-gray-800"><%= recipe.titre%></h2>
+    <p class="mb-4 text-sm text-gray-600"><%= movie.titre %> - <%= movie.annee %></p>
+    <div class="mb-4 flex flex-col gap-4 md:flex-row md:items-center md:space-x-4">
+      <div class="flex text-orange-600">
+        <!-- nombre étoiles -->
+        <% for (let i = 0; i < recipe.difficulte; i++) { %>
+          <span>&#9733;</span>
+        <% } %>
+        <% for (let i = recipe.difficulte; i < 5; i++) { %>
+          <span class="text-gray-300">&#9733;</span>
+        <% } %>
+      </div>
+      <p class="text-sm text-gray-600">(<%= reviewsCount %> avis)</p>
+      <div>
+        <ul class="list-disc list-inside text-sm">
+          <li>🍴 Catégorie : <%- category.libelle %></li>
+          <li>🕒 Temps de préparation : <%= recipe.temps_preparation %> min</li>
         </ul>
-        <p class="">
-          Découvrez cette recette emblématique inspirée par le film d'animation
-          Pixar "Ratatouille".
-        </p>
       </div>
     </div>
-  </section>
+    
+    <!-- existe/pas ou ajoute dans la db ? -->
+    <section>
+      <h3 class="mb-3 text-xl font-semibold text-orange-600">Pour réussir cette recette comme dans le film :</h3>
+      <ul class="mb-6 list-inside list-disc space-y-2 text-gray-700">
+        <li>Utilisez des légumes de taille similaire pour un résultat plus esthétique</li>
+        <li>La cuisson doit être douce pour préserver les saveurs</li>
+        <li>Servez la ratatouille chaude avec un filet d'huile d'olive</li>
+      </ul>
+    </section>
+<!-- sinon -->
+<section>
+  <h3 class="mb-3 text-xl font-semibold text-orange-600">Anecdote</h3>
+  <p class="mb-6 text-gray-700"><%- recipe.anecdote %></p>
+  <!-- il y a des recettes sans anecdote -->
+</section>
 
-  <section class="">
-    <h3 class="">Ingrédients</h3>
-    <ul class="">
-      <li>2 aubergines</li>
-      <li>3 tomates</li>
-      <li>1 poivron rouge</li>
-      <li>Huile d'olive</li>
-      <li>Herbes de Provence</li>
-    </ul>
-  </section>
+    <section class="mb-6 grid gap-4 md:grid-cols-2">
+      <div>
+        <h3 class="mb-3 text-xl font-semibold text-orange-600">Ingrédients</h3>
+        <% if (ingredients.length) { %>
+          <ul class="space-y-2 rounded-lg bg-red-50 p-4 list-disc list-inside">
+            <% ingredients.forEach(ingredient => { %>
+              <li><%- ingredient.nom_ingredient %> -- (<%- ingredient.unite_mesure %>)</li>
+            <% }) %>
+          </ul>
+          <!-- en cas ou l'user n'a pas ajouter d'ingredient -->
+        <% } else { %>
+          <p>Aucun ingrédient disponible.</p>
+        <% } %>
+      </div>
+      <div>
+        <h3 class="mb-3 text-xl font-semibold text-orange-600">Ustensiles</h3>
+        <% if (utensils.length) { %>
+          <ul class="space-y-2 rounded-lg bg-red-50 p-4 list-disc list-inside">
+            <% utensils.forEach(utensil => { %>
+              <li><%- utensil.nom_ustensile %></li>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <p>Aucun ustensile requis.</p>
+        <% } %>
+      </div>
+    </section>
 
-  <section class="">
-    <h3 class="">Ustensiles</h3>
-    <ul class="">
-      <li>Casserole à fond épais</li>
-      <li>Spatule en silicone</li>
-      <li>Fouet manuel/li></li>
-      <li>Mixeur plongeant</li>
-      <li>Moule à tarte</li>
-    </ul>
-  </section>
+    <section class="mb-6">
+      <h3 class="mb-3 text-xl font-semibold text-orange-600">Instructions</h3>
+      <ol class="list-inside list-decimal space-y-2 rounded-lg bg-red-50 p-4">
+        <% JSON.parse(recipe.etapes).forEach(etape => { %>
+          <li><%- etape %></li>
+        <% }) %>
+      </ol>
+    </section>
+ <!-- n'existe pas dans la db  -->
+    <section>
+      <h3 class="mb-3 text-xl font-semibold text-orange-600">Notes et astuces</h3>
+      <ul class="list-inside list-disc space-y-2 rounded-lg bg-red-50 p-4">
+        <li>Utilisez des légumes de taille similaire pour un résultat plus esthétique.</li>
+        <li>La cuisson doit être douce pour préserver les saveurs.</li>
+        <li>Servez la ratatouille chaude avec un filet d'huile d'olive.</li>
+      </ul>
+    </section>
 
-  <section class="">
-    <h3>Instructions</h3>
-    <ol class="preparation-steps">
-      <li>Lavez et coupez les légumes en rondelles fines.</li>
-      <li>
-        Dans une poêle, faites revenir l'oignon et l'ail avec un filet d'huile
-        d'olive jusqu'à ce qu'ils soient dorés.
-      </li>
-      <li>
-        Disposez les légumes en couches harmonieuses dans un plat à gratin.
-      </li>
-      <li>Arrosez d'huile d'olive, parsemez de thym, de sel et de poivre.</li>
-      <li>Enfournez à 180°C pendant 45 minutes.</li>
-      <li>Servez chaud et dégustez avec plaisir.</li>
-    </ol>
-  </section>
-
-  <section class="">
-    <h3>Notes et astuces</h3>
-    <p class="">
-      Pour une touche de saveur supplémentaire, ajoutez une pincée de basilic
-      frais au moment de servir.
-    </p>
-  </section>
+    <section>
+      <h3 class="mb-3 text-xl font-semibold text-orange-600">Commentaires</h3>
+      <% if (comments.length) { %>
+        <ul class="list-inside list-disc space-y-2 rounded-lg bg-red-50 p-4">
+          <% comments.forEach(comment => { %>
+            <li><strong><%- comment.user.name %>:</strong> <%- comment.content %></li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>Aucun commentaire pour le moment. Soyez le premier à réagir !</p>
+      <% } %>
+    </section>
+  </article>
 </main>
+
 
 <!-- Footer -->
 
