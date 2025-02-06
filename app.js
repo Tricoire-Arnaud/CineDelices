@@ -40,7 +40,8 @@ app.get('/ajout-recette', mainController.addRecipe);
 
 app.get('/admin/recette', mainController.getRecipes); //attendre Iskander
 app.get('/admin/utilisateur', mainController.getUsers);
-app.get('/admin/films-series', mainController.getDashboard);
+app.get('/admin/films-series', mainController.showaddmoviesTvShows);
+app.post('/admin/films-series', mainController.addmoviesTvShows);
 app.get('/admin/tableau-de-bord', mainController.getDashboard); // ok
 
 // Routes API

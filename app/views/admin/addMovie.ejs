@@ -1,0 +1,59 @@
+<!-- Ajouter une recette coté administrateur --> 
+
+<%- include('../partials/header') %>
+
+
+<section class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+
+    <main class="bg-white p-6 rounded-2xl shadow-md w-full max-w-lg">
+        <h1 class="text-2xl font-bold text-center mb-4 text-orange-600">Ajouter un Film ou une Série</h1>
+        <p class="text-center text-gray-500 mb-6">Remplissez les informations ci-dessous</p>
+
+        <form action="/admin/add-movie" method="POST" class="space-y-4">
+            <!-- Titre -->
+            <label class="block">
+                <span class="text-sm text-gray-700">Titre</span>
+                <input type="text" name="titre" required placeholder="Ex: Inception" 
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-orange-500">
+            </label>
+
+            <!-- Type (Film ou Série) -->
+            <label class="block">
+                <span class="text-sm text-gray-700">Type</span>
+                <select name="type" required class="mt-1 block w-full p-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-orange-500">
+                    <option value="film">Film</option>
+                    <option value="série">Série</option>
+                </select>
+            </label>
+
+            <!-- Année -->
+            <label class="block">
+                <span class="text-sm text-gray-700">Année de sortie</span>
+                <input type="number" name="annee" required min="1900" max="2030" placeholder="Ex: 2010" 
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-orange-500">
+            </label>
+
+            <!-- Description -->
+            <label class="block">
+                <span class="text-sm text-gray-700">Description</span>
+                <textarea name="description" rows="4" placeholder="Brève description du film ou de la série"
+                    class="mt-1 block w-full p-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+            </label>
+
+            <!-- Bouton Ajouter -->
+            <button type="submit" class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600">
+                Ajouter l'œuvre
+            </button>
+
+        </form>
+
+        <!-- Bouton Retour -->
+        <div class="mt-6 text-center">
+            <a href="/admin/tableau-de-bord" class="text-orange-500 hover:underline">Retour au tableau de bord</a>
+        </div>
+
+    </main>
+
+</section>
+
+<%- include('../partials/footer') %>

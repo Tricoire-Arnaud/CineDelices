@@ -328,7 +328,23 @@ const mainController = {
             return { usersCount: 0, recipesCount: 0, moviesSeriesCount: 0 };
         }
     },
-      
+
+    //afficher la page d'ajout d'une oeuvre coté admin
+    showaddmoviesTvShows: (req, res) => {
+        res.render('admin/addMovie');
+    },
+
+    //ajout d'une oeuvre coté admin
+    addmoviesTvShows: async (req, res) => {
+        try {
+            const { titre, type, annee, description } = req.body;
+            await Movie.create({ titre, type, annee, description });
+            res.redirect('/admin/tableau-de-bord'); // Redirige vers le tableau de bord après l'ajout
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Erreur lors de l'ajout du film ou de la série");
+        }
+    },      
 
     // Page de connexion
     getLogin: (req, res) => {
