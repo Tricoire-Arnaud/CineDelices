@@ -7,7 +7,7 @@ const {
 } = require("../models");
 
 const adminController = {
-  // Récupère les statistiques générales du site (nombre d'utilisateurs, recettes, films, etc.)
+  // Récupère les statistiques générales du site
   getDashboard: async (req, res) => {
     try {
       const stats = {
@@ -16,15 +16,13 @@ const adminController = {
         movies: await Movie.count(),
         categories: await Category.count(),
       };
-      res.json(stats);
+      res.render('admin/dashboard', { stats });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Erreur lors de la récupération des statistiques" });
+      res.status(500).render('errors/500');
     }
   },
 
-  // Récupère la liste de tous les utilisateurs avec leurs informations essentielles
+  // Récupère la liste de tous les utilisateurs
   getAllUsers: async (req, res) => {
     try {
       const users = await User.findAll({
@@ -36,15 +34,28 @@ const adminController = {
           "created_at",
         ],
       });
-      res.json(users);
+      res.render('admin/users', { users });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Erreur lors de la récupération des utilisateurs" });
+      res.status(500).render('errors/500');
     }
   },
 
-  // Modifie le rôle d'un utilisateur spécifique
+  // Récupère la liste de toutes les recettes
+  getRecipes: async (req, res) => {
+    try {
+      const recipes = await Recipe.findAll({
+        include: [
+          { model: Movie },
+          { model: Category, as: 'category' }
+        ]
+      });
+      res.render('admin/recipes', { recipes });
+    } catch (error) {
+      res.status(500).render('errors/500');
+    }
+  },
+
+  // Modifie le rôle d'un utilisateur
   updateUser: async (req, res) => {
     try {
       const { id } = req.params;
@@ -58,13 +69,11 @@ const adminController = {
       await user.update({ role });
       res.json({ message: "Utilisateur mis à jour avec succès" });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Erreur lors de la mise à jour de l'utilisateur" });
+      res.status(500).json({ message: "Erreur lors de la mise à jour de l'utilisateur" });
     }
   },
 
-  // Supprime un utilisateur de la base de données
+  // Supprime un utilisateur
   deleteUser: async (req, res) => {
     try {
       const { id } = req.params;
@@ -77,9 +86,7 @@ const adminController = {
       await user.destroy();
       res.json({ message: "Utilisateur supprimé avec succès" });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Erreur lors de la suppression de l'utilisateur" });
+      res.status(500).json({ message: "Erreur lors de la suppression de l'utilisateur" });
     }
   },
 };

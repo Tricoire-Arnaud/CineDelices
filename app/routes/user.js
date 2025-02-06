@@ -3,21 +3,21 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const authMiddleware = require('../middlewares/auth');
 
-// Routes protégées (nécessite authentification)
-router.use(authMiddleware);
+// Profil utilisateur
+router.get('/profile', authMiddleware, userController.getProfile);
+router.put('/profile', authMiddleware, userController.updateProfile);
+router.delete('/profile', authMiddleware, userController.deleteAccount);
 
-// Gestion du profil
-router.get('/profil', userController.getProfile);
-router.put('/user/:id', userController.updateProfile);
-router.delete('/user/:id', userController.deleteAccount);
+// Favoris
+router.get('/favorites', authMiddleware, userController.getFavorites);
+router.post('/favorites/:recipeId', authMiddleware, userController.addFavorite);
+router.delete('/favorites/:recipeId', authMiddleware, userController.removeFavorite);
 
-// Gestion des favoris
-router.get('/favoris', userController.getFavorites);
-router.post('/favoris/:recipeId', userController.addFavorite);
-router.delete('/favoris/:recipeId', userController.removeFavorite);
+// Commentaires
+router.get('/comments', authMiddleware, userController.getComments);
+router.post('/recipes/:id/comments', authMiddleware, userController.addComment);
 
-// Gestion des commentaires
-router.post('/recette/:id/comment', userController.addComment);
-router.post('/recette/:id/note', userController.rateRecipe);
+// Notes
+router.post('/recipes/:id/ratings', authMiddleware, userController.rateRecipe);
 
 module.exports = router; 

@@ -6,15 +6,15 @@
       <h1 class="text-2xl font-bold text-center mb-4 text-orange-600">Content de te revoir !</h1>
       <p class="text-center text-black mb-6">Entrez vos identifiants pour accéder à votre compte</p>
 
-      <form class="space-y-4">
+      <form class="space-y-4" action="/api/auth/login" method="POST">
         <label class="block">
           <span class="text-sm text-black">Adresse email</span>
-          <input type="email" placeholder="Entrez votre email" class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none focus:ring-black">
+          <input type="email" name="email" placeholder="Entrez votre email" required class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none focus:ring-black">
         </label>
 
         <label class="block">
           <span class="text-sm text-black">Mot de passe</span>
-          <input type="password" placeholder="Entrez votre mot de passe" class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none">
+          <input type="password" name="password" placeholder="Entrez votre mot de passe" required class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none">
           <span><a href="#" class="text-sm text-black block mt-2 text-right">Mot de passe oublié ?</a></span>
         </label>
 

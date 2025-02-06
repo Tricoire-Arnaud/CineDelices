@@ -14,7 +14,9 @@ const userController = {
                         as: 'RecettesFavorites',
                         through: { model: Favorite },
                         include: [{ model: Rating }]
-                    }
+                    },
+                    { model: Comment },
+                    { model: Rating }
                 ]
             });
 
@@ -198,8 +200,6 @@ const userController = {
             res.status(500).json({ message: "Erreur lors de la notation" });
         }
     },
-
-
 
     // Supprimer son compte
     deleteAccount: async (req, res) => {

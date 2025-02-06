@@ -20,29 +20,22 @@ app.set('views', path.join(__dirname, 'app/views'));
 // Import des routes
 const mainRoutes = require('./app/routes/main');
 const authRoutes = require('./app/routes/auth');
-const recipeRoutes = require('./app/routes/recipe');
-const userRoutes = require('./app/routes/user');
 const adminRoutes = require('./app/routes/admin');
-
-// Routes admin à déplacer plus tard dans admin.js
-app.get('/admin/recette', mainController.getRecipes);
-app.get('/admin/utilisateur', mainController.getUsers);
-app.get('/admin/tableau-de-bord', mainController.getDashboard);
+const userRoutes = require('./app/routes/user');
 
 // Routes API
-app.use('/', mainRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/recipes', recipeRoutes);
-app.use('/api/users', userRoutes);
-app.use('/admin', adminRoutes);
+app.use('/', mainRoutes);          // Routes principales en premier
+app.use('/auth', authRoutes);      // Routes d'authentification
+app.use('/user', userRoutes);      // Routes utilisateur
+app.use('/admin', adminRoutes);    // Routes admin en dernier
 
-// Middleware de gestion des erreurs
-app.use((req, res, next) => {
+// Middleware de gestion des erreurs 404 et 500
+app.use((req, res) => {
     res.status(404).render('errors/404');
 });
 
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error(err);
     res.status(500).render('errors/500');
 });
 
