@@ -55,6 +55,27 @@ const adminController = {
     }
   },
 
+  // Affiche la page d'ajout d'une oeuvre
+  showaddmoviesTvShows: async (req, res) => {
+    try {
+      res.render('admin/addMovie');
+    } catch (error) {
+      res.status(500).render('errors/500');
+    }
+  },
+
+  // Ajoute une nouvelle oeuvre
+  addmoviesTvShows: async (req, res) => {
+    try {
+      const { titre, type, annee, description } = req.body;
+      await Movie.create({ titre, type, annee, description });
+      res.redirect('/admin/tableau-de-bord');
+    } catch (error) {
+      console.error(error);
+      res.status(500).render('errors/500');
+    }
+  },
+
   // Modifie le rôle d'un utilisateur
   updateUser: async (req, res) => {
     try {
