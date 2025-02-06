@@ -1,4 +1,4 @@
-const { Recipe, Movie, Category } = require('../models');
+const { Recipe, Movie, Category, User } = require('../models');
 const { Op, literal } = require('sequelize');
 
 
@@ -295,14 +295,50 @@ const mainController = {
 
     
     //listes des users coté admin
-    getUsers: (req, res) => {
-        res.render('admin/users');
+    getUsers: async (req, res) => {
+        try {
+            const users = await User.findAll({ attributes: ['nom_utilisateur', 'email', 'role'] }); // Récupère certaines données
+            res.render('admin/users', { users });
+        } catch (error) {
+            console.error("Erreur lors de la récupération des utilisateurs :", error);
+            res.status(500).send("Erreur serveur");
+        }
+
     },
 
+
     //tableau de bord coté admin
-    getDashboard: (req, res) => {
-        res.render('admin/dashboard');
+    getDashboard: async (req, res) => {
+        try {
+            const usersCount = await User.count();
+            const recipesCount = await Recipe.count();
+            const moviesSeriesCount = await Movie.count();
+    
+            // return { usersCount, recipesCount, moviesSeriesCount };
+            res.render('admin/dashboard', { usersCount, recipesCount, moviesSeriesCount });
+
+        } catch (error) {
+            console.error('Erreur lors du comptage des documents :', error);
+            return { usersCount: 0, recipesCount: 0, moviesSeriesCount: 0 };
+        }
     },
+
+    //afficher la page d'ajout d'une oeuvre coté admin
+    showaddmoviesTvShows: (req, res) => {
+        res.render('admin/addMovie');
+    },
+
+    //ajout d'une oeuvre coté admin
+    addmoviesTvShows: async (req, res) => {
+        try {
+            const { titre, type, annee, description } = req.body;
+            await Movie.create({ titre, type, annee, description });
+            res.redirect('/admin/tableau-de-bord'); // Redirige vers le tableau de bord après l'ajout
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Erreur lors de l'ajout du film ou de la série");
+        }
+    },      
 
     // Page de connexion
     getLogin: (req, res) => {
