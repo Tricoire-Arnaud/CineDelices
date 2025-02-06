@@ -288,12 +288,6 @@ const mainController = {
         res.render('users/profile');
     },
 
-    //ajout recette user
-    addRecipe: (req, res) => {
-        res.render('users/addRecipe');
-    },
-
-
     //listes des recettes coté admin
     getRecipes: (req, res) => {
         res.render('admin/recipes');
@@ -382,7 +376,7 @@ const mainController = {
                 limit: 3
             });
 
-            res.render('recipes/show', {
+            res.render('recipes/index', {
                 recipe,
                 similarRecipes,
                 user: req.user

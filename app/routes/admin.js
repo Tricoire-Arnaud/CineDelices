@@ -7,6 +7,7 @@ const ingredientController = require('../controllers/ingredientController');
 const utensilController = require('../controllers/utensilController');
 const recipeController = require('../controllers/recipeController');
 const movieController = require('../controllers/movieController');
+const categoryController = require('../controllers/categoryController');
 
 // Routes du tableau de bord admin
 router.get('/dashboard', adminMiddleware, adminController.getDashboard);
@@ -35,5 +36,15 @@ router.delete('/recipes/:id', adminMiddleware, recipeController.deleteRecipe);
 router.post('/movies', adminMiddleware, movieController.createMovie);
 router.put('/movies/:id', adminMiddleware, movieController.updateMovie);
 router.delete('/movies/:id', adminMiddleware, movieController.deleteMovie);
+
+// Routes pour afficher les pages d'administration
+router.get('/recipes', adminMiddleware, adminController.getRecipes);
+router.get('/users', adminMiddleware, adminController.getAllUsers);
+
+// Routes pour la gestion des catégories
+router.get('/categories', adminMiddleware, categoryController.getAllCategories);
+router.post('/categories', adminMiddleware, categoryController.createCategory);
+router.put('/categories/:id', adminMiddleware, categoryController.updateCategory);
+router.delete('/categories/:id', adminMiddleware, categoryController.deleteCategory);
 
 module.exports = router; 

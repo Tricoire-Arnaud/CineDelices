@@ -13,6 +13,9 @@ router.get('/recette/:id', mainController.getRecipeDetails);
 router.get('/CGU', mainController.getCGU);
 router.get('/mentions-legales', mainController.getML);
 router.get('/profil', mainController.getProfile);
-router.get('/ajout-recette', mainController.addRecipe);
+
+// Gestion des erreurs
+router.get('/404', mainController.notFound);
+router.get('/500', mainController.serverError);
 
 module.exports = router;

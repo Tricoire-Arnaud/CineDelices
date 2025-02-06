@@ -48,6 +48,11 @@ const recipeController = {
     // Créer une nouvelle recette (admin uniquement)
     createRecipe: async (req, res) => {
         try {
+            // Vérifier que l'utilisateur est admin
+            if (req.user.role !== 'admin') {
+                return res.status(403).json({ message: 'Accès non autorisé' });
+            }
+            
             const { 
                 titre, description, etapes, temps_preparation, 
                 temps_cuisson, difficulte, id_oeuvre, id_categorie,
