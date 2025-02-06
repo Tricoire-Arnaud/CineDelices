@@ -148,7 +148,7 @@ const mainController = {
             const { type = 'films-series' } = req.query;
             const queryFilms = Array.isArray(req.query.queryFilms) ? req.query.queryFilms[0] : req.query.queryFilms || '';
 
-
+            
             // Vérifier si le type est correct, sinon rediriger
             if (queryFilms && type !== 'films-series') {
                 return res.redirect(`/films-series?queryFilms=${queryFilms}&type=films-series`);
