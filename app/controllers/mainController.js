@@ -1,4 +1,4 @@
-const { Recipe, Movie, Category, User } = require('../models');
+const { Recipe, Movie, Category, User, Ingredient, Utensil } = require('../models');
 const { Op, literal } = require('sequelize');
 
 
@@ -40,7 +40,7 @@ const mainController = {
             console.error('Erreur page accueil:', error);
             res.status(500).render('errors/500');
         }
-    },   
+    },
 
     getCatalog: async (req, res) => {
         try {
@@ -50,21 +50,21 @@ const mainController = {
                 sort = 'recent',
             } = req.query;
 
-            const queryRecipes  = Array.isArray(req.query.queryRecipes ) ? req.query.queryRecipes [0] : req.query.queryRecipes  || '';
+            const queryRecipes = Array.isArray(req.query.queryRecipes) ? req.query.queryRecipes[0] : req.query.queryRecipes || '';
 
-    
+
             const limit = 12;
             const offset = (page - 1) * limit;
             const whereClause = category ? { id_categorie: category } : {};
-    
+
             // Condition de recherche pour les recettes
             const searchConditionRecipes = queryRecipes ? { titre: { [Op.iLike]: `%${queryRecipes}%` } } : {};
-    
+
             let recipes = [];
             let categories = [];
-            
+
             console.log(queryRecipes);
-            
+
             if (!queryRecipes) {
                 // Si aucune recherche n'est faite, récupérer les recettes avec pagination
                 [recipes, categories] = await Promise.all([
@@ -99,10 +99,10 @@ const mainController = {
                     Category.findAll()
                 ]);
             }
-    
+
             // Vérifier s'il y a des résultats
             const noResults = queryRecipes && recipes.count === 0;
-    
+
             res.render('recipes/catalog', {
                 recipes: recipes.rows,
                 categories,
@@ -114,13 +114,13 @@ const mainController = {
                 noResults, // Permettra d'afficher "Aucun résultat" dans la vue
                 user: req.user
             });
-    
+
         } catch (error) {
             console.error('Erreur catalogue:', error);
             res.status(500).render('errors/500');
         }
     },
-    
+
 
     search: async (req, res) => {
         try {
@@ -148,20 +148,20 @@ const mainController = {
             const { type = 'films-series' } = req.query;
             const queryFilms = Array.isArray(req.query.queryFilms) ? req.query.queryFilms[0] : req.query.queryFilms || '';
 
-    
+            
             // Vérifier si le type est correct, sinon rediriger
             if (queryFilms && type !== 'films-series') {
                 return res.redirect(`/films-series?queryFilms=${queryFilms}&type=films-series`);
             }
-    
+
             // Condition de recherche pour les films/séries
             const searchConditionFilms = queryFilms ? { titre: { [Op.iLike]: `%${queryFilms}%` } } : {};
-            
+
             // Initialiser les variables pour éviter les erreurs
             let movies = [];
             let movieRecipes = [];
             let tvShowRecipes = [];
-    
+
             if (!queryFilms) {
                 // Si pas de recherche, récupérer les listes de films et séries avec leurs recettes
                 movieRecipes = await Recipe.findAll({
@@ -175,7 +175,7 @@ const mainController = {
                     order: [['created_at', 'DESC']],
                     limit: 6
                 });
-    
+
                 tvShowRecipes = await Recipe.findAll({
                     include: [
                         {
@@ -195,18 +195,18 @@ const mainController = {
                         ...searchConditionFilms,
                         type: { [Op.in]: ['film', 'série'] }
                     },
-                    include: [{ 
+                    include: [{
                         model: Recipe,
-                        foreignKey: 'id_oeuvre' 
+                        foreignKey: 'id_oeuvre'
                     }] // Associer les recettes liées
                 });
                 console.log(movies); // Vérifie si les recettes sont bien incluses dans les films/séries
 
             }
-    
+
             // Vérifier s'il y a des résultats
             const noResults = queryFilms && movies.length === 0;
-    
+
             res.render('Movie&Tvshow/movie&Tvshow', {
                 movieRecipes,
                 tvShowRecipes,
@@ -216,13 +216,13 @@ const mainController = {
                 noResults, // Permettra d'afficher "Aucun résultat" dans la vue
                 user: req.user
             });
-    
+
         } catch (error) {
             console.error(error);
             res.status(500).render('errors/500');
         }
     },
-    
+
 
     // moviesTvShows: async (req, res) => {
     //     try {
@@ -293,7 +293,7 @@ const mainController = {
         res.render('admin/recipes');
     },
 
-    
+
     //listes des users coté admin
     getUsers: async (req, res) => {
         try {
@@ -313,7 +313,7 @@ const mainController = {
             const usersCount = await User.count();
             const recipesCount = await Recipe.count();
             const moviesSeriesCount = await Movie.count();
-    
+
             // return { usersCount, recipesCount, moviesSeriesCount };
             res.render('admin/dashboard', { usersCount, recipesCount, moviesSeriesCount });
 
@@ -338,7 +338,7 @@ const mainController = {
             console.error(error);
             res.status(500).send("Erreur lors de l'ajout du film ou de la série");
         }
-    },      
+    },
 
     // Page de connexion
     getLogin: (req, res) => {
@@ -385,24 +385,34 @@ const mainController = {
                 include: [
                     {
                         model: Movie,
-                        attributes: ['id_film', 'titre', 'annee', 'image']
+                        attributes: ['id_oeuvre', 'titre', 'type', 'annee', 'description']
                     },
                     {
                         model: Category,
                         as: 'category',
                         attributes: ['id_categorie', 'libelle']
+                    },
+                    {
+                        model: Ingredient,
+                        attributes: ['id_ingredient', 'nom_ingredient', 'unite_mesure'],
+                        through: { attributes: [] } // Ignore les colonnes de la table pivot
+                    },
+                    {
+                        model: Utensil,
+                        attributes: ['id_ustensile', 'nom_ustensile'],
+                        through: { attributes: [] } // Ignore les colonnes de la table pivot
                     }
                 ]
             });
 
             if (!recipe) {
                 return res.status(404).render('errors/404');
-            }
+            };
 
             // Récupérer les recettes similaires (même catégorie)
             const similarRecipes = await Recipe.findAll({
                 where: {
-                    id_categorie: recipe.id_categorie,
+                    id_categorie: recipe.category.id_categorie, // Correction ici
                     id_recette: { [Op.ne]: recipe.id_recette } // Exclure la recette actuelle
                 },
                 include: [
@@ -411,6 +421,10 @@ const mainController = {
                 ],
                 limit: 3
             });
+            // console.log(recipe);
+            // console.log(recipe.dataValues.Ingredients);
+            // console.log(recipe.dataValues.Utensils);
+            // console.log(recipe.etapes);
 
             res.render('recipes/index', {
                 recipe,
@@ -418,7 +432,7 @@ const mainController = {
                 user: req.user
             });
         } catch (error) {
-            console.error('Erreur détail recette:', error);
+            console.error(error);
             res.status(500).render('errors/500');
         }
     },
