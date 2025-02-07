@@ -1,84 +1,64 @@
 <main class="mx-auto max-w-4xl p-4 md:p-8">
   <article class="rounded-lg bg-white p-6 shadow-md">
     <img
-      src="<%= recipe.img %>"
-      alt="<%= recipe.name %>"
+      src="/images/<%= recipe.image %>"
+      alt="<%= recipe.titre %>"
       class="mb-4 w-full rounded-lg"
     />
     <h2 class="mb-2 text-2xl font-bold text-gray-800"><%= recipe.titre%></h2>
 
-      <div class="flex text-orange-600">
-        <!-- nombre étoiles -->
-        <% for (let i = 0; i < recipe.difficulte; i++) { %>
-        <span>&#9733;</span>
-        <% } %> <% for (let i = recipe.difficulte; i < 5; i++) { %>
-        <span class="text-gray-300">&#9733;</span>
-        <% } %>
-      </div>
-
-      <div>
-        <ul class="list-disc list-inside text-sm">
-          <li>🍴 Catégorie : <%= recipe.category.libelle %></li> 
-          <li>🕒 Temps de préparation : <%= recipe.temps_preparation %> min</li>
-        </ul>
-      </div>
+    <div class="flex text-orange-600">
+      <% for (let i = 0; i < recipe.difficulte; i++) { %>
+      <span>&#9733;</span>
+      <% } %> <% for (let i = recipe.difficulte; i < 5; i++) { %>
+      <span class="text-gray-300">&#9733;</span>
+      <% } %>
     </div>
 
-    <!-- existe/pas ou ajoute dans la db ? -->
-
-      <ul class="mb-6 list-inside list-disc space-y-2 text-gray-700">
-        <li>
-          Utilisez des légumes de taille similaire pour un résultat plus
-          esthétique
-        </li>
-        <li>La cuisson doit être douce pour préserver les saveurs</li>
-        <li>Servez la ratatouille chaude avec un filet d'huile d'olive</li>
+    <div>
+      <ul class="list-disc list-inside text-sm">
+        <li>🍴 Catégorie : <%= recipe.category.libelle %></li>
+        <li>🕒 Temps de préparation : <%= recipe.temps_preparation %> min</li>
       </ul>
-
-
-    <section class="mb-6 grid gap-4 md:grid-cols-2">
-      <div>
-        <h3 class="mb-3 text-xl font-semibold text-orange-600">Ingrédients</h3>
-
-        <% } else { %>
-        <p>Aucun ingrédient disponible.</p>
-        <% } %>
-      </div>
-      <div>
-        <h3 class="mb-3 text-xl font-semibold text-orange-600">Ustensiles</h3>
-
-        <% } else { %>
-        <p>Aucun ustensile requis.</p>
-        <% } %>
-      </div>
-    </section>
+    </div>
 
     <section class="mb-6">
       <h3 class="mb-3 text-xl font-semibold text-orange-600">Instructions</h3>
       <ol class="list-inside list-decimal space-y-2 rounded-lg bg-red-50 p-4">
         <% JSON.parse(recipe.etapes).forEach(etape => { %>
-
+        <li><%= etape %></li>
+        <% }) %>
       </ol>
     </section>
-    <!-- n'existe pas dans la db  -->
+
+    <% if (recipe.anecdote) { %>
+    <section>
+      <h3 class="mb-3 text-xl font-semibold text-orange-600">Anecdote</h3>
+      <p class="mb-6 text-gray-700"><%= recipe.anecdote %></p>
+    </section>
+    <% } %> <% if (similarRecipes && similarRecipes.length > 0) { %>
     <section>
       <h3 class="mb-3 text-xl font-semibold text-orange-600">
-        Notes et astuces
+        Recettes similaires
       </h3>
-      <ul class="list-inside list-disc space-y-2 rounded-lg bg-red-50 p-4">
-        <li>
-          Utilisez des légumes de taille similaire pour un résultat plus
-          esthétique.
-        </li>
-        <li>La cuisson doit être douce pour préserver les saveurs.</li>
-        <li>Servez la ratatouille chaude avec un filet d'huile d'olive.</li>
-      </ul>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <% similarRecipes.forEach(similar => { %>
+        <a href="/recette/<%= similar.id_recette %>" class="hover:opacity-75">
+          <div class="rounded-lg overflow-hidden shadow-sm">
+            <img
+              src="/images/<%= similar.image %>"
+              alt="<%= similar.titre %>"
+              class="w-full h-32 object-cover"
+            />
+            <div class="p-2">
+              <h4 class="font-medium"><%= similar.titre %></h4>
+            </div>
+          </div>
+        </a>
+        <% }) %>
+      </div>
     </section>
-
-    <section>
-      <h3 class="mb-3 text-xl font-semibold text-orange-600">Commentaires</h3>
-
-    </section>
+    <% } %>
   </article>
 </main>
 
