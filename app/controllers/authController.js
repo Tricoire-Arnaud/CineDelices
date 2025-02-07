@@ -3,20 +3,41 @@ const bcrypt = require("bcrypt");
 
 // Contrôleur pour l'authentification
 const authController = {
+  // Affichage du formulaire de connexion
+  getLogin: (req, res) => {
+    res.render("auth/login");
+  },
+
+  // Affichage du formulaire d'inscription
+  getRegister: (req, res) => {
+    res.render("auth/register");
+  },
+
   // Connexion
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
+      console.log("=== LOGIN ATTEMPT ===");
+      console.log("Email:", email);
 
-      // Vérifier si l'utilisateur existe
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({
+        where: { email },
+        attributes: [
+          "id_utilisateur",
+          "nom_utilisateur",
+          "email",
+          "mot_de_passe",
+          "role",
+        ],
+      });
+
+      console.log("Found user:", user ? user.toJSON() : null);
 
       if (!user) {
         req.flash("error", "Email ou mot de passe incorrect");
         return res.redirect("/auth/login");
       }
 
-      // Vérifier le mot de passe
       const validPassword = await bcrypt.compare(password, user.mot_de_passe);
 
       if (!validPassword) {
@@ -32,20 +53,20 @@ const authController = {
         role: user.role,
       };
 
-      // Sauvegarder la session et attendre qu'elle soit sauvegardée
-      await new Promise((resolve, reject) => {
-        req.session.save((err) => {
-          if (err) {
-            console.error("Session save error:", err);
-            reject(err);
-          }
+      console.log("Session user set:", req.session.user);
 
-          resolve();
-        });
+      // Sauvegarder la session de manière synchrone
+      req.session.save((err) => {
+        if (err) {
+          console.error("Erreur sauvegarde session:", err);
+          req.flash("error", "Une erreur est survenue lors de la connexion");
+          return res.redirect("/auth/login");
+        }
+
+        console.log("Session saved successfully");
+        req.flash("success", "Connexion réussie !");
+        res.redirect("/");
       });
-
-      req.flash("success", "Connexion réussie !");
-      res.redirect("/");
     } catch (error) {
       console.error("Erreur connexion:", error);
       req.flash("error", "Une erreur est survenue lors de la connexion");

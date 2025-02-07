@@ -5,29 +5,23 @@ const validators = {
   registerValidation: [
     body("username")
       .trim()
-      .isLength({ min: 3, max: 30 })
-      .withMessage(
-        "Le nom d'utilisateur doit contenir entre 3 et 30 caractères"
-      )
-      .matches(/^[a-zA-Z0-9_-]+$/)
-      .withMessage(
-        "Le nom d'utilisateur ne peut contenir que des lettres, chiffres, tirets et underscores"
-      ),
+      .isLength({ min: 3 })
+      .withMessage("Le nom d'utilisateur doit contenir au moins 3 caractères"),
 
-    body("email")
-      .trim()
-      .isEmail()
-      .withMessage("Email invalide")
-      .normalizeEmail(),
+    body("email").trim().isEmail().withMessage("L'email n'est pas valide"),
 
     body("password")
       .isLength({ min: 8 })
       .withMessage("Le mot de passe doit contenir au moins 8 caractères")
-      .matches(
-        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/
-      )
+      .matches(/[A-Z]/)
+      .withMessage("Le mot de passe doit contenir au moins une majuscule")
+      .matches(/[a-z]/)
+      .withMessage("Le mot de passe doit contenir au moins une minuscule")
+      .matches(/[0-9]/)
+      .withMessage("Le mot de passe doit contenir au moins un chiffre")
+      .matches(/[@$!%*?&+]/)
       .withMessage(
-        "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial"
+        "Le mot de passe doit contenir au moins un caractère spécial (@$!%*?&+)"
       ),
 
     body("confirmPassword").custom((value, { req }) => {
@@ -36,6 +30,15 @@ const validators = {
       }
       return true;
     }),
+
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash("error", errors.array()[0].msg);
+        return res.redirect("back");
+      }
+      next();
+    },
   ],
 
   // Validation du formulaire de connexion

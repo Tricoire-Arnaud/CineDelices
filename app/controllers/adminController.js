@@ -1,24 +1,28 @@
 // Import des modèles nécessaires depuis le dossier models
-const {
-  User,
-  Recipe,
-  Movie,
-  Category,
-} = require("../models");
+const { User, Recipe, Movie, Category } = require("../models");
 
 const adminController = {
   // Récupère les statistiques générales du site
   getDashboard: async (req, res) => {
     try {
-      const stats = {
-        users: await User.count(),
-        recipes: await Recipe.count(),
-        movies: await Movie.count(),
-        categories: await Category.count(),
-      };
-      res.render('admin/dashboard', { stats });
+      // Récupérer les statistiques
+      const [usersCount, recipesCount, moviesCount] = await Promise.all([
+        User.count(),
+        Recipe.count(),
+        Movie.count(),
+      ]);
+
+      // Rendre la vue avec les données
+      res.render("admin/dashboard", {
+        usersCount,
+        recipesCount,
+        moviesCount,
+        user: req.session.user, // Assurez-vous de passer l'utilisateur
+      });
     } catch (error) {
-      res.status(500).render('errors/500');
+      console.error("Erreur tableau de bord:", error);
+      req.flash("error", "Une erreur est survenue");
+      res.redirect("/");
     }
   },
 
@@ -34,9 +38,9 @@ const adminController = {
           "created_at",
         ],
       });
-      res.render('admin/users', { users });
+      res.render("admin/users", { users });
     } catch (error) {
-      res.status(500).render('errors/500');
+      res.status(500).render("errors/500");
     }
   },
 
@@ -44,23 +48,20 @@ const adminController = {
   getRecipes: async (req, res) => {
     try {
       const recipes = await Recipe.findAll({
-        include: [
-          { model: Movie },
-          { model: Category, as: 'category' }
-        ]
+        include: [{ model: Movie }, { model: Category, as: "category" }],
       });
-      res.render('admin/recipes', { recipes });
+      res.render("admin/recipes", { recipes });
     } catch (error) {
-      res.status(500).render('errors/500');
+      res.status(500).render("errors/500");
     }
   },
 
   // Affiche la page d'ajout d'une oeuvre
   showaddmoviesTvShows: async (req, res) => {
     try {
-      res.render('admin/addMovie');
+      res.render("admin/addMovie");
     } catch (error) {
-      res.status(500).render('errors/500');
+      res.status(500).render("errors/500");
     }
   },
 
@@ -69,10 +70,10 @@ const adminController = {
     try {
       const { titre, type, annee, description } = req.body;
       await Movie.create({ titre, type, annee, description });
-      res.redirect('/admin/tableau-de-bord');
+      res.redirect("/admin/tableau-de-bord");
     } catch (error) {
       console.error(error);
-      res.status(500).render('errors/500');
+      res.status(500).render("errors/500");
     }
   },
 
@@ -90,7 +91,9 @@ const adminController = {
       await user.update({ role });
       res.json({ message: "Utilisateur mis à jour avec succès" });
     } catch (error) {
-      res.status(500).json({ message: "Erreur lors de la mise à jour de l'utilisateur" });
+      res
+        .status(500)
+        .json({ message: "Erreur lors de la mise à jour de l'utilisateur" });
     }
   },
 
@@ -107,7 +110,9 @@ const adminController = {
       await user.destroy();
       res.json({ message: "Utilisateur supprimé avec succès" });
     } catch (error) {
-      res.status(500).json({ message: "Erreur lors de la suppression de l'utilisateur" });
+      res
+        .status(500)
+        .json({ message: "Erreur lors de la suppression de l'utilisateur" });
     }
   },
 };

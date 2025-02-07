@@ -34,16 +34,25 @@
         />
       </label>
 
-      <label class="block">
-        <span class="text-sm text-black">Mot de passe</span>
+      <div class="mb-4">
+        <label
+          for="password"
+          class="block text-gray-700 text-sm font-bold mb-2"
+        >
+          Mot de passe
+        </label>
         <input
           type="password"
+          id="password"
           name="password"
-          placeholder="Entrez votre mot de passe"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
-          class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none focus:ring-orange-300"
         />
-      </label>
+        <p class="text-sm text-gray-600 mt-1">
+          Le mot de passe doit contenir au moins 8 caractères, une majuscule,
+          une minuscule, un chiffre et un caractère spécial (@$!%*?&+)
+        </p>
+      </div>
 
       <label class="block">
         <span class="text-sm text-black">Confirmer votre mot de passe</span>

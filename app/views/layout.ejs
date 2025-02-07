@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CinéDélices</title>
-    <link rel="stylesheet" href="/CSS/reset.css">
-    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" href="/CSS/reset.css" />
+    <link rel="stylesheet" href="/CSS/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/svg+xml" href="/images/CineDelice_favicons_32px.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/images/CineDelice_favicons_32px.svg"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <%- defineContent('styles') %>
-</head>
-<body class="bg-gray-50 font-['Inter']">
-    <%- include('partials/header') %>
-    
-    <div id="main-content">
-        <%- body %>
-    </div>
-    
-    <%- include('partials/footer') %>
-    <%- defineContent('scripts') %>
-</body>
+  </head>
+  <body class="bg-gray-50 font-['Inter']">
+    <%- include('partials/flash') %> <%- include('partials/header') %>
+
+    <div id="main-content"><%- body %></div>
+
+    <%- include('partials/footer') %> <%- defineContent('scripts') %>
+  </body>
 </html>
