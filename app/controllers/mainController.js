@@ -16,10 +16,19 @@ const mainController = {
       const [latestRecipes, popularCategories] = await Promise.all([
         // Récupère les 6 dernières recettes avec leurs relations
         Recipe.findAll({
-          include: [{ model: Movie }, { model: Category, as: "category" }],
+          include: [
+            {
+              model: Movie,
+              as: "oeuvre",
+            },
+            {
+              model: Category,
+              as: "category",
+            },
+          ],
           order: [["created_at", "DESC"]],
           limit: 6,
-          raw: false, // Assurez-vous que ce n'est pas en mode raw
+          raw: false,
         }),
 
         // Récupère les 4 catégories les plus utilisées
