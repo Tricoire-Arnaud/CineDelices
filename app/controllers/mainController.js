@@ -1,4 +1,13 @@
-const { Recipe, Movie, Category, User } = require("../models");
+const {
+  Recipe,
+  Movie,
+  Category,
+  User,
+  Ingredient,
+  RecipeIngredient,
+  Utensil,
+  RecipeUtensil,
+} = require("../models");
 const { Op, literal } = require("sequelize");
 
 const mainController = {
@@ -339,12 +348,23 @@ const mainController = {
         include: [
           {
             model: Movie,
+            as: "oeuvre",
             attributes: ["titre", "annee"],
           },
           {
             model: Category,
             as: "category",
             attributes: ["libelle"],
+          },
+          {
+            model: Ingredient,
+            through: RecipeIngredient,
+            attributes: ["nom_ingredient", "unite_mesure"],
+          },
+          {
+            model: Utensil,
+            through: RecipeUtensil,
+            attributes: ["nom_ustensile"],
           },
         ],
       });
@@ -360,7 +380,10 @@ const mainController = {
           id_categorie: recipe.id_categorie,
           id_recette: { [Op.ne]: recipe.id_recette }, // Exclure la recette actuelle
         },
-        include: [{ model: Movie }, { model: Category, as: "category" }],
+        include: [
+          { model: Movie, as: "oeuvre" },
+          { model: Category, as: "category" },
+        ],
         limit: 3,
       });
 

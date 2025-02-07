@@ -84,6 +84,18 @@ Recipe.associate = (models) => {
     foreignKey: "id_categorie",
     as: "category",
   });
+
+  Recipe.belongsToMany(models.Ingredient, {
+    through: models.RecipeIngredient,
+    foreignKey: "id_recette",
+    otherKey: "id_ingredient",
+  });
+
+  Recipe.belongsToMany(models.Utensil, {
+    through: models.RecipeUtensil,
+    foreignKey: "id_recette",
+    otherKey: "id_ustensile",
+  });
 };
 
 module.exports = Recipe;
