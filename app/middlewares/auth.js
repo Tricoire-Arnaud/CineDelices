@@ -1,37 +1,25 @@
-const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { User } = require("../models");
 
-const authMiddleware = async (req, res, next) => {
-    try {
-        // Récupérer le token du header Authorization
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return res.status(401).json({ message: 'Token non fourni' });
-        }
-
-        const token = authHeader.split(' ')[1];
-
-        // Vérifier le token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        // Récupérer l'utilisateur
-        const user = await User.findByPk(decoded.id);
-        if (!user) {
-            return res.status(401).json({ message: 'Utilisateur non trouvé' });
-        }
-
-        // Ajouter l'utilisateur à la requête
-        req.user = user;
-        next();
-    } catch (error) {
-        if (error.name === 'JsonWebTokenError') {
-            return res.status(401).json({ message: 'Token invalide' });
-        }
-        if (error.name === 'TokenExpiredError') {
-            return res.status(401).json({ message: 'Token expiré' });
-        }
-        res.status(500).json({ message: 'Erreur d\'authentification' });
+const authMiddleware = {
+  // Middleware pour vérifier si l'utilisateur est connecté
+  isAuthenticated: (req, res, next) => {
+    if (req.session && req.session.user) {
+      // Ajouter l'utilisateur à la requête pour y accéder dans les contrôleurs
+      req.user = req.session.user;
+      return next();
     }
+    req.flash("error", "Vous devez être connecté pour accéder à cette page");
+    res.redirect("/auth/login");
+  },
+
+  // Middleware pour vérifier si l'utilisateur est admin
+  isAdmin: (req, res, next) => {
+    if (req.session && req.session.user && req.session.user.role === "admin") {
+      return next();
+    }
+    req.flash("error", "Accès non autorisé");
+    res.redirect("/");
+  },
 };
 
 module.exports = authMiddleware;
