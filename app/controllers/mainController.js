@@ -151,10 +151,18 @@ const mainController = {
   // Page Films & Séries
   getMoviesAndShows: async (req, res) => {
     try {
-      // Récupérer séparément les films et les séries
-      const [movies, tvShows] = await Promise.all([
-        Movie.findAll({
-          where: { type: "film" }, // Filtrer les films
+      const queryFilms = req.query.queryFilms?.trim() || ""; // Récupérer la recherche
+
+      let searchResults = null; // Stocke les résultats de recherche
+
+      if (queryFilms) {
+        searchResults = await Movie.findAll({
+          where: {
+            [Op.or]: [
+              { titre: { [Op.iLike]: `%${queryFilms}%` } },
+              { description: { [Op.iLike]: `%${queryFilms}%` } },
+            ],
+          },
           include: [
             {
               model: Recipe,
@@ -162,27 +170,47 @@ const mainController = {
               attributes: ["id_recette", "titre", "image"],
             },
           ],
-          order: [["titre", "ASC"]],
-        }),
-        Movie.findAll({
-          where: { type: "série" }, // Filtrer les séries
-          include: [
-            {
-              model: Recipe,
-              as: "recipes",
-              attributes: ["id_recette", "titre", "image"],
-            },
-          ],
-          order: [["titre", "ASC"]],
-        }),
-      ]);
+        });
+      }
+
+      // Récupérer séparément les films et séries si pas de recherche
+      let movies = [];
+      let tvShows = [];
+      if (!searchResults) {
+        [movies, tvShows] = await Promise.all([
+          Movie.findAll({
+            where: { type: "film" },
+            include: [
+              {
+                model: Recipe,
+                as: "recipes",
+                attributes: ["id_recette", "titre", "image"],
+              },
+            ],
+            order: [["titre", "ASC"]],
+          }),
+          Movie.findAll({
+            where: { type: "série" },
+            include: [
+              {
+                model: Recipe,
+                as: "recipes",
+                attributes: ["id_recette", "titre", "image"],
+              },
+            ],
+            order: [["titre", "ASC"]],
+          }),
+        ]);
+      }
 
       res.render("Movie&Tvshow/movie&Tvshow", {
         title: "Films & Séries",
+        searchResults, // Résultats de la recherche si existants
         movies,
-        tvShows, // Ajouter les séries aux données de la vue
-        noResults: movies.length === 0 && tvShows.length === 0,
+        tvShows,
+        noResults: searchResults?.length === 0 || (movies.length === 0 && tvShows.length === 0),
         user: req.session.user,
+        isSearch: !!queryFilms, // Permet d'afficher la bonne section dans la vue
       });
     } catch (error) {
       console.error("Erreur page films et séries:", error);
