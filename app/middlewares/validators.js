@@ -49,7 +49,7 @@ const validators = {
       .withMessage("Email invalide")
       .normalizeEmail(),
 
-    body("password").notEmpty().withMessage("Le mot de passe est requis"),
+    body("mot_de_passe").notEmpty().withMessage("Le mot de passe est requis"),
   ],
 
   // Validation pour la création/modification d'une recette

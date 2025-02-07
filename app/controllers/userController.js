@@ -1,35 +1,72 @@
 // Contrôleur pour la gestion des utilisateurs
-const { User, Recipe, Favorite, Comment, Rating, Like } = require("../models");
+const {
+  User,
+  Recipe,
+  Movie,
+  Category,
+  Favorite,
+  Comment,
+  Rating,
+  Like,
+} = require("../models");
 const bcrypt = require("bcrypt");
 
 const userController = {
   // Récupérer le profil de l'utilisateur connecté
   getProfile: async (req, res) => {
     try {
+      // Vérifier si l'utilisateur est connecté
+      if (!req.session.user) {
+        return res.redirect("/auth/login");
+      }
+
+      // Récupérer l'utilisateur avec ses informations complètes
       const user = await User.findByPk(req.session.user.id, {
-        attributes: { exclude: ["mot_de_passe"] },
+        attributes: [
+          "id_utilisateur",
+          "nom_utilisateur",
+          "email",
+          "role",
+          "created_at",
+        ],
         include: [
           {
             model: Recipe,
-            as: "favorites",
-            through: Favorite,
-          },
-          {
-            model: Comment,
+            as: "favoriteRecipes",
+            include: [
+              {
+                model: Movie,
+                as: "oeuvre",
+                attributes: ["titre"],
+              },
+              {
+                model: Category,
+                as: "category",
+                attributes: ["libelle"],
+              },
+            ],
           },
         ],
       });
 
       if (!user) {
-        req.flash("error", "Utilisateur non trouvé");
-        return res.redirect("/");
+        return res.redirect("/auth/login");
       }
 
-      res.render("users/profile", { user });
+      // Rendre la vue avec les données
+      res.render("users/profile", {
+        user,
+        title: "Mon Profil",
+        favoriteRecipes: user.favoriteRecipes || [],
+        memberSince: new Date(user.created_at).toLocaleDateString("fr-FR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      });
     } catch (error) {
-      console.error("Erreur profil:", error);
-      req.flash("error", "Une erreur est survenue");
-      res.redirect("/");
+      console.error("Erreur profil utilisateur:", error);
+      res.status(500).render("errors/500", { user: req.session.user });
     }
   },
 

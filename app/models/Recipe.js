@@ -85,6 +85,14 @@ Recipe.associate = (models) => {
     as: "category",
   });
 
+  Recipe.belongsToMany(models.User, {
+    through: "user_favorites",
+    as: "favoritedBy",
+    foreignKey: "id_recette",
+    otherKey: "id_utilisateur",
+    timestamps: true,
+  });
+
   Recipe.belongsToMany(models.Ingredient, {
     through: models.RecipeIngredient,
     foreignKey: "id_recette",

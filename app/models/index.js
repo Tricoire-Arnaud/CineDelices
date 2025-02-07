@@ -15,60 +15,14 @@ const RecipeUtensil = require("./RecipeUtensil");
 
 // Fonction pour initialiser toutes les associations
 const initAssociations = () => {
-  // ============================
-  //     ASSOCIATIONS USER
-  // ============================
-  User.hasMany(Comment, { foreignKey: "id_utilisateur" });
-  User.hasMany(Rating, { foreignKey: "id_utilisateur" });
-  User.hasMany(Favorite, { foreignKey: "id_utilisateur" });
+  const models = require("./");
 
-  // ============================
-  //    ASSOCIATIONS RECIPE
-  // ============================
-  Recipe.belongsTo(Movie, { foreignKey: "id_oeuvre", as: "oeuvre" });
-  Recipe.belongsTo(Category, { foreignKey: "id_categorie", as: "category" });
-  Recipe.hasMany(Comment, { foreignKey: "id_recette" });
-  Recipe.hasMany(Rating, { foreignKey: "id_recette" });
-  Recipe.hasMany(Favorite, { foreignKey: "id_recette" });
-
-  // ============================
-  //  ASSOCIATIONS MANY-TO-MANY
-  // ============================
-  Recipe.belongsToMany(Ingredient, {
-    through: RecipeIngredient,
-    foreignKey: "id_recette",
-    otherKey: "id_ingredient",
+  // Initialiser les associations pour chaque modèle
+  Object.values(models).forEach((model) => {
+    if (model.associate) {
+      model.associate(models);
+    }
   });
-  Ingredient.belongsToMany(Recipe, {
-    through: RecipeIngredient,
-    foreignKey: "id_ingredient",
-    otherKey: "id_recette",
-  });
-
-  Recipe.belongsToMany(Utensil, {
-    through: RecipeUtensil,
-    foreignKey: "id_recette",
-    otherKey: "id_ustensile",
-  });
-  Utensil.belongsToMany(Recipe, {
-    through: RecipeUtensil,
-    foreignKey: "id_ustensile",
-    otherKey: "id_recette",
-  });
-
-  // ============================
-  //  ASSOCIATIONS INVERSES
-  // ============================
-  Comment.belongsTo(User, { foreignKey: "id_utilisateur" });
-  Comment.belongsTo(Recipe, { foreignKey: "id_recette" });
-
-  Rating.belongsTo(User, { foreignKey: "id_utilisateur" });
-  Rating.belongsTo(Recipe, { foreignKey: "id_recette" });
-
-  Favorite.belongsTo(User, { foreignKey: "id_utilisateur" });
-  Favorite.belongsTo(Recipe, { foreignKey: "id_recette" });
-
-  Movie.hasMany(Recipe, { foreignKey: "id_oeuvre" });
 };
 
 /**

@@ -254,8 +254,61 @@ const mainController = {
   },
 
   //profil user
-  getProfile: (req, res) => {
-    res.render("users/profile");
+  getProfile: async (req, res) => {
+    try {
+      // Vérifier si l'utilisateur est connecté
+      if (!req.session.user) {
+        return res.redirect("/login");
+      }
+
+      // Récupérer l'utilisateur avec ses informations complètes
+      const user = await User.findByPk(req.session.user.id_utilisateur, {
+        attributes: [
+          "id_utilisateur",
+          "nom_utilisateur",
+          "email",
+          "role",
+          "created_at",
+        ],
+        include: [
+          {
+            model: Recipe,
+            as: "favoriteRecipes",
+            include: [
+              {
+                model: Movie,
+                as: "oeuvre",
+                attributes: ["titre"],
+              },
+              {
+                model: Category,
+                as: "category",
+                attributes: ["libelle"],
+              },
+            ],
+          },
+        ],
+      });
+
+      if (!user) {
+        return res.redirect("/login");
+      }
+
+      // Rendre la vue avec les données
+      res.render("users/profile", {
+        user,
+        title: "Mon Profil",
+        favoriteRecipes: user.favoriteRecipes || [],
+        memberSince: new Date(user.created_at).toLocaleDateString("fr-FR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      });
+    } catch (error) {
+      console.error("Erreur profil utilisateur:", error);
+      res.status(500).render("errors/500", { user: req.session.user });
+    }
   },
 
   //listes des recettes coté admin

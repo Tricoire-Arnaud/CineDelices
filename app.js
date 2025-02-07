@@ -63,7 +63,7 @@ const userRoutes = require("./app/routes/user");
 // Routes
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
-app.use("/user", userRoutes);
+app.use("/", userRoutes);
 app.use("/", mainRoutes);
 
 // Middleware de gestion des erreurs 404 et 500

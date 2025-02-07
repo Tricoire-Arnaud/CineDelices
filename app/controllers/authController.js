@@ -16,9 +16,9 @@ const authController = {
   // Connexion
   login: async (req, res) => {
     try {
-      const { email, password } = req.body;
-      console.log("=== LOGIN ATTEMPT ===");
-      console.log("Email:", email);
+      const { email, mot_de_passe } = req.body;
+      console.log("Connexion - Email:", email);
+      console.log("Connexion - Mot de passe reçu:", mot_de_passe);
 
       const user = await User.findOne({
         where: { email },
@@ -29,23 +29,29 @@ const authController = {
           "mot_de_passe",
           "role",
         ],
+        raw: true,
       });
 
-      console.log("Found user:", user ? user.toJSON() : null);
-
       if (!user) {
+        console.log("Utilisateur non trouvé");
         req.flash("error", "Email ou mot de passe incorrect");
         return res.redirect("/auth/login");
       }
 
-      const validPassword = await bcrypt.compare(password, user.mot_de_passe);
+      console.log("Connexion - Hash stocké:", user.mot_de_passe);
+      const validPassword = await bcrypt.compare(
+        mot_de_passe,
+        user.mot_de_passe
+      );
+      console.log("Connexion - Résultat bcrypt.compare:", validPassword);
 
       if (!validPassword) {
+        console.log("Mot de passe invalide");
         req.flash("error", "Email ou mot de passe incorrect");
         return res.redirect("/auth/login");
       }
 
-      // Stocker les infos utilisateur en session
+      // Création de la session
       req.session.user = {
         id: user.id_utilisateur,
         username: user.nom_utilisateur,
@@ -53,38 +59,20 @@ const authController = {
         role: user.role,
       };
 
-      console.log("Session user set:", req.session.user);
-
-      // Sauvegarder la session de manière synchrone
-      req.session.save((err) => {
-        if (err) {
-          console.error("Erreur sauvegarde session:", err);
-          req.flash("error", "Une erreur est survenue lors de la connexion");
-          return res.redirect("/auth/login");
-        }
-
-        console.log("Session saved successfully");
-        req.flash("success", "Connexion réussie !");
-        res.redirect("/");
-      });
+      console.log("Session créée:", req.session.user);
+      req.flash("success", "Connexion réussie !");
+      res.redirect("/");
     } catch (error) {
       console.error("Erreur connexion:", error);
-      req.flash("error", "Une erreur est survenue lors de la connexion");
+      req.flash("error", "Une erreur est survenue");
       res.redirect("/auth/login");
     }
   },
 
   // Déconnexion
   logout: (req, res) => {
-    console.log("=== DEBUG LOGOUT START ===");
-    console.log("Session before destroy:", req.session);
-
     req.session.destroy((err) => {
-      if (err) {
-        console.error("Erreur lors de la déconnexion:", err);
-      }
-      console.log("Session destroyed");
-      console.log("=== DEBUG LOGOUT END ===");
+      if (err) console.error("Erreur déconnexion:", err);
       res.redirect("/");
     });
   },
@@ -92,10 +80,8 @@ const authController = {
   // Inscription
   register: async (req, res) => {
     try {
-      console.log("=== DEBUG REGISTER START ===");
-      console.log("Body:", req.body);
-
       const { username, email, password } = req.body;
+      console.log("Inscription - Mot de passe reçu:", password);
 
       // Vérifier si l'utilisateur existe déjà
       const existingUser = await User.findOne({ where: { email } });
@@ -104,18 +90,17 @@ const authController = {
         return res.redirect("/auth/register");
       }
 
-      // Hasher le mot de passe
+      // Hasher le mot de passe manuellement ici plutôt que d'utiliser le hook
       const hashedPassword = await bcrypt.hash(password, 10);
+      console.log("Inscription - Hash généré:", hashedPassword);
 
-      // Créer l'utilisateur
+      // Créer l'utilisateur avec le mot de passe déjà hashé
       const user = await User.create({
         nom_utilisateur: username,
         email,
         mot_de_passe: hashedPassword,
         role: "user",
       });
-
-      console.log("User created:", user.toJSON());
 
       // Connecter l'utilisateur directement après l'inscription
       req.session.user = {
@@ -124,23 +109,6 @@ const authController = {
         email: user.email,
         role: user.role,
       };
-
-      console.log("Session before save:", req.session);
-
-      // Sauvegarder la session et attendre qu'elle soit sauvegardée
-      await new Promise((resolve, reject) => {
-        req.session.save((err) => {
-          if (err) {
-            console.error("Session save error:", err);
-            reject(err);
-          }
-          console.log("Session saved successfully");
-          resolve();
-        });
-      });
-
-      console.log("Session after save:", req.session);
-      console.log("=== DEBUG REGISTER END ===");
 
       req.flash("success", "Inscription réussie !");
       res.redirect("/");

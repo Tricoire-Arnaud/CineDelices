@@ -14,6 +14,7 @@
 
       <!-- Menu principal -->
       <nav class="hidden lg:flex items-center space-x-12">
+        <!-- Liens de navigation -->
         <a
           href="/catalogue"
           class="text-gray-700 hover:text-orange-500 transition-all duration-200 font-medium relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-orange-500 hover:after:w-full after:transition-all after:duration-300"
@@ -27,36 +28,93 @@
           Films & Séries
         </a>
 
-        <!-- Boutons de connexion -->
-        <div class="flex items-center space-x-4">
-          <% if (locals.user) { %>
-          <span class="text-gray-700 mr-4">Bienvenue <%= user.username %></span>
-          <a
-            href="/auth/logout"
-            class="inline-flex items-center justify-center px-6 py-2.5 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
-          >
-            Déconnexion
-          </a>
-          <% if (user.role === 'admin') { %>
-          <a
-            href="/admin/tableau-de-bord"
-            class="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full hover:from-orange-600 hover:to-orange-700 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
-          >
-            Admin
-          </a>
-          <% } %> <% } else { %>
-          <a
-            href="/auth/login"
-            class="inline-flex items-center justify-center px-6 py-2.5 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
-          >
-            Connexion
-          </a>
-          <a
-            href="/auth/register"
-            class="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full hover:from-orange-600 hover:to-orange-700 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
-          >
-            Inscription
-          </a>
+        <!-- Menu utilisateur -->
+        <div class="relative ml-3">
+          <% if (user) { %>
+          <div class="flex items-center gap-4">
+            <% if (user.role === 'admin') { %>
+            <!-- Bouton admin -->
+            <a
+              href="/admin/tableau-de-bord"
+              class="inline-flex items-center justify-center px-6 py-2.5 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                />
+              </svg>
+              Administration
+            </a>
+            <% } %>
+
+            <!-- Bouton profil -->
+            <a
+              href="/mon-profil"
+              class="inline-flex items-center justify-center px-6 py-2.5 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 mr-2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+              Mon Profil
+            </a>
+
+            <!-- Bouton déconnexion -->
+            <a
+              href="/auth/logout"
+              class="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full hover:from-orange-600 hover:to-orange-700 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 mr-2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                />
+              </svg>
+              Déconnexion
+            </a>
+          </div>
+          <% } else { %>
+          <div class="flex items-center gap-4">
+            <a
+              href="/auth/login"
+              class="inline-flex items-center justify-center px-6 py-2.5 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
+            >
+              Connexion
+            </a>
+            <a
+              href="/auth/register"
+              class="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full hover:from-orange-600 hover:to-orange-700 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
+            >
+              Inscription
+            </a>
+          </div>
           <% } %>
         </div>
       </nav>

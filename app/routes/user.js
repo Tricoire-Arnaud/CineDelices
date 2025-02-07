@@ -1,39 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
-const auth = require("../middlewares/auth");
+const { isAuthenticated } = require("../middlewares/auth");
+
+// Routes protégées par authentification
+router.use(isAuthenticated);
 
 // Profil utilisateur
-router.get("/profile", auth.isAuthenticated, userController.getProfile);
-router.put("/profile", auth.isAuthenticated, userController.updateProfile);
-router.delete("/profile", auth.isAuthenticated, userController.deleteAccount);
+router.get("/mon-profil", userController.getProfile);
 
-// Favoris
-router.get("/favorites", auth.isAuthenticated, userController.getFavorites);
-router.post(
-  "/favorites/:recipeId",
-  auth.isAuthenticated,
-  userController.addFavorite
-);
-router.delete(
-  "/favorites/:recipeId",
-  auth.isAuthenticated,
-  userController.removeFavorite
-);
+// Gestion des favoris
+router.post("/favoris/:recipeId", userController.addFavorite);
+router.delete("/favoris/:recipeId", userController.removeFavorite);
 
-// Commentaires
-router.get("/comments", auth.isAuthenticated, userController.getComments);
-router.post(
-  "/recipes/:id/comments",
-  auth.isAuthenticated,
-  userController.addComment
-);
+// Gestion des commentaires
+router.post("/commentaire/:id", userController.addComment);
 
-// Notes
-router.post(
-  "/recipes/:id/ratings",
-  auth.isAuthenticated,
-  userController.rateRecipe
-);
+// Notation des recettes
+router.post("/noter/:id", userController.rateRecipe);
+
+// Suppression du compte
+router.delete("/supprimer", userController.deleteAccount);
 
 module.exports = router;

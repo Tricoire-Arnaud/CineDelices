@@ -1,91 +1,455 @@
 <!-- Page d'inscription -->
 
 <div
-  class="pic-header-login relative bg-cover bg-center bg-no-repeat min-h-screen flex items-center justify-center"
+  class="pic-header-login relative bg-cover bg-center bg-no-repeat min-h-screen flex items-center justify-center px-4"
 >
-  <!-- Centrer le contenu -->
-  <main class="bg-white p-6 rounded-2xl shadow-md w-full max-w-sm">
-    <h1 class="text-2xl font-bold text-center mb-2 text-orange-600">
-      Commencez dès maintenant
-    </h1>
-    <p class="text-center text-black mb-6">
-      Veuillez compléter le formulaire pour créer un compte
-    </p>
-    <form class="space-y-4" action="/auth/register" method="POST">
-      <label class="block">
-        <span class="text-sm text-black">Nom</span>
-        <input
-          type="text"
-          name="username"
-          placeholder="Entrez votre nom"
-          required
-          class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none focus:ring-orange-300"
-        />
-      </label>
+  <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
 
-      <label class="block">
-        <span class="text-sm text-black">Adresse email</span>
-        <input
-          type="email"
-          name="email"
-          placeholder="Entrez votre email"
-          required
-          class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none focus:ring-orange-300"
-        />
-      </label>
+  <main
+    class="relative bg-white/95 p-8 rounded-2xl shadow-xl w-full max-w-md backdrop-blur-sm"
+  >
+    <!-- En-tête -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-3">
+        Commencez dès maintenant
+      </h1>
+      <p class="text-gray-600">
+        Veuillez compléter le formulaire pour créer un compte
+      </p>
+    </div>
 
-      <div class="mb-4">
+    <form
+      id="registerForm"
+      action="/auth/register"
+      method="POST"
+      class="space-y-6"
+    >
+      <!-- Nom d'utilisateur -->
+      <div>
+        <label
+          for="username"
+          class="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Nom d'utilisateur
+        </label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              class="h-5 w-5 text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            required
+            minlength="3"
+            class="pl-10 w-full px-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+            placeholder="Votre nom d'utilisateur"
+          />
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+          Adresse email
+        </label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              class="h-5 w-5 text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+              />
+            </svg>
+          </div>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            required
+            class="pl-10 w-full px-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+            placeholder="exemple@email.com"
+          />
+        </div>
+      </div>
+
+      <!-- Mot de passe -->
+      <div>
         <label
           for="password"
-          class="block text-gray-700 text-sm font-bold mb-2"
+          class="block text-sm font-medium text-gray-700 mb-1"
         >
           Mot de passe
         </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-        />
-        <p class="text-sm text-gray-600 mt-1">
-          Le mot de passe doit contenir au moins 8 caractères, une majuscule,
-          une minuscule, un chiffre et un caractère spécial (@$!%*?&+)
-        </p>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              class="h-5 w-5 text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+          </div>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            required
+            class="pl-10 pr-12 w-full px-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+            placeholder="••••••••"
+          />
+          <button
+            type="button"
+            id="togglePassword"
+            class="absolute inset-y-0 right-0 pr-3 flex items-center"
+          >
+            <svg
+              class="h-5 w-5 text-gray-400 hover:text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+              />
+            </svg>
+          </button>
+        </div>
+        <!-- Indicateurs de force du mot de passe -->
+        <div class="mt-2 space-y-2">
+          <div class="flex gap-2">
+            <div
+              id="strengthBar"
+              class="h-1 flex-1 bg-gray-200 rounded-full overflow-hidden"
+            >
+              <div
+                id="strengthIndicator"
+                class="h-full w-0 transition-all duration-300"
+              ></div>
+            </div>
+            <span id="strengthText" class="text-xs font-medium"></span>
+          </div>
+          <ul class="text-xs space-y-1 text-gray-500">
+            <li id="lengthCheck" class="flex items-center gap-1">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              Au moins 8 caractères
+            </li>
+            <li id="upperCheck" class="flex items-center gap-1">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              Une majuscule
+            </li>
+            <li id="lowerCheck" class="flex items-center gap-1">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              Une minuscule
+            </li>
+            <li id="numberCheck" class="flex items-center gap-1">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              Un chiffre
+            </li>
+            <li id="specialCheck" class="flex items-center gap-1">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+              Un caractère spécial (@$!%*?&+)
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <label class="block">
-        <span class="text-sm text-black">Confirmer votre mot de passe</span>
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirmer votre mot de passe"
-          required
-          class="mt-1 block w-full p-3 border border-orange-500 rounded-lg outline-none focus:ring-orange-300"
-        />
-      </label>
-
-      <div class="flex items-center">
-        <input type="checkbox" id="terms" name="terms" required class="mr-2" />
-        <label for="terms" class="text-sm"
-          >J'accepte les
-          <a href="#" class="text-orange-500"
-            >conditions et la politique</a
-          ></label
+      <!-- Confirmation du mot de passe -->
+      <div>
+        <label
+          for="confirmPassword"
+          class="block text-sm font-medium text-gray-700 mb-1"
         >
+          Confirmer le mot de passe
+        </label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              class="h-5 w-5 text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+          </div>
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            required
+            class="pl-10 w-full px-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+            placeholder="••••••••"
+          />
+        </div>
+        <p id="passwordMatch" class="mt-1 text-xs text-gray-500"></p>
       </div>
 
+      <!-- CGU -->
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          id="terms"
+          name="terms"
+          required
+          class="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+        />
+        <label for="terms" class="ml-2 block text-sm text-gray-700">
+          J'accepte les
+          <a href="#" class="font-medium text-orange-500 hover:text-orange-600">
+            conditions et la politique
+          </a>
+        </label>
+      </div>
+
+      <!-- Bouton d'inscription -->
       <button
         type="submit"
-        class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600"
+        class="w-full flex justify-center py-3 px-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-300 font-medium shadow-md hover:-translate-y-0.5"
       >
         S'inscrire
       </button>
 
-      <p class="text-sm text-center mt-4">
+      <!-- Lien de connexion -->
+      <p class="text-center text-sm text-gray-600">
         Vous avez déjà un compte ?
-        <a href="/connexion" class="text-orange-500">Se connecter</a>
+        <a
+          href="/auth/login"
+          class="font-medium text-orange-500 hover:text-orange-600"
+        >
+          Se connecter
+        </a>
       </p>
     </form>
   </main>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const togglePassword = document.getElementById("togglePassword");
+    const strengthIndicator = document.getElementById("strengthIndicator");
+    const strengthText = document.getElementById("strengthText");
+    const form = document.getElementById("registerForm");
+
+    // Validation critères
+    const lengthCheck = document.getElementById("lengthCheck");
+    const upperCheck = document.getElementById("upperCheck");
+    const lowerCheck = document.getElementById("lowerCheck");
+    const numberCheck = document.getElementById("numberCheck");
+    const specialCheck = document.getElementById("specialCheck");
+
+    // Afficher/Masquer le mot de passe
+    togglePassword.addEventListener("click", function () {
+      const type =
+        password.getAttribute("type") === "password" ? "text" : "password";
+      password.setAttribute("type", type);
+      // Change l'icône
+      this.querySelector("svg").innerHTML =
+        type === "password"
+          ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />'
+          : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />';
+    });
+
+    // Vérification de la force du mot de passe
+    function checkPasswordStrength(value) {
+      const hasLength = value.length >= 8;
+      const hasUpper = /[A-Z]/.test(value);
+      const hasLower = /[a-z]/.test(value);
+      const hasNumber = /[0-9]/.test(value);
+      const hasSpecial = /[@$!%*?&+]/.test(value);
+
+      // Mise à jour des indicateurs
+      updateCheckMark(lengthCheck, hasLength);
+      updateCheckMark(upperCheck, hasUpper);
+      updateCheckMark(lowerCheck, hasLower);
+      updateCheckMark(numberCheck, hasNumber);
+      updateCheckMark(specialCheck, hasSpecial);
+
+      // Calcul du score
+      const criteria = [hasLength, hasUpper, hasLower, hasNumber, hasSpecial];
+      const score = criteria.filter(Boolean).length;
+
+      // Mise à jour de la barre de progression
+      const colors = [
+        "bg-red-500",
+        "bg-orange-500",
+        "bg-yellow-500",
+        "bg-lime-500",
+        "bg-green-500",
+      ];
+      const texts = ["Très faible", "Faible", "Moyen", "Fort", "Très fort"];
+
+      strengthIndicator.className = `h-full transition-all duration-300 ${
+        colors[score - 1]
+      }`;
+      strengthIndicator.style.width = `${score * 20}%`;
+      strengthText.textContent = texts[score - 1];
+      strengthText.className = `text-xs font-medium ${colors[score - 1].replace(
+        "bg-",
+        "text-"
+      )}`;
+    }
+
+    function updateCheckMark(element, isValid) {
+      const icon = element.querySelector("svg");
+      if (isValid) {
+        element.classList.remove("text-gray-500");
+        element.classList.add("text-green-500");
+        icon.innerHTML =
+          '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />';
+      } else {
+        element.classList.remove("text-green-500");
+        element.classList.add("text-gray-500");
+        icon.innerHTML =
+          '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+      }
+    }
+
+    // Vérification de la correspondance des mots de passe
+    function checkPasswordMatch() {
+      const match = password.value === confirmPassword.value;
+      const matchText = document.getElementById("passwordMatch");
+
+      if (confirmPassword.value) {
+        matchText.textContent = match
+          ? "Les mots de passe correspondent"
+          : "Les mots de passe ne correspondent pas";
+        matchText.className = `mt-1 text-xs ${
+          match ? "text-green-500" : "text-red-500"
+        }`;
+      } else {
+        matchText.textContent = "";
+      }
+    }
+
+    // Event listeners
+    password.addEventListener("input", () =>
+      checkPasswordStrength(password.value)
+    );
+    password.addEventListener("input", checkPasswordMatch);
+    confirmPassword.addEventListener("input", checkPasswordMatch);
+
+    // Validation du formulaire
+    form.addEventListener("submit", function (e) {
+      if (password.value !== confirmPassword.value) {
+        e.preventDefault();
+        alert("Les mots de passe ne correspondent pas");
+      }
+    });
+  });
+</script>

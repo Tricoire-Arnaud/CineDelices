@@ -43,15 +43,17 @@ const User = sequelize.define(
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
-    hooks: {
-      // Hash le mot de passe avant la création
-      beforeCreate: async (user) => {
-        if (user.mot_de_passe) {
-          user.mot_de_passe = await bcrypt.hash(user.mot_de_passe, 10);
-        }
-      },
-    },
   }
 );
+
+User.associate = (models) => {
+  User.belongsToMany(models.Recipe, {
+    through: "user_favorites",
+    as: "favoriteRecipes",
+    foreignKey: "id_utilisateur",
+    otherKey: "id_recette",
+    timestamps: true,
+  });
+};
 
 module.exports = User;
