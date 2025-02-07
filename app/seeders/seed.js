@@ -28,25 +28,25 @@ async function seedDatabase() {
         nom_utilisateur: "chef_ratatouille",
         email: "chef@cinedelices.fr",
         mot_de_passe: await bcrypt.hash("chef123", 10),
-        role: "utilisateur",
+        role: "user",
       },
       {
         nom_utilisateur: "hobbit_gourmet",
         email: "hobbit@cinedelices.fr",
         mot_de_passe: await bcrypt.hash("hobbit123", 10),
-        role: "utilisateur",
+        role: "user",
       },
       {
         nom_utilisateur: "foodie_expert",
         email: "expert@cinedelices.fr",
         mot_de_passe: await bcrypt.hash("expert123", 10),
-        role: "utilisateur",
+        role: "user",
       },
       {
         nom_utilisateur: "gourmet_master",
         email: "master@cinedelices.fr",
         mot_de_passe: await bcrypt.hash("master123", 10),
-        role: "utilisateur",
+        role: "user",
       },
     ]);
 
@@ -220,8 +220,8 @@ async function seedDatabase() {
         anecdote:
           "La véritable ratatouille niçoise est une mijotée de légumes, le film a popularisé cette version en spirale",
         image: "ratatouille-reelle.jpg",
-        id_oeuvre: movies[0].id,
-        id_categorie: categories[1].id,
+        id_oeuvre: movies[0].id_oeuvre,
+        id_categorie: categories[1].id_categorie,
       },
       {
         titre: "Second petit-déjeuner de Hobbit Complet",
@@ -238,8 +238,8 @@ async function seedDatabase() {
         temps_cuisson: 25,
         difficulte: 2,
         image: "hobbit-breakfast.jpg",
-        id_oeuvre: movies[1].id,
-        id_categorie: categories[0].id,
+        id_oeuvre: movies[1].id_oeuvre,
+        id_categorie: categories[0].id_categorie,
       },
       {
         titre: "Bière au Beurre Authentique",
@@ -257,8 +257,8 @@ async function seedDatabase() {
         anecdote:
           "Les studios Harry Potter proposent une version non alcoolisée dans leurs parcs à thème",
         image: "butterbeer_real.jpg",
-        id_oeuvre: movies[2].id,
-        id_categorie: categories[3].id,
+        id_oeuvre: movies[2].id_oeuvre,
+        id_categorie: categories[3].id_categorie,
       },
       {
         titre: "Tourte au Poulet façon Mrs Weasley",
@@ -277,8 +277,8 @@ async function seedDatabase() {
         anecdote:
           "Les tourtes sont fréquentes dans la cuisine britannique traditionnelle",
         image: "chicken_pie_real.jpg",
-        id_oeuvre: movies[2].id,
-        id_categorie: categories[1].id,
+        id_oeuvre: movies[2].id_oeuvre,
+        id_categorie: categories[1].id_categorie,
       },
       {
         titre: "Pain Elfique Lembas",
@@ -296,8 +296,8 @@ async function seedDatabase() {
         anecdote:
           "Une seule bouchée suffit à rassasier un homme pour toute une journée !",
         image: "lembas.jpg",
-        id_oeuvre: movies[1].id,
-        id_categorie: categories[3].id,
+        id_oeuvre: movies[1].id_oeuvre,
+        id_categorie: categories[4].id_categorie,
       },
       {
         titre: "Festin de Winterfell",
@@ -317,7 +317,7 @@ async function seedDatabase() {
         id_categorie: categories[1].id_categorie,
       },
       {
-        titre: "Donuts de Homer Simpson",
+        titre: "Donuts d'Homer",
         description: "Version améliorée des donuts roses des Simpsons",
         etapes: JSON.stringify([
           "Mélanger 500g de farine, 50g de sucre, 1 sachet de levure.",
@@ -332,8 +332,8 @@ async function seedDatabase() {
         anecdote:
           "Le magasin de donuts préféré d'Homer s'appelle Lard Lad Donuts",
         image: "simpsons_donuts_real.jpg",
-        id_oeuvre: movies[6].id,
-        id_categorie: categories[2].id,
+        id_oeuvre: movies[6].id_oeuvre,
+        id_categorie: categories[4].id_categorie,
       },
       {
         titre: "Bœuf Bourguignon de Julia Child",
@@ -352,8 +352,8 @@ async function seedDatabase() {
         anecdote:
           "Julia Child a adapté cette recette pour le public américain dans son livre 'Mastering the Art of French Cooking'",
         image: "boeuf_bourguignon_real.jpg",
-        id_oeuvre: movies[7].id,
-        id_categorie: categories[1].id,
+        id_oeuvre: movies[7].id_oeuvre,
+        id_categorie: categories[1].id_categorie,
       },
       {
         titre: "Sushi à la Jiro",
@@ -405,11 +405,11 @@ async function seedDatabase() {
         difficulte: 4,
         anecdote: "Le plat qui a failli être servi au président !",
         image: "canard-orange.jpg",
-        id_oeuvre: movies[9].id_oeuvre,
+        id_oeuvre: movies[8].id_oeuvre,
         id_categorie: categories[1].id_categorie,
       },
       {
-        titre: "Chocolat chaud épicé de Vianne",
+        titre: "Chocolat chaud épicé",
         description: "Le chocolat chaud qui réchauffe les cœurs",
         etapes: JSON.stringify([
           "Faire fondre le chocolat",
@@ -477,7 +477,7 @@ async function seedDatabase() {
         id_categorie: categories[1].id_categorie,
       },
       {
-        titre: "Pudding de Noël de Mrs Patmore",
+        titre: "Pudding de Noël",
         description: "Le dessert traditionnel de Downton Abbey",
         etapes: JSON.stringify([
           "Préparer les fruits secs",
@@ -494,7 +494,7 @@ async function seedDatabase() {
         id_categorie: categories[2].id_categorie,
       },
       {
-        titre: "Tarte aux pommes à l'anglaise",
+        titre: "Tarte aux pommes",
         description: "Une tarte traditionnelle servie à l'heure du thé",
         etapes: JSON.stringify([
           "Préparer la pâte",
@@ -507,7 +507,7 @@ async function seedDatabase() {
         difficulte: 3,
         anecdote: "La recette préférée de la Comtesse douairière",
         image: "apple-pie.jpg",
-        id_oeuvre: movies[11].id_oeuvre,
+        id_oeuvre: movies[8].id_oeuvre,
         id_categorie: categories[2].id_categorie,
       },
       {
@@ -544,6 +544,88 @@ async function seedDatabase() {
         image: "turtle-soup.jpg",
         id_oeuvre: movies[12].id_oeuvre,
         id_categorie: categories[0].id_categorie,
+      },
+      {
+        titre: "Cubano Parfait",
+        description:
+          "Le sandwich cubain signature du film Chef, avec du porc mariné, du jambon, du fromage suisse, des cornichons et de la moutarde, pressé jusqu'à perfection.",
+        etapes: JSON.stringify([
+          "Trancher le pain cubain dans la longueur",
+          "Étaler de la moutarde jaune sur les deux faces intérieures",
+          "Disposer les tranches de fromage suisse",
+          "Ajouter le jambon et le porc mariné",
+          "Placer les cornichons tranchés",
+          "Beurrer l'extérieur du pain",
+          "Presser dans un grill ou une plancha chaude jusqu'à ce que le fromage fonde",
+        ]),
+        temps_preparation: 20,
+        temps_cuisson: 10,
+        difficulte: 3,
+        image: "cubano.jpg",
+        anecdote:
+          "Le Cubano est le sandwich emblématique du film Chef, où Jon Favreau apprend à son fils l'importance de la perfection dans la cuisine.",
+        id_oeuvre: movies[3].id_oeuvre,
+        id_categorie: categories[1].id_categorie,
+      },
+      {
+        titre: "Pasta Aglio e Olio",
+        description:
+          "Un plat de pâtes simple mais délicieux, préparé avec de l'ail, de l'huile d'olive et du piment, comme montré dans la scène romantique du film.",
+        etapes: JSON.stringify([
+          "Cuire les spaghetti al dente dans l'eau salée",
+          "Faire revenir l'ail émincé dans l'huile d'olive",
+          "Ajouter le piment rouge concassé",
+          "Incorporer les pâtes et un peu d'eau de cuisson",
+          "Parsemer de persil frais et de parmesan",
+        ]),
+        temps_preparation: 10,
+        temps_cuisson: 15,
+        difficulte: 2,
+        image: "aglio-olio.jpg",
+        anecdote:
+          "Cette recette est préparée par Carl Casper pour Molly dans une scène mémorable du film.",
+        id_oeuvre: movies[3].id_oeuvre,
+        id_categorie: categories[1].id_categorie,
+      },
+      {
+        titre: "Los Pollos Hermanos Chicken",
+        description:
+          "Poulet frit épicé inspiré du restaurant emblématique de la série Breaking Bad, avec un mélange secret d'épices.",
+        etapes: JSON.stringify([
+          "Mariner le poulet dans le babeurre et les épices pendant 12h",
+          "Préparer la panure avec farine et épices",
+          "Enrober les morceaux de poulet",
+          "Frire à 170°C jusqu'à dorure",
+          "Servir avec la sauce spéciale",
+        ]),
+        temps_preparation: 30,
+        temps_cuisson: 20,
+        difficulte: 4,
+        image: "pollos-hermanos.jpg",
+        anecdote:
+          "Los Pollos Hermanos est la façade du réseau de distribution de Gus Fring dans Breaking Bad.",
+        id_oeuvre: movies[5].id_oeuvre,
+        id_categorie: categories[1].id_categorie,
+      },
+      {
+        titre: "Blue Crystal Rock Candy",
+        description:
+          "Bonbons bleus cristallisés inspirés de l'iconique 'produit' de la série, mais en version 100% légale et sucrée !",
+        etapes: JSON.stringify([
+          "Porter l'eau et le sucre à ébullition",
+          "Chauffer jusqu'à 150°C",
+          "Ajouter le colorant bleu",
+          "Verser sur une plaque et laisser refroidir",
+          "Casser en morceaux cristallins",
+        ]),
+        temps_preparation: 20,
+        temps_cuisson: 30,
+        difficulte: 3,
+        image: "blue-candy.jpg",
+        anecdote:
+          "Un clin d'œil humoristique au fameux produit bleu de Walter White, mais en version confiserie !",
+        id_oeuvre: movies[5].id_oeuvre,
+        id_categorie: categories[2].id_categorie,
       },
     ]);
 
@@ -787,7 +869,7 @@ async function seedDatabase() {
         quantite: "2",
       }, // Miel
 
-      // Ingrédients pour le Risotto aux Champignons
+      // Ingrédients pour le Risotto
       {
         id_recette: recipes[9].id_recette,
         id_ingredient: ingredients[26].id_ingredient,
@@ -811,8 +893,18 @@ async function seedDatabase() {
       {
         id_recette: recipes[9].id_recette,
         id_ingredient: ingredients[7].id_ingredient,
-        quantite: "50",
+        quantite: "100",
       }, // Beurre
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[14].id_ingredient,
+        quantite: "1",
+      }, // Citron
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[22].id_ingredient,
+        quantite: "1",
+      }, // Thym
 
       // Ingrédients pour le Pudding de Noël
       {
@@ -840,6 +932,11 @@ async function seedDatabase() {
         id_ingredient: ingredients[17].id_ingredient,
         quantite: "200",
       }, // Crème
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[25].id_ingredient,
+        quantite: "2",
+      }, // Vinaigre balsamique
 
       // Ingrédients pour la Tarte aux pommes
       {
@@ -870,57 +967,120 @@ async function seedDatabase() {
 
       // Ingrédients pour les Cailles en Sarcophage
       {
-        id_recette: recipes[9].id_recette,
+        id_recette: recipes[12].id_recette,
         id_ingredient: ingredients[8].id_ingredient,
         quantite: "400",
       }, // Farine
       {
-        id_recette: recipes[9].id_recette,
+        id_recette: recipes[12].id_recette,
         id_ingredient: ingredients[7].id_ingredient,
         quantite: "200",
       }, // Beurre
       {
-        id_recette: recipes[9].id_recette,
+        id_recette: recipes[12].id_recette,
         id_ingredient: ingredients[20].id_ingredient,
         quantite: "2",
       }, // Œufs
       {
-        id_recette: recipes[9].id_recette,
+        id_recette: recipes[12].id_recette,
         id_ingredient: ingredients[17].id_ingredient,
         quantite: "200",
       }, // Crème
       {
-        id_recette: recipes[9].id_recette,
+        id_recette: recipes[12].id_recette,
         id_ingredient: ingredients[22].id_ingredient,
         quantite: "3",
       }, // Thym
 
       // Ingrédients pour la Soupe de tortue
       {
-        id_recette: recipes[10].id_recette,
+        id_recette: recipes[13].id_recette,
         id_ingredient: ingredients[27].id_ingredient,
         quantite: "1000",
       }, // Bouillon
       {
-        id_recette: recipes[10].id_recette,
+        id_recette: recipes[13].id_recette,
         id_ingredient: ingredients[4].id_ingredient,
         quantite: "2",
       }, // Oignons
       {
-        id_recette: recipes[10].id_recette,
+        id_recette: recipes[13].id_recette,
         id_ingredient: ingredients[5].id_ingredient,
         quantite: "3",
       }, // Ail
       {
-        id_recette: recipes[10].id_recette,
+        id_recette: recipes[13].id_recette,
         id_ingredient: ingredients[22].id_ingredient,
         quantite: "2",
       }, // Thym
       {
-        id_recette: recipes[10].id_recette,
+        id_recette: recipes[13].id_recette,
         id_ingredient: ingredients[23].id_ingredient,
         quantite: "1",
       }, // Laurier
+
+      // Ingrédients pour le Cubano
+      {
+        id_recette: recipes[19].id_recette,
+        id_ingredient: ingredients[7].id_ingredient,
+        quantite: "50",
+      }, // Beurre
+      {
+        id_recette: recipes[19].id_recette,
+        id_ingredient: ingredients[18].id_ingredient,
+        quantite: "2",
+      }, // Pain
+      {
+        id_recette: recipes[19].id_recette,
+        id_ingredient: ingredients[21].id_ingredient,
+        quantite: "200",
+      }, // Fromage
+
+      // Ingrédients pour Pasta Aglio e Olio
+      {
+        id_recette: recipes[20].id_recette,
+        id_ingredient: ingredients[5].id_ingredient,
+        quantite: "6",
+      }, // Ail
+      {
+        id_recette: recipes[20].id_recette,
+        id_ingredient: ingredients[6].id_ingredient,
+        quantite: "100",
+      }, // Huile d'olive
+      {
+        id_recette: recipes[20].id_recette,
+        id_ingredient: ingredients[28].id_ingredient,
+        quantite: "100",
+      }, // Parmesan
+
+      // Ingrédients pour Los Pollos Hermanos Chicken
+      {
+        id_recette: recipes[21].id_recette,
+        id_ingredient: ingredients[13].id_ingredient,
+        quantite: "1000",
+      }, // Poulet
+      {
+        id_recette: recipes[21].id_recette,
+        id_ingredient: ingredients[8].id_ingredient,
+        quantite: "300",
+      }, // Farine
+      {
+        id_recette: recipes[21].id_recette,
+        id_ingredient: ingredients[20].id_ingredient,
+        quantite: "2",
+      }, // Œufs
+
+      // Ingrédients pour Blue Crystal Rock Candy
+      {
+        id_recette: recipes[22].id_recette,
+        id_ingredient: ingredients[16].id_ingredient,
+        quantite: "500",
+      }, // Sucre
+      {
+        id_recette: recipes[22].id_recette,
+        id_ingredient: ingredients[24].id_ingredient,
+        quantite: "2",
+      }, // Miel
     ]);
 
     // Associations recettes-ustensiles
@@ -1107,31 +1267,79 @@ async function seedDatabase() {
 
       // Ustensiles pour les Cailles en Sarcophage
       {
-        id_recette: recipes[9].id_recette,
+        id_recette: recipes[12].id_recette,
         id_ustensile: ustensils[0].id_ustensile,
       }, // Couteau
       {
-        id_recette: recipes[9].id_recette,
+        id_recette: recipes[12].id_recette,
         id_ustensile: ustensils[8].id_ustensile,
       }, // Four
       {
-        id_recette: recipes[9].id_recette,
+        id_recette: recipes[12].id_recette,
         id_ustensile: ustensils[9].id_ustensile,
       }, // Plat
 
       // Ustensiles pour la Soupe de tortue
       {
-        id_recette: recipes[10].id_recette,
+        id_recette: recipes[13].id_recette,
         id_ustensile: ustensils[2].id_ustensile,
       }, // Casserole
       {
-        id_recette: recipes[10].id_recette,
+        id_recette: recipes[13].id_recette,
         id_ustensile: ustensils[0].id_ustensile,
       }, // Couteau
       {
-        id_recette: recipes[10].id_recette,
+        id_recette: recipes[13].id_recette,
         id_ustensile: ustensils[10].id_ustensile,
       }, // Cuillère
+
+      // Ustensiles pour le Cubano
+      {
+        id_recette: recipes[19].id_recette,
+        id_ustensile: ustensils[3].id_ustensile,
+      }, // Poêle
+      {
+        id_recette: recipes[19].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+
+      // Ustensiles pour Pasta Aglio e Olio
+      {
+        id_recette: recipes[20].id_recette,
+        id_ustensile: ustensils[2].id_ustensile,
+      }, // Casserole
+      {
+        id_recette: recipes[20].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+      {
+        id_recette: recipes[20].id_recette,
+        id_ustensile: ustensils[10].id_ustensile,
+      }, // Cuillère en bois
+
+      // Ustensiles pour Los Pollos Hermanos Chicken
+      {
+        id_recette: recipes[21].id_recette,
+        id_ustensile: ustensils[3].id_ustensile,
+      }, // Poêle
+      {
+        id_recette: recipes[21].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+      {
+        id_recette: recipes[21].id_recette,
+        id_ustensile: ustensils[1].id_ustensile,
+      }, // Planche
+
+      // Ustensiles pour Blue Crystal Rock Candy
+      {
+        id_recette: recipes[22].id_recette,
+        id_ustensile: ustensils[2].id_ustensile,
+      }, // Casserole
+      {
+        id_recette: recipes[22].id_recette,
+        id_ustensile: ustensils[4].id_ustensile,
+      }, // Fouet
     ]);
 
     // Création des commentaires pour toutes les recettes

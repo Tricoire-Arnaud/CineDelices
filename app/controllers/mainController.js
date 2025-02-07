@@ -10,6 +10,7 @@ const mainController = {
           include: [{ model: Movie }, { model: Category, as: "category" }],
           order: [["created_at", "DESC"]],
           limit: 6,
+          raw: false, // Assurez-vous que ce n'est pas en mode raw
         }),
 
         // Récupère les 4 catégories les plus utilisées
@@ -42,59 +43,68 @@ const mainController = {
 
   getCatalog: async (req, res) => {
     try {
-      const { page = 1, category, sort = "recent" } = req.query;
-      const queryRecipes = req.query.queryRecipes || "";
-      const limit = 12;
-      const offset = (page - 1) * limit;
-
-      // Construction de la clause WHERE de base
       let whereClause = {};
+      let includeClause = [
+        {
+          model: Movie,
+          as: "oeuvre",
+          required: false,
+        },
+        {
+          model: Category,
+          as: "category",
+          required: false,
+        },
+      ];
 
-      // Ajout du filtre par catégorie si présent
-      if (category) {
-        whereClause.id_categorie = category;
+      // Si un filtre de catégorie est sélectionné
+      if (req.query.categorie && req.query.categorie !== "all") {
+        whereClause.id_categorie = req.query.categorie;
       }
 
-      // Ajout de la recherche par titre si présente
+      // Si un filtre de film/série est sélectionné
+      if (req.query.oeuvre && req.query.oeuvre !== "all") {
+        whereClause.id_oeuvre = req.query.oeuvre;
+      }
+
+      // Recherche par titre/description si présente
+      const queryRecipes = req.query.queryRecipes || "";
       if (queryRecipes) {
-        whereClause.titre = {
-          [Op.iLike]: `%${queryRecipes}%`,
-        };
+        whereClause[Op.or] = [
+          { titre: { [Op.iLike]: `%${queryRecipes}%` } },
+          { description: { [Op.iLike]: `%${queryRecipes}%` } },
+        ];
       }
 
-      // Récupération des recettes et catégories
-      const [recipes, categories] = await Promise.all([
-        Recipe.findAndCountAll({
-          where: whereClause,
-          include: [
-            {
-              model: Movie,
-              attributes: ["titre", "annee"],
-            },
-            {
-              model: Category,
-              as: "category",
-              attributes: ["libelle"],
-            },
-          ],
-          order: getSortingOrder(sort),
-          limit,
-          offset,
-        }),
+      // Récupération de toutes les recettes
+      const recipes = await Recipe.findAll({
+        where: whereClause,
+        include: includeClause,
+        order: [["titre", "ASC"]],
+        distinct: true,
+      });
+
+      // Récupération des catégories et films pour les filtres
+      const [categories, movies] = await Promise.all([
         Category.findAll({
-          attributes: ["id_categorie", "libelle"], // Assurez-vous d'inclure l'ID
+          order: [["libelle", "ASC"]],
+        }),
+        Movie.findAll({
+          order: [["titre", "ASC"]],
         }),
       ]);
 
+      // Ajout de la variable noResults
+      const noResults = recipes.length === 0 && queryRecipes.trim() !== "";
+
       res.render("recipes/catalog", {
-        recipes: recipes.rows,
+        recipes,
         categories,
-        currentPage: parseInt(page),
-        totalPages: Math.ceil(recipes.count / limit),
-        currentCategory: category ? parseInt(category) : null, // Convertir en nombre
-        currentSort: sort,
+        movies,
+        selectedCategory: req.query.categorie || "all",
+        selectedMovie: req.query.oeuvre || "all",
         currentQueryRecipes: queryRecipes,
-        noResults: queryRecipes && recipes.count === 0,
+        noResults,
         user: req.session.user,
       });
     } catch (error) {
@@ -124,127 +134,86 @@ const mainController = {
 
   moviesTvShows: async (req, res) => {
     try {
-      const { type = "films-series" } = req.query;
-      const queryFilms = Array.isArray(req.query.queryFilms)
-        ? req.query.queryFilms[0]
-        : req.query.queryFilms || "";
+      const queryFilms = req.query.queryFilms || "";
+      let whereClause = {};
 
-      // Vérifier si le type est correct, sinon rediriger
-      if (queryFilms && type !== "films-series") {
-        return res.redirect(
-          `/films-series?queryFilms=${queryFilms}&type=films-series`
-        );
+      if (queryFilms) {
+        whereClause = {
+          [Op.or]: [
+            { titre: { [Op.iLike]: `%${queryFilms}%` } },
+            { description: { [Op.iLike]: `%${queryFilms}%` } },
+          ],
+        };
       }
 
-      // Condition de recherche pour les films/séries
-      const searchConditionFilms = queryFilms
-        ? { titre: { [Op.iLike]: `%${queryFilms}%` } }
-        : {};
-
-      // Initialiser les variables pour éviter les erreurs
-      let movies = [];
-      let movieRecipes = [];
-      let tvShowRecipes = [];
-
-      if (!queryFilms) {
-        // Si pas de recherche, récupérer les listes de films et séries avec leurs recettes
-        movieRecipes = await Recipe.findAll({
-          include: [
-            {
-              model: Movie,
-              where: { type: "film" }, // Filtrer sur les films
-            },
-            { model: Category, as: "category" },
-          ],
-          order: [["created_at", "DESC"]],
-          limit: 6,
-        });
-
-        tvShowRecipes = await Recipe.findAll({
-          include: [
-            {
-              model: Movie,
-              where: { type: "série" }, // Filtrer sur les séries
-            },
-            { model: Category, as: "category" },
-          ],
-          order: [["created_at", "DESC"]],
-          limit: 6,
-        });
-      } else {
-        // Si recherche, récupérer les films et séries correspondants
-        console.log("Query films:", queryFilms); // Ajoute cette ligne pour vérifier
-        movies = await Movie.findAll({
+      // Récupérer les films et séries séparément
+      const [movies, tvShows] = await Promise.all([
+        Movie.findAll({
           where: {
-            ...searchConditionFilms,
-            type: { [Op.in]: ["film", "série"] },
+            ...whereClause,
+            type: "film",
           },
           include: [
             {
               model: Recipe,
-              foreignKey: "id_oeuvre",
+              attributes: ["id_recette"], // On récupère juste les IDs pour compter
             },
-          ], // Associer les recettes liées
-        });
-        console.log(movies); // Vérifie si les recettes sont bien incluses dans les films/séries
-      }
-
-      // Vérifier s'il y a des résultats
-      const noResults = queryFilms && movies.length === 0;
+          ],
+          order: [["titre", "ASC"]],
+        }),
+        Movie.findAll({
+          where: {
+            ...whereClause,
+            type: "série",
+          },
+          include: [
+            {
+              model: Recipe,
+              attributes: ["id_recette"], // On récupère juste les IDs pour compter
+            },
+          ],
+          order: [["titre", "ASC"]],
+        }),
+      ]);
 
       res.render("Movie&Tvshow/movie&Tvshow", {
-        movieRecipes,
-        tvShowRecipes,
-        movies, // Résultats de la recherche
+        movies,
+        tvShows,
         currentQueryFilms: queryFilms,
-        currentType: "films-series",
-        noResults, // Permettra d'afficher "Aucun résultat" dans la vue
+        noResults: queryFilms && movies.length === 0 && tvShows.length === 0,
         user: req.session.user,
       });
     } catch (error) {
-      console.error(error);
-      res.status(500).render("errors/500");
+      res.status(500).render("errors/500", { user: req.session.user });
     }
   },
 
-  // moviesTvShows: async (req, res) => {
-  //     try {
-  //         // Récupérer les recettes récentes pour les films
-  //         const movieRecipes = await Recipe.findAll({
-  //             include: [
-  //                 {
-  //                     model: Movie,
-  //                     where: { type: 'film' } // Filtrer sur les films
-  //                 },
-  //                 { model: Category, as: 'category' }
-  //             ],
-  //             order: [['created_at', 'DESC']],
-  //             limit: 6
-  //         });
+  // Nouvelle méthode pour afficher les recettes d'un film/série
+  getMovieRecipes: async (req, res) => {
+    try {
+      const movieId = req.params.id;
+      const movie = await Movie.findByPk(movieId, {
+        include: [
+          {
+            model: Recipe,
+            include: [{ model: Category, as: "category" }],
+          },
+        ],
+      });
 
-  //         // Récupérer les recettes récentes pour les series
-  //         const tvShowRecipes = await Recipe.findAll({
-  //             include: [
-  //                 {
-  //                     model: Movie,
-  //                     where: { type: 'série' } // Filtrer sur les séries
-  //                 },
-  //                 { model: Category, as: 'category' }
-  //             ],
-  //             order: [['created_at', 'DESC']],
-  //             limit: 6
-  //         });
+      if (!movie) {
+        return res.status(404).render("errors/404", { user: req.session.user });
+      }
 
-  //         res.render('Movie&Tvshow/movie&Tvshow', {
-  //             movieRecipes,
-  //             tvShowRecipes,
-  //             user: req.user
-  //         });
-  //     } catch (error) {
-  //         console.error(error);
-  //         res.status(500).render('errors/500');
-  //     }
-  // },
+      res.render("Movie&Tvshow/movieRecipes", {
+        movie,
+        recipes: movie.Recipes,
+        user: req.session.user,
+      });
+    } catch (error) {
+      res.status(500).render("errors/500", { user: req.session.user });
+    }
+  },
 
   // Page 404
   notFound: (req, res) => {
@@ -365,7 +334,6 @@ const mainController = {
   getRecipeDetails: async (req, res) => {
     try {
       const recipeId = req.params.id;
-      console.log("ID de la recette demandée:", recipeId);
 
       const recipe = await Recipe.findByPk(recipeId, {
         include: [
@@ -380,8 +348,6 @@ const mainController = {
           },
         ],
       });
-
-      console.log("Recette trouvée:", recipe);
 
       if (!recipe) {
         req.flash("error", "Recette non trouvée");

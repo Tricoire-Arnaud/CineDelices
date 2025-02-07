@@ -1,197 +1,69 @@
-
-  <div class="max-w-6xl mx-auto px-4 py-8">
-
-    <!-- Section Recettes Films en vedette -->
-    <section>
-      <% if (noResults) { %>
-        <p>Aucun résultat pour "<%= currentQueryFilms %>"</p>
-        <% } else { %>
-          <h2 class="text-2xl font-semibold mb-4">Nos Recette de films récentes</h2>
-          <!-- Grille des recettes -->
-          <div id="recipes-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <% movieRecipes.forEach(recipe=> { %>
-              <article
-                class="recipe-card bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
-                data-category="<%= recipe.category.libelle %>">
-                <div class="relative aspect-video overflow-hidden">
-                  <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>"
-                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-                  <span
-                    class="absolute top-4 right-4 px-3 py-1 bg-black/50 text-white text-sm rounded-full backdrop-blur-sm">
-                    <%= recipe.category.libelle %>
-                  </span>
-                </div>
-
-                <div class="p-6">
-                  <h3 class="text-xl font-semibold mb-2 group-hover:text-orange-500 transition-colors duration-200">
-                    <%= recipe.titre %>
-                  </h3>
-                  <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                    <%= recipe.description %>
-                  </p>
-
-                  <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div class="flex items-center">
-                      <div class="flex">
-                        <% for(let i=0; i < 5; i++) { %>
-                          <svg class="w-4 h-4 <%= i < recipe.rating ? 'text-yellow-400' : 'text-gray-300' %>"
-                            fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                          <% } %>
-                      </div>
-                      <span class="ml-2">(<%= recipe.reviews %>)</span>
-                    </div>
-                    <div class="flex items-center">
-                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <%= recipe.temps_preparation %> min
-                    </div>
-                  </div>
-                  <a href="/recette/<%= recipe.id_recette %>"
-                    class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300 transform hover:-translate-y-0.5">
-                    Voir la recette
-                  </a>
-                </div>
-              </article>
-              <% }) %>
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <% if (noResults) { %>
+  <p class="text-center text-gray-500">
+    Aucun résultat pour "<%= currentQueryFilms %>"
+  </p>
+  <% } else { %>
+  <!-- Section Films -->
+  <section class="mb-12">
+    <h2 class="text-2xl font-semibold mb-6">Films</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% movies.forEach(movie => { %>
+      <div
+        class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300"
+      >
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2"><%= movie.titre %></h3>
+          <p class="text-gray-600 mb-4"><%= movie.annee %></p>
+          <p class="text-gray-500 mb-4 line-clamp-2">
+            <%= movie.description %>
+          </p>
+          <div
+            class="flex items-center justify-between text-sm text-gray-500 mb-4"
+          >
+            <span class="font-medium"
+              ><%= movie.Recipes.length %> recettes</span
+            >
           </div>
-
-    </section>
-
-    <!-- Section Recettes Séries en vedette -->
-    <section class="mt-12">
-      <h2 class="text-2xl font-semibold mb-4">Nos Recette de séries récentes</h2>
-
-
-      <!-- Grille des recettes -->
-      <div id="recipes-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <% tvShowRecipes.forEach(recipe=> { %>
-          <article
-            class="recipe-card bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
-            data-category="<%= recipe.category.libelle %>">
-            <div class="relative aspect-video overflow-hidden">
-              <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>"
-                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-              <span
-                class="absolute top-4 right-4 px-3 py-1 bg-black/50 text-white text-sm rounded-full backdrop-blur-sm">
-                <%= recipe.category.libelle %>
-              </span>
-            </div>
-
-            <div class="p-6">
-              <h3 class="text-xl font-semibold mb-2 group-hover:text-orange-500 transition-colors duration-200">
-                <%= recipe.titre %>
-              </h3>
-              <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                <%= recipe.description %>
-              </p>
-
-              <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                <div class="flex items-center">
-                  <div class="flex">
-                    <% for(let i=0; i < 5; i++) { %>
-                      <svg class="w-4 h-4 <%= i < recipe.rating ? 'text-yellow-400' : 'text-gray-300' %>"
-                        fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <% } %>
-                  </div>
-                  <span class="ml-2">(<%= recipe.reviews %>)</span>
-                </div>
-                <div class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <%= recipe.temps_preparation %> min
-                </div>
-              </div>
-              <a href="/recette/<%= recipe.id_recette %>"
-                class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300 transform hover:-translate-y-0.5">
-                Voir la recette
-              </a>
-            </div>
-          </article>
-          <% }) %>
+          <a
+            href="/films-series/<%= movie.id_oeuvre %>/recettes"
+            class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300"
+          >
+            Voir les recettes
+          </a>
+        </div>
       </div>
-    </section>
-    <% } %>
+      <% }) %>
+    </div>
+  </section>
 
-      <!-- Section Films et Séries correspondant à la recherche -->
-      <% if (movies.length> 0) { %>
-        <section class="mt-12">
-          <h2>Films et Séries correspondant à votre recherche</h2>
-          <div>
-            <% movies.forEach(function(movie) { %>
-              <div>
-                <h3>
-                  <%= movie.titre %>
-                </h3>
-                <!-- Vérification des recettes associées -->
-                <p>Recettes liées:</p>
-                <div id="recipes-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  <% if (movie.Recipes && movie.Recipes.length> 0) { %>
-                    <% movie.Recipes.forEach(function(recipe) { %>
-                      <article
-                        class="recipe-card bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
-                        <div class="relative aspect-video overflow-hidden">
-                          <img src="/images/<%= recipe.image %>" alt="<%= recipe.titre %>"
-                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-                        </div>
-
-                        <div class="p-6">
-                          <h3
-                            class="text-xl font-semibold mb-2 group-hover:text-orange-500 transition-colors duration-200">
-                            <%= recipe.titre %>
-                          </h3>
-                          <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                            <%= recipe.description %>
-                          </p>
-
-                          <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                            <div class="flex items-center">
-                              <div class="flex">
-                                <% for(let i=0; i < 5; i++) { %>
-                                  <svg class="w-4 h-4 <%= i < recipe.rating ? 'text-yellow-400' : 'text-gray-300' %>"
-                                    fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                  </svg>
-                                  <% } %>
-                              </div>
-                              <span class="ml-2">(<%= recipe.reviews %>)</span>
-                            </div>
-                            <div class="flex items-center">
-                              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              <%= recipe.temps_preparation %> min
-                            </div>
-                          </div>
-
-                          <a href="/recette/<%= recipe.id_recette %>"
-                            class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300 transform hover:-translate-y-0.5">
-                            Voir la recette
-                          </a>
-                        </div>
-                      </article>
-                      <% }); %>
-                        <% } else { %>
-                          <p>Aucune recette</p>
-                          <% } %>
-                </div>
-
-                <% }); %>
-              </div>
-        </section>
-        <% } %>
-
-  </div>
-
-
+  <!-- Section Séries -->
+  <section>
+    <h2 class="text-2xl font-semibold mb-6">Séries</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% tvShows.forEach(show => { %>
+      <div
+        class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300"
+      >
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2"><%= show.titre %></h3>
+          <p class="text-gray-600 mb-4"><%= show.annee %></p>
+          <p class="text-gray-500 mb-4 line-clamp-2"><%= show.description %></p>
+          <div
+            class="flex items-center justify-between text-sm text-gray-500 mb-4"
+          >
+            <span class="font-medium"><%= show.Recipes.length %> recettes</span>
+          </div>
+          <a
+            href="/films-series/<%= show.id_oeuvre %>/recettes"
+            class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300"
+          >
+            Voir les recettes
+          </a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </section>
+  <% } %>
+</div>

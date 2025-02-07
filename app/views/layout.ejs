@@ -23,6 +23,12 @@
 
     <div id="main-content"><%- body %></div>
 
-    <%- include('partials/footer') %> <%- defineContent('scripts') %>
+    <%- include('partials/footer') %>
+
+    <!-- Scripts -->
+    <script>
+      console.log("Layout chargé");
+    </script>
+    <%- defineContent('script') %>
   </body>
 </html>
