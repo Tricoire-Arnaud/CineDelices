@@ -1,0 +1,84 @@
+# docker-compose pour lancer l'environnement de dev
+
+services:
+
+  # nom du service sur le réseau docker => server:3000
+  cinedelices-app:
+    container_name: cinedelices-app-dev
+
+    # informations relatives à l'image (=> construire une image Docker à partir de notre code pour pouvoir ensuite le faire tourner dans un conteneur)
+    build:
+      # le répertoire de build du projet
+      context: .
+      # le nom du Dockerfile
+      dockerfile: Dockerfile.dev
+
+    # on déclare que le service doit être accessible sur le port
+    # 3000 de l'hôte qui correspond au port 3000 du conteneur.
+    # C'est l'équivalent de l'option -p de docker run
+    ports:
+      # port-hôte:port-conteneur
+      - 3000:3000
+
+    # notre conteneur app utilise le service db
+    # qui doit donc être lancé avant l'application
+    # on peut indiquer que l'app dépend de db
+    depends_on:
+      db:
+        condition: service_healthy
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    env_file:
+      - .env.docker-compose
+
+    command: npm run setup-dev
+
+  # service pour la base de données
+  db:
+    # on peut donner directement des instructions de construction :
+    # on utilise l'image postgres pour ce service, 
+    # on n'est pas obligé de passer par un Dockerfile
+    image: postgres:17
+    container_name: cinedelices-db-dev
+    restart: always
+
+    # on déclare les variables d'environnement qui permettent
+    # de personnaliser l'image pour notre BDD
+    #environment:
+    #  POSTGRES_USER: 
+    #  POSTGRES_PASSWORD: 
+    #  POSTGRES_DB: 
+
+    # plutôt que de mettre des données sensibles
+    # dans le docker-compose, on peut les mettre
+    # dans un fichier d'environnement
+    env_file:
+      - .env.docker-compose
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+
+    # on peut partager un répertoire de notre projet
+    # sur notre système hôte avec le conteneur
+    # c'est un "bind mount"
+    #  - bind : lien
+    #  - mount : monter
+
+    volumes:
+      # on monte le volume local cinedelice-volume
+      # comme volume de /var/lib/postgresql/data
+      - cinedelices-volume-dev:/var/lib/postgresql/data
+
+# dans Docker, on peut créer des volumes pour la 
+# persistance des données (pour ne pas perdre les données).
+# Dans ce cas les données sont sauvegardées sur le système hôtes,
+# mais c'est Docker qui gère tout !
+volumes:
+  cinedelices-volume-dev:
