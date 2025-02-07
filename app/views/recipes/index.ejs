@@ -16,11 +16,40 @@
     </div>
 
     <div>
-      <ul class="list-disc list-inside text-sm">
+      <ul class="list-disc list-inside text-sm mb-6">
         <li>🍴 Catégorie : <%= recipe.category.libelle %></li>
         <li>🕒 Temps de préparation : <%= recipe.temps_preparation %> min</li>
+        <li>🕒 Temps de cuisson : <%= recipe.temps_cuisson %> min</li>
       </ul>
     </div>
+
+    <section class="mb-6 pt-50 grid gap-4 md:grid-cols-2">
+      <div>
+        <h3 class="mb-3 text-xl font-semibold text-orange-600">Ingrédients</h3>
+          <% if (recipe.dataValues.Ingredients && recipe.dataValues.Ingredients.length) { %>
+            <ul class="space-y-2 rounded-lg bg-red-50 p-4 list-disc list-inside">
+              <% recipe.dataValues.Ingredients.forEach(ingredient => { %>
+                <li><%= ingredient.dataValues.nom_ingredient %> (<%= ingredient.dataValues.unite_mesure %>)</li>
+              <% }); %>
+            </ul>
+          <!-- en cas ou l'user n'a pas ajouter d'ingredient -->
+        <% } else { %>
+          <p>Aucun ingrédient disponible.</p>
+        <% } %>
+      </div>
+      <div>
+        <h3 class="mb-3 text-xl font-semibold text-orange-600">Ustensiles</h3>
+        <% if (recipe.dataValues.Utensils && recipe.dataValues.Utensils.length) { %>
+          <ul class="space-y-2 rounded-lg bg-red-50 p-4 list-disc list-inside">
+            <% recipe.dataValues.Utensils.forEach(utensil => { %>
+              <li><%- utensil.dataValues.nom_ustensile %></li>
+            <% }) %>
+          </ul> 
+        <% } else { %>
+          <p>Aucun ustensile requis.</p>
+        <% } %>
+      </div>
+    </section>
 
     <section class="mb-6">
       <h3 class="mb-3 text-xl font-semibold text-orange-600">Instructions</h3>
