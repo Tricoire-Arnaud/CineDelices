@@ -26,14 +26,14 @@
     </div>
     
     <!-- existe/pas ou ajoute dans la db ? -->
-    <section>
+    <!-- <section>
       <h3 class="mb-3 text-xl font-semibold text-orange-600">Pour réussir cette recette comme dans le film :</h3>
       <ul class="mb-6 list-inside list-disc space-y-2 text-gray-700">
         <li>Utilisez des légumes de taille similaire pour un résultat plus esthétique</li>
         <li>La cuisson doit être douce pour préserver les saveurs</li>
         <li>Servez la ratatouille chaude avec un filet d'huile d'olive</li>
       </ul>
-    </section>
+    </section> -->
 <!-- sinon -->
 <section>
   <h3 class="mb-3 text-xl font-semibold text-orange-600">Anecdote</h3>
@@ -57,31 +57,24 @@
       </div>
       <div>
         <h3 class="mb-3 text-xl font-semibold text-orange-600">Ustensiles</h3>
-        <!-- <% if (recipe.utensils.length) { %>
+        <% if (recipe.dataValues.Utensils && recipe.dataValues.Utensils.length) { %>
           <ul class="space-y-2 rounded-lg bg-red-50 p-4 list-disc list-inside">
-            <% recipe.utensils.forEach(utensil => { %>
-              <li><%- recipe.utensil.nom_ustensile %></li>
+            <% recipe.dataValues.Utensils.forEach(utensil => { %>
+              <li><%- utensil.dataValues.nom_ustensile %></li>
             <% }) %>
-          </ul> -->
-
-          <!-- <% if (recipe.dataValues.Utensils && recipe.dataValues.Utensils.length) { %>
-            <ul class="space-y-2 rounded-lg bg-red-50 p-4 list-disc list-inside">
-              <% recipe.dataValues.Utensils.forEach(utensil => { %>
-                <li><%= utensil.dataValues.nom_ustensile %></li>
-              <% }); %>
-            </ul>
+          </ul> 
         <% } else { %>
           <p>Aucun ustensile requis.</p>
-        <% } %> -->
+        <% } %>
       </div>
     </section>
 
     <section class="mb-6">
       <h3 class="mb-3 text-xl font-semibold text-orange-600">Instructions</h3>
       <ol class="list-inside list-decimal space-y-2 rounded-lg bg-red-50 p-4">
-        <!-- <% JSON.parse(recipe.etapes).forEach(etape => { %>
+        <% JSON.parse(recipe.etapes).forEach(etape => { %>
           <li><%- etape %></li>
-        <% }) %> -->
+        <%  }) %>
       </ol>
     </section>
  <!-- n'existe pas dans la db  -->
@@ -96,15 +89,15 @@
 
     <section>
       <h3 class="mb-3 text-xl font-semibold text-orange-600">Commentaires</h3>
-      <!-- <% if (comments.length) { %>
-        <ul class="list-inside list-disc space-y-2 rounded-lg bg-red-50 p-4">
-          <% comments.forEach(comment => { %>
-            <li><strong><%- comment.user.name %>:</strong> <%- comment.content %></li>
-          <% }) %>
+      <%# if (comments.length) { %>
+        <!-- <ul class="list-inside list-disc space-y-2 rounded-lg bg-red-50 p-4"> -->
+          <%# comments.forEach(comment => { %>
+            <!-- <li><strong><%# comment.user.name %>:</strong> <%# comment.content %></li> -->
+          <%# }) %>
         </ul>
-      <% } else { %>
-        <p>Aucun commentaire pour le moment. Soyez le premier à réagir !</p>
-      <% } %> -->
+      <%# } else { %>
+        <!-- <p>Aucun commentaire pour le moment. Soyez le premier à réagir !</p> -->
+      <%# } %>
     </section>
   </article>
 </main>

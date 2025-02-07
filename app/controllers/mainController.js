@@ -423,7 +423,8 @@ const mainController = {
             });
             // console.log(recipe);
             // console.log(recipe.dataValues.Ingredients);
-            console.log(recipe.dataValues.Utensils);
+            // console.log(recipe.dataValues.Utensils);
+            // console.log(recipe.etapes);
 
             res.render('recipes/index', {
                 recipe,
