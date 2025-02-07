@@ -6,8 +6,8 @@ const { isAuthenticated } = require("../middlewares/auth");
 // Routes protégées par authentification
 router.use(isAuthenticated);
 
-// Profil utilisateur
-router.get("/mon-profil", userController.getProfile);
+// Route du profil
+router.get("/", userController.getProfile); // La route racine correspondra à /mon-profil
 
 // Gestion des favoris
 router.post("/favoris/:recipeId", userController.addFavorite);

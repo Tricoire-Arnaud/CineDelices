@@ -149,45 +149,28 @@ const mainController = {
   },
 
   // Page Films & Séries
-
-  moviesTvShows: async (req, res) => {
+  getMoviesAndShows: async (req, res) => {
     try {
-      const queryFilms = req.query.queryFilms || "";
-      let whereClause = {};
-
-      if (queryFilms) {
-        whereClause = {
-          [Op.or]: [
-            { titre: { [Op.iLike]: `%${queryFilms}%` } },
-            { description: { [Op.iLike]: `%${queryFilms}%` } },
-          ],
-        };
-      }
-
-      // Récupérer les films et séries séparément
+      // Récupérer séparément les films et les séries
       const [movies, tvShows] = await Promise.all([
         Movie.findAll({
-          where: {
-            ...whereClause,
-            type: "film",
-          },
+          where: { type: "film" }, // Filtrer les films
           include: [
             {
               model: Recipe,
-              attributes: ["id_recette"], // On récupère juste les IDs pour compter
+              as: "recipes",
+              attributes: ["id_recette", "titre", "image"],
             },
           ],
           order: [["titre", "ASC"]],
         }),
         Movie.findAll({
-          where: {
-            ...whereClause,
-            type: "série",
-          },
+          where: { type: "série" }, // Filtrer les séries
           include: [
             {
               model: Recipe,
-              attributes: ["id_recette"], // On récupère juste les IDs pour compter
+              as: "recipes",
+              attributes: ["id_recette", "titre", "image"],
             },
           ],
           order: [["titre", "ASC"]],
@@ -195,18 +178,19 @@ const mainController = {
       ]);
 
       res.render("Movie&Tvshow/movie&Tvshow", {
+        title: "Films & Séries",
         movies,
-        tvShows,
-        currentQueryFilms: queryFilms,
-        noResults: queryFilms && movies.length === 0 && tvShows.length === 0,
+        tvShows, // Ajouter les séries aux données de la vue
+        noResults: movies.length === 0 && tvShows.length === 0,
         user: req.session.user,
       });
     } catch (error) {
+      console.error("Erreur page films et séries:", error);
       res.status(500).render("errors/500", { user: req.session.user });
     }
   },
 
-  // Nouvelle méthode pour afficher les recettes d'un film/série
+  // Méthode pour afficher les recettes d'un film/série
   getMovieRecipes: async (req, res) => {
     try {
       const movieId = req.params.id;
@@ -214,7 +198,13 @@ const mainController = {
         include: [
           {
             model: Recipe,
-            include: [{ model: Category, as: "category" }],
+            as: "recipes", // Utiliser le même alias que dans le modèle
+            include: [
+              {
+                model: Category,
+                as: "category",
+              },
+            ],
           },
         ],
       });
@@ -225,10 +215,12 @@ const mainController = {
 
       res.render("Movie&Tvshow/movieRecipes", {
         movie,
-        recipes: movie.Recipes,
+        recipes: movie.recipes, // Utiliser le même alias en minuscules
+        title: movie.titre,
         user: req.session.user,
       });
     } catch (error) {
+      console.error("Erreur récupération recettes film:", error);
       res.status(500).render("errors/500", { user: req.session.user });
     }
   },
@@ -245,7 +237,9 @@ const mainController = {
 
   //CGU
   getCGU: (req, res) => {
-    res.render("legal/CGU");
+    res.render("legal/cgu", {
+      title: "Conditions Générales d'Utilisation",
+    });
   },
 
   //mentions-legales
@@ -258,7 +252,7 @@ const mainController = {
     try {
       // Vérifier si l'utilisateur est connecté
       if (!req.session.user) {
-        return res.redirect("/login");
+        return res.redirect("/auth/login");
       }
 
       // Récupérer l'utilisateur avec ses informations complètes
@@ -291,7 +285,7 @@ const mainController = {
       });
 
       if (!user) {
-        return res.redirect("/login");
+        return res.redirect("/auth/login");
       }
 
       // Rendre la vue avec les données

@@ -9,6 +9,8 @@ const MemoryStore = require("memorystore")(session);
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const expressLayouts = require("express-ejs-layouts");
+const authMiddleware = require("./app/middlewares/auth");
+const mainController = require("./app/controllers/mainController");
 
 // Configuration du moteur de vue et du layout
 app.set("view engine", "ejs");
@@ -46,11 +48,9 @@ app.use(flash());
 
 // Middleware pour passer l'utilisateur aux vues
 app.use((req, res, next) => {
-  // Passer directement les variables à res.locals
   res.locals.user = req.session.user || null;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-
   next();
 });
 
@@ -59,12 +59,23 @@ const mainRoutes = require("./app/routes/main");
 const authRoutes = require("./app/routes/auth");
 const adminRoutes = require("./app/routes/admin");
 const userRoutes = require("./app/routes/user");
+const recipeRoutes = require("./app/routes/recipe"); // Route des recettes
 
-// Routes
+// Routes publiques
+app.use("/", mainRoutes); // Page d'accueil
+app.use("/catalogue", recipeRoutes); // Utilise les routes de recettes pour le catalogue
+app.use("/films-series", mainRoutes); // Utilise les routes principales pour films/séries
+app.use("/cgu", mainRoutes); // Utilise les routes principales pour CGU
+
+// Routes protégées
+app.use(
+  "/recette/:id",
+  authMiddleware.isAuthenticated,
+  mainController.getRecipeDetails
+);
+app.use("/mon-profil", authMiddleware.isAuthenticated, userRoutes);
+app.use("/admin", authMiddleware.isAdmin, adminRoutes);
 app.use("/auth", authRoutes);
-app.use("/admin", adminRoutes);
-app.use("/", userRoutes);
-app.use("/", mainRoutes);
 
 // Middleware de gestion des erreurs 404 et 500
 app.use((req, res) => {

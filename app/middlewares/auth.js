@@ -12,6 +12,14 @@ const authMiddleware = {
     res.redirect("/auth/login");
   },
 
+  // Middleware pour les pages publiques mais avec accès utilisateur
+  addUserToLocals: (req, res, next) => {
+    if (req.session && req.session.user) {
+      req.user = req.session.user;
+    }
+    next();
+  },
+
   // Middleware pour vérifier si l'utilisateur est admin
   isAdmin: (req, res, next) => {
     if (req.session && req.session.user && req.session.user.role === "admin") {

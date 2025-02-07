@@ -16,13 +16,7 @@ router.get(
   validate,
   mainController.getCatalog
 );
-router.get(
-  "/films-series",
-  searchValidation,
-  validate,
-  mainController.moviesTvShows
-);
-router.get("/recette/:id", mainController.getRecipeDetails);
+router.get("/films-series", mainController.getMoviesAndShows);
 router.get("/CGU", mainController.getCGU);
 router.get("/mentions-legales", mainController.getML);
 router.get("/profil", mainController.getProfile);
