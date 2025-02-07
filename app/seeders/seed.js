@@ -150,91 +150,97 @@ async function seedDatabase() {
 
     // Création des ingrédients de base
     const ingredients = await Ingredient.bulkCreate([
-        { nom_ingredient: "Tomate", unite_mesure: "g" },
-        { nom_ingredient: "Aubergine", unite_mesure: "g" },
-        { nom_ingredient: "Courgette", unite_mesure: "g" },
-        { nom_ingredient: "Poivron rouge", unite_mesure: "pièce" },
-        { nom_ingredient: "Oignon jaune", unite_mesure: "pièce" },
-        { nom_ingredient: "Ail", unite_mesure: "gousse" },
-        { nom_ingredient: "Huile d'olive", unite_mesure: "cuillère à soupe" },
-        { nom_ingredient: "Beurre salé", unite_mesure: "g" },
-        { nom_ingredient: "Farine T55", unite_mesure: "g" },
-        { nom_ingredient: "Lait entier", unite_mesure: "ml" },
-        { nom_ingredient: "Champignons de Paris", unite_mesure: "g" },
-        { nom_ingredient: "Pommes de terre", unite_mesure: "g" },
-        { nom_ingredient: "Bière blonde", unite_mesure: "ml" },
-        { nom_ingredient: "Cuisse de poulet", unite_mesure: "g" },
-        { nom_ingredient: "Citron jaune", unite_mesure: "pièce" },
-        { nom_ingredient: "Chocolat noir 70%", unite_mesure: "g" },
-        { nom_ingredient: "Sucre en poudre", unite_mesure: "g" },
-        { nom_ingredient: "Crème fraîche", unite_mesure: "ml" },
-        { nom_ingredient: "Pain de mie", unite_mesure: "tranche" },
-        { nom_ingredient: "Lardons fumés", unite_mesure: "g" },
-        { nom_ingredient: "Œufs", unite_mesure: "pièce" },
-        { nom_ingredient: "Comté", unite_mesure: "g" },
-        { nom_ingredient: "Thym", unite_mesure: "pincée" },
-        { nom_ingredient: "Laurel", unite_mesure: "feuille" },
-        { nom_ingredient: "Miel", unite_mesure: "cuillère à café" },
-        { nom_ingredient: "Vinaigre balsamique", unite_mesure: "cuillère à soupe" },
-        { nom_ingredient: "Riz Arborio", unite_mesure: "g" },
-        { nom_ingredient: "Bouillon de volaille", unite_mesure: "ml" },
-        { nom_ingredient: "Parmesan", unite_mesure: "g" },
-      ]);
-  
-      // Ustensiles plus complets
-      const ustensils = await Utensil.bulkCreate([
-        { nom_ustensile: "Couteau de chef" },
-        { nom_ustensile: "Planche à découper" },
-        { nom_ustensile: "Casserole" },
-        { nom_ustensile: "Poêle antiadhésive" },
-        { nom_ustensile: "Fouet" },
-        { nom_ustensile: "Spatule" },
-        { nom_ustensile: "Mandoline" },
-        { nom_ustensile: "Mixeur plongeant" },
-        { nom_ustensile: "Four" },
-        { nom_ustensile: "Plat de cuisson" },
-        { nom_ustensile: "Cuillère en bois" },
-        { nom_ustensile: "Moule à tarte" },
-      ]);
+      { nom_ingredient: "Tomate", unite_mesure: "g" },
+      { nom_ingredient: "Aubergine", unite_mesure: "g" },
+      { nom_ingredient: "Courgette", unite_mesure: "g" },
+      { nom_ingredient: "Poivron rouge", unite_mesure: "pièce" },
+      { nom_ingredient: "Oignon jaune", unite_mesure: "pièce" },
+      { nom_ingredient: "Ail", unite_mesure: "gousse" },
+      { nom_ingredient: "Huile d'olive", unite_mesure: "cuillère à soupe" },
+      { nom_ingredient: "Beurre salé", unite_mesure: "g" },
+      { nom_ingredient: "Farine T55", unite_mesure: "g" },
+      { nom_ingredient: "Lait entier", unite_mesure: "ml" },
+      { nom_ingredient: "Champignons de Paris", unite_mesure: "g" },
+      { nom_ingredient: "Pommes de terre", unite_mesure: "g" },
+      { nom_ingredient: "Bière blonde", unite_mesure: "ml" },
+      { nom_ingredient: "Cuisse de poulet", unite_mesure: "g" },
+      { nom_ingredient: "Citron jaune", unite_mesure: "pièce" },
+      { nom_ingredient: "Chocolat noir 70%", unite_mesure: "g" },
+      { nom_ingredient: "Sucre en poudre", unite_mesure: "g" },
+      { nom_ingredient: "Crème fraîche", unite_mesure: "ml" },
+      { nom_ingredient: "Pain de mie", unite_mesure: "tranche" },
+      { nom_ingredient: "Lardons fumés", unite_mesure: "g" },
+      { nom_ingredient: "Œufs", unite_mesure: "pièce" },
+      { nom_ingredient: "Comté", unite_mesure: "g" },
+      { nom_ingredient: "Thym", unite_mesure: "pincée" },
+      { nom_ingredient: "Laurel", unite_mesure: "feuille" },
+      { nom_ingredient: "Miel", unite_mesure: "cuillère à café" },
+      {
+        nom_ingredient: "Vinaigre balsamique",
+        unite_mesure: "cuillère à soupe",
+      },
+      { nom_ingredient: "Riz Arborio", unite_mesure: "g" },
+      { nom_ingredient: "Bouillon de volaille", unite_mesure: "ml" },
+      { nom_ingredient: "Parmesan", unite_mesure: "g" },
+    ]);
+
+    // Ustensiles plus complets
+    const ustensils = await Utensil.bulkCreate([
+      { nom_ustensile: "Couteau de chef" },
+      { nom_ustensile: "Planche à découper" },
+      { nom_ustensile: "Casserole" },
+      { nom_ustensile: "Poêle antiadhésive" },
+      { nom_ustensile: "Fouet" },
+      { nom_ustensile: "Spatule" },
+      { nom_ustensile: "Mandoline" },
+      { nom_ustensile: "Mixeur plongeant" },
+      { nom_ustensile: "Four" },
+      { nom_ustensile: "Plat de cuisson" },
+      { nom_ustensile: "Cuillère en bois" },
+      { nom_ustensile: "Moule à tarte" },
+    ]);
 
     // Création des recettes existantes
     const recipes = await Recipe.bulkCreate([
-        {
-            titre: "Ratatouille Confite",
-            description: "Version réaliste de la ratatouille du film, inspirée de la ratatouille niçoise",
-            etapes: JSON.stringify([
-              "Préchauffer le four à 150°C (thermostat 5).",
-              "Couper 2 aubergines, 3 courgettes et 4 tomates en rondelles de 3mm d'épaisseur.",
-              "Dans un plat allant au four, alterner les légumes en spirale serrée.",
-              "Ajouter 4 gousses d'ail émincées, 5 cuillères à soupe d'huile d'olive, sel et thym.",
-              "Couvrir de papier cuisson et cuire 2 heures en arrosant régulièrement.",
-              "Retirer le papier et poursuivre la cuisson 30 min à 180°C pour dorer."
-            ]),
-            temps_preparation: 40,
-            temps_cuisson: 150,
-            difficulte: 3,
-            anecdote: "La véritable ratatouille niçoise est une mijotée de légumes, le film a popularisé cette version en spirale",
-            image: "ratatouille-reelle.jpg",
-            id_oeuvre: movies[0].id,
-            id_categorie: categories[1].id,
-          },
-          {
-            titre: "Second petit-déjeuner de Hobbit Complet",
-            description: "Repas copieux inspiré des habitudes alimentaires des Hobbits",
-            etapes: JSON.stringify([
-              "Faire sauter 300g de champignons à l'ail et persil",
-              "Cuire 500g de pommes de terre en cubes à la poêle",
-              "Griller 200g de lardons et 4 tranches de pain de campagne",
-              "Préparer des œufs au plat",
-              "Servir tous les éléments accompagnés de fromage râpé"
-            ]),
-            temps_preparation: 30,
-            temps_cuisson: 25,
-            difficulte: 2,
-            image: "hobbit-breakfast.jpg",
-            id_oeuvre: movies[1].id,
-            id_categorie: categories[0].id,
-          },
+      {
+        titre: "Ratatouille Confite",
+        description:
+          "Version réaliste de la ratatouille du film, inspirée de la ratatouille niçoise",
+        etapes: JSON.stringify([
+          "Préchauffer le four à 150°C (thermostat 5).",
+          "Couper 2 aubergines, 3 courgettes et 4 tomates en rondelles de 3mm d'épaisseur.",
+          "Dans un plat allant au four, alterner les légumes en spirale serrée.",
+          "Ajouter 4 gousses d'ail émincées, 5 cuillères à soupe d'huile d'olive, sel et thym.",
+          "Couvrir de papier cuisson et cuire 2 heures en arrosant régulièrement.",
+          "Retirer le papier et poursuivre la cuisson 30 min à 180°C pour dorer.",
+        ]),
+        temps_preparation: 40,
+        temps_cuisson: 150,
+        difficulte: 3,
+        anecdote:
+          "La véritable ratatouille niçoise est une mijotée de légumes, le film a popularisé cette version en spirale",
+        image: "ratatouille-reelle.jpg",
+        id_oeuvre: movies[0].id,
+        id_categorie: categories[1].id,
+      },
+      {
+        titre: "Second petit-déjeuner de Hobbit Complet",
+        description:
+          "Repas copieux inspiré des habitudes alimentaires des Hobbits",
+        etapes: JSON.stringify([
+          "Faire sauter 300g de champignons à l'ail et persil",
+          "Cuire 500g de pommes de terre en cubes à la poêle",
+          "Griller 200g de lardons et 4 tranches de pain de campagne",
+          "Préparer des œufs au plat",
+          "Servir tous les éléments accompagnés de fromage râpé",
+        ]),
+        temps_preparation: 30,
+        temps_cuisson: 25,
+        difficulte: 2,
+        image: "hobbit-breakfast.jpg",
+        id_oeuvre: movies[1].id,
+        id_categorie: categories[0].id,
+      },
       {
         titre: "Bière au Beurre Authentique",
         description: "Version alcool-free inspirée des livres Harry Potter",
@@ -243,12 +249,13 @@ async function seedDatabase() {
           "Ajouter 50g de sucre roux et 2 cuillères à café de caramel liquide.",
           "Verser 500ml de bière sans alcool et 250ml de lait d'amande.",
           "Porter à frémissement en remuant constamment.",
-          "Servir chaud avec de la crème fouettée et de la noix de muscade."
+          "Servir chaud avec de la crème fouettée et de la noix de muscade.",
         ]),
         temps_preparation: 10,
         temps_cuisson: 15,
         difficulte: 1,
-        anecdote: "Les studios Harry Potter proposent une version non alcoolisée dans leurs parcs à thème",
+        anecdote:
+          "Les studios Harry Potter proposent une version non alcoolisée dans leurs parcs à thème",
         image: "butterbeer_real.jpg",
         id_oeuvre: movies[2].id,
         id_categorie: categories[3].id,
@@ -262,12 +269,13 @@ async function seedDatabase() {
           "Mélanger avec 200ml de crème fraîche et 1 cuillère à café de moutarde.",
           "Étaler une pâte brisée dans un moule, verser la préparation.",
           "Recouvrir d'une seconde pâte, sceller les bords et faire des entailles.",
-          "Cuire 40 min à 180°C jusqu'à coloration."
+          "Cuire 40 min à 180°C jusqu'à coloration.",
         ]),
         temps_preparation: 35,
         temps_cuisson: 45,
         difficulte: 2,
-        anecdote: "Les tourtes sont fréquentes dans la cuisine britannique traditionnelle",
+        anecdote:
+          "Les tourtes sont fréquentes dans la cuisine britannique traditionnelle",
         image: "chicken_pie_real.jpg",
         id_oeuvre: movies[2].id,
         id_categorie: categories[1].id,
@@ -316,12 +324,13 @@ async function seedDatabase() {
           "Ajouter 2 œufs, 100ml de lait tiède et 50g de beurre fondu.",
           "Pétrir 10 min et laisser lever 1h.",
           "Former des donuts et frire à 170°C 2 min par côté.",
-          "Glaçage : mélanger 200g de sucre glace, colorant rose et 3 c.à.s d'eau."
+          "Glaçage : mélanger 200g de sucre glace, colorant rose et 3 c.à.s d'eau.",
         ]),
         temps_preparation: 90,
         temps_cuisson: 15,
         difficulte: 3,
-        anecdote: "Le magasin de donuts préféré d'Homer s'appelle Lard Lad Donuts",
+        anecdote:
+          "Le magasin de donuts préféré d'Homer s'appelle Lard Lad Donuts",
         image: "simpsons_donuts_real.jpg",
         id_oeuvre: movies[6].id,
         id_categorie: categories[2].id,
@@ -335,12 +344,13 @@ async function seedDatabase() {
           "Saupoudrer de 2 cuillères à soupe de farine. Mélanger.",
           "Mouiller avec 750ml de vin rouge et 250ml de bouillon.",
           "Ajouter 4 carottes, 1 bouquet garni. Cuire 3h à feu doux.",
-          "Ajouter 200g de champignons en fin de cuisson."
+          "Ajouter 200g de champignons en fin de cuisson.",
         ]),
         temps_preparation: 45,
         temps_cuisson: 210,
         difficulte: 4,
-        anecdote: "Julia Child a adapté cette recette pour le public américain dans son livre 'Mastering the Art of French Cooking'",
+        anecdote:
+          "Julia Child a adapté cette recette pour le public américain dans son livre 'Mastering the Art of French Cooking'",
         image: "boeuf_bourguignon_real.jpg",
         id_oeuvre: movies[7].id,
         id_categorie: categories[1].id,
@@ -540,173 +550,588 @@ async function seedDatabase() {
     // Associations recettes-ingrédients
     await RecipeIngredient.bulkCreate([
       // Ingrédients pour la Ratatouille Confite
-      { id_recette: recipes[0].id_recette, id_ingredient: ingredients[0].id_ingredient, quantite: '4' },  // Tomates
-      { id_recette: recipes[0].id_recette, id_ingredient: ingredients[1].id_ingredient, quantite: '2' },  // Aubergines
-      { id_recette: recipes[0].id_recette, id_ingredient: ingredients[2].id_ingredient, quantite: '3' },  // Courgettes
-      { id_recette: recipes[0].id_recette, id_ingredient: ingredients[5].id_ingredient, quantite: '4' },  // Gousses d'ail
-      { id_recette: recipes[0].id_recette, id_ingredient: ingredients[6].id_ingredient, quantite: '5' },  // Huile d'olive
-      { id_recette: recipes[0].id_recette, id_ingredient: ingredients[22].id_ingredient, quantite: '2' }, // Thym
+      {
+        id_recette: recipes[0].id_recette,
+        id_ingredient: ingredients[0].id_ingredient,
+        quantite: "4",
+      }, // Tomates
+      {
+        id_recette: recipes[0].id_recette,
+        id_ingredient: ingredients[1].id_ingredient,
+        quantite: "2",
+      }, // Aubergines
+      {
+        id_recette: recipes[0].id_recette,
+        id_ingredient: ingredients[2].id_ingredient,
+        quantite: "3",
+      }, // Courgettes
+      {
+        id_recette: recipes[0].id_recette,
+        id_ingredient: ingredients[5].id_ingredient,
+        quantite: "4",
+      }, // Gousses d'ail
+      {
+        id_recette: recipes[0].id_recette,
+        id_ingredient: ingredients[6].id_ingredient,
+        quantite: "5",
+      }, // Huile d'olive
+      {
+        id_recette: recipes[0].id_recette,
+        id_ingredient: ingredients[22].id_ingredient,
+        quantite: "2",
+      }, // Thym
 
       // Ingrédients pour le Second petit-déjeuner hobbit
-      { id_recette: recipes[1].id_recette, id_ingredient: ingredients[10].id_ingredient, quantite: '300' }, // Champignons
-      { id_recette: recipes[1].id_recette, id_ingredient: ingredients[11].id_ingredient, quantite: '500' }, // Pommes de terre
-      { id_recette: recipes[1].id_recette, id_ingredient: ingredients[19].id_ingredient, quantite: '200' }, // Lardons
-      { id_recette: recipes[1].id_recette, id_ingredient: ingredients[20].id_ingredient, quantite: '4' },   // Œufs
-      { id_recette: recipes[1].id_recette, id_ingredient: ingredients[22].id_ingredient, quantite: '1' },   // Thym
+      {
+        id_recette: recipes[1].id_recette,
+        id_ingredient: ingredients[10].id_ingredient,
+        quantite: "300",
+      }, // Champignons
+      {
+        id_recette: recipes[1].id_recette,
+        id_ingredient: ingredients[11].id_ingredient,
+        quantite: "500",
+      }, // Pommes de terre
+      {
+        id_recette: recipes[1].id_recette,
+        id_ingredient: ingredients[19].id_ingredient,
+        quantite: "200",
+      }, // Lardons
+      {
+        id_recette: recipes[1].id_recette,
+        id_ingredient: ingredients[20].id_ingredient,
+        quantite: "4",
+      }, // Œufs
+      {
+        id_recette: recipes[1].id_recette,
+        id_ingredient: ingredients[22].id_ingredient,
+        quantite: "1",
+      }, // Thym
 
       // Ingrédients pour la Bière au Beurre
-      { id_recette: recipes[2].id_recette, id_ingredient: ingredients[7].id_ingredient, quantite: '100' },  // Beurre
-      { id_recette: recipes[2].id_recette, id_ingredient: ingredients[12].id_ingredient, quantite: '500' }, // Bière
-      { id_recette: recipes[2].id_recette, id_ingredient: ingredients[16].id_ingredient, quantite: '100' }, // Sucre
-      { id_recette: recipes[2].id_recette, id_ingredient: ingredients[17].id_ingredient, quantite: '200' }, // Crème fraîche
-      { id_recette: recipes[2].id_recette, id_ingredient: ingredients[24].id_ingredient, quantite: '2' },   // Miel
+      {
+        id_recette: recipes[2].id_recette,
+        id_ingredient: ingredients[7].id_ingredient,
+        quantite: "100",
+      }, // Beurre
+      {
+        id_recette: recipes[2].id_recette,
+        id_ingredient: ingredients[12].id_ingredient,
+        quantite: "500",
+      }, // Bière
+      {
+        id_recette: recipes[2].id_recette,
+        id_ingredient: ingredients[16].id_ingredient,
+        quantite: "100",
+      }, // Sucre
+      {
+        id_recette: recipes[2].id_recette,
+        id_ingredient: ingredients[17].id_ingredient,
+        quantite: "200",
+      }, // Crème fraîche
+      {
+        id_recette: recipes[2].id_recette,
+        id_ingredient: ingredients[24].id_ingredient,
+        quantite: "2",
+      }, // Miel
 
       // Ingrédients pour les Donuts d'Homer
-      { id_recette: recipes[3].id_recette, id_ingredient: ingredients[8].id_ingredient, quantite: '500' },  // Farine
-      { id_recette: recipes[3].id_recette, id_ingredient: ingredients[16].id_ingredient, quantite: '100' }, // Sucre
-      { id_recette: recipes[3].id_recette, id_ingredient: ingredients[20].id_ingredient, quantite: '2' },   // Œufs
-      { id_recette: recipes[3].id_recette, id_ingredient: ingredients[9].id_ingredient, quantite: '250' },  // Lait
-      { id_recette: recipes[3].id_recette, id_ingredient: ingredients[7].id_ingredient, quantite: '50' },   // Beurre
+      {
+        id_recette: recipes[3].id_recette,
+        id_ingredient: ingredients[8].id_ingredient,
+        quantite: "500",
+      }, // Farine
+      {
+        id_recette: recipes[3].id_recette,
+        id_ingredient: ingredients[16].id_ingredient,
+        quantite: "100",
+      }, // Sucre
+      {
+        id_recette: recipes[3].id_recette,
+        id_ingredient: ingredients[20].id_ingredient,
+        quantite: "2",
+      }, // Œufs
+      {
+        id_recette: recipes[3].id_recette,
+        id_ingredient: ingredients[9].id_ingredient,
+        quantite: "250",
+      }, // Lait
+      {
+        id_recette: recipes[3].id_recette,
+        id_ingredient: ingredients[7].id_ingredient,
+        quantite: "50",
+      }, // Beurre
 
       // Ingrédients pour le Bœuf Bourguignon
-      { id_recette: recipes[4].id_recette, id_ingredient: ingredients[4].id_ingredient, quantite: '3' },    // Oignons
-      { id_recette: recipes[4].id_recette, id_ingredient: ingredients[5].id_ingredient, quantite: '4' },    // Ail
-      { id_recette: recipes[4].id_recette, id_ingredient: ingredients[6].id_ingredient, quantite: '3' },    // Huile d'olive
-      { id_recette: recipes[4].id_recette, id_ingredient: ingredients[19].id_ingredient, quantite: '200' }, // Lardons
-      { id_recette: recipes[4].id_recette, id_ingredient: ingredients[23].id_ingredient, quantite: '2' },    // Laurier
+      {
+        id_recette: recipes[4].id_recette,
+        id_ingredient: ingredients[4].id_ingredient,
+        quantite: "3",
+      }, // Oignons
+      {
+        id_recette: recipes[4].id_recette,
+        id_ingredient: ingredients[5].id_ingredient,
+        quantite: "4",
+      }, // Ail
+      {
+        id_recette: recipes[4].id_recette,
+        id_ingredient: ingredients[6].id_ingredient,
+        quantite: "3",
+      }, // Huile d'olive
+      {
+        id_recette: recipes[4].id_recette,
+        id_ingredient: ingredients[19].id_ingredient,
+        quantite: "200",
+      }, // Lardons
+      {
+        id_recette: recipes[4].id_recette,
+        id_ingredient: ingredients[23].id_ingredient,
+        quantite: "2",
+      }, // Laurier
 
       // Ingrédients pour la Tourte au Poulet
-      { id_recette: recipes[5].id_recette, id_ingredient: ingredients[13].id_ingredient, quantite: '500' }, // Poulet
-      { id_recette: recipes[5].id_recette, id_ingredient: ingredients[4].id_ingredient, quantite: '1' },    // Oignon
-      { id_recette: recipes[5].id_recette, id_ingredient: ingredients[10].id_ingredient, quantite: '200' }, // Champignons
-      { id_recette: recipes[5].id_recette, id_ingredient: ingredients[17].id_ingredient, quantite: '200' }, // Crème fraîche
-      { id_recette: recipes[5].id_recette, id_ingredient: ingredients[8].id_ingredient, quantite: '300' },  // Farine
+      {
+        id_recette: recipes[5].id_recette,
+        id_ingredient: ingredients[13].id_ingredient,
+        quantite: "500",
+      }, // Poulet
+      {
+        id_recette: recipes[5].id_recette,
+        id_ingredient: ingredients[4].id_ingredient,
+        quantite: "1",
+      }, // Oignon
+      {
+        id_recette: recipes[5].id_recette,
+        id_ingredient: ingredients[10].id_ingredient,
+        quantite: "200",
+      }, // Champignons
+      {
+        id_recette: recipes[5].id_recette,
+        id_ingredient: ingredients[17].id_ingredient,
+        quantite: "200",
+      }, // Crème fraîche
+      {
+        id_recette: recipes[5].id_recette,
+        id_ingredient: ingredients[8].id_ingredient,
+        quantite: "300",
+      }, // Farine
 
       // Ingrédients pour le Pain Elfique
-      { id_recette: recipes[6].id_recette, id_ingredient: ingredients[8].id_ingredient, quantite: '400' },  // Farine
-      { id_recette: recipes[6].id_recette, id_ingredient: ingredients[7].id_ingredient, quantite: '50' },   // Beurre
-      { id_recette: recipes[6].id_recette, id_ingredient: ingredients[24].id_ingredient, quantite: '3' },   // Miel
-      { id_recette: recipes[6].id_recette, id_ingredient: ingredients[9].id_ingredient, quantite: '200' },  // Lait
+      {
+        id_recette: recipes[6].id_recette,
+        id_ingredient: ingredients[8].id_ingredient,
+        quantite: "400",
+      }, // Farine
+      {
+        id_recette: recipes[6].id_recette,
+        id_ingredient: ingredients[7].id_ingredient,
+        quantite: "50",
+      }, // Beurre
+      {
+        id_recette: recipes[6].id_recette,
+        id_ingredient: ingredients[24].id_ingredient,
+        quantite: "3",
+      }, // Miel
+      {
+        id_recette: recipes[6].id_recette,
+        id_ingredient: ingredients[9].id_ingredient,
+        quantite: "200",
+      }, // Lait
 
       // Ingrédients pour le Festin de Winterfell
-      { id_recette: recipes[7].id_recette, id_ingredient: ingredients[13].id_ingredient, quantite: '800' }, // Poulet
-      { id_recette: recipes[7].id_recette, id_ingredient: ingredients[4].id_ingredient, quantite: '3' },    // Oignons
-      { id_recette: recipes[7].id_recette, id_ingredient: ingredients[11].id_ingredient, quantite: '400' }, // Pommes de terre
-      { id_recette: recipes[7].id_recette, id_ingredient: ingredients[23].id_ingredient, quantite: '2' },   // Laurier
+      {
+        id_recette: recipes[7].id_recette,
+        id_ingredient: ingredients[13].id_ingredient,
+        quantite: "800",
+      }, // Poulet
+      {
+        id_recette: recipes[7].id_recette,
+        id_ingredient: ingredients[19].id_ingredient,
+        quantite: "200",
+      }, // Lardons
+      {
+        id_recette: recipes[7].id_recette,
+        id_ingredient: ingredients[11].id_ingredient,
+        quantite: "400",
+      }, // Pommes de terre
+      {
+        id_recette: recipes[7].id_recette,
+        id_ingredient: ingredients[4].id_ingredient,
+        quantite: "3",
+      }, // Oignons
+      {
+        id_recette: recipes[7].id_recette,
+        id_ingredient: ingredients[23].id_ingredient,
+        quantite: "2",
+      }, // Laurier
 
       // Ingrédients pour le Chocolat Chaud Épicé
-      { id_recette: recipes[8].id_recette, id_ingredient: ingredients[15].id_ingredient, quantite: '200' }, // Chocolat noir
-      { id_recette: recipes[8].id_recette, id_ingredient: ingredients[9].id_ingredient, quantite: '500' },  // Lait
-      { id_recette: recipes[8].id_recette, id_ingredient: ingredients[17].id_ingredient, quantite: '100' }, // Crème
-      { id_recette: recipes[8].id_recette, id_ingredient: ingredients[24].id_ingredient, quantite: '2' },   // Miel
+      {
+        id_recette: recipes[8].id_recette,
+        id_ingredient: ingredients[15].id_ingredient,
+        quantite: "200",
+      }, // Chocolat noir
+      {
+        id_recette: recipes[8].id_recette,
+        id_ingredient: ingredients[9].id_ingredient,
+        quantite: "500",
+      }, // Lait
+      {
+        id_recette: recipes[8].id_recette,
+        id_ingredient: ingredients[17].id_ingredient,
+        quantite: "100",
+      }, // Crème
+      {
+        id_recette: recipes[8].id_recette,
+        id_ingredient: ingredients[24].id_ingredient,
+        quantite: "2",
+      }, // Miel
 
       // Ingrédients pour le Risotto aux Champignons
-      { id_recette: recipes[9].id_recette, id_ingredient: ingredients[26].id_ingredient, quantite: '300' }, // Riz Arborio
-      { id_recette: recipes[9].id_recette, id_ingredient: ingredients[27].id_ingredient, quantite: '1000' },// Bouillon
-      { id_recette: recipes[9].id_recette, id_ingredient: ingredients[10].id_ingredient, quantite: '250' }, // Champignons
-      { id_recette: recipes[9].id_recette, id_ingredient: ingredients[28].id_ingredient, quantite: '100' }, // Parmesan
-      { id_recette: recipes[9].id_recette, id_ingredient: ingredients[7].id_ingredient, quantite: '50' },    // Beurre
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[26].id_ingredient,
+        quantite: "300",
+      }, // Riz Arborio
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[27].id_ingredient,
+        quantite: "1000",
+      }, // Bouillon
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[10].id_ingredient,
+        quantite: "250",
+      }, // Champignons
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[28].id_ingredient,
+        quantite: "100",
+      }, // Parmesan
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[7].id_ingredient,
+        quantite: "50",
+      }, // Beurre
+
       // Ingrédients pour le Pudding de Noël
-      { id_recette: recipes[10].id_recette, id_ingredient: ingredients[8].id_ingredient, quantite: '300' },  // Farine
-      { id_recette: recipes[10].id_recette, id_ingredient: ingredients[16].id_ingredient, quantite: '200' }, // Sucre
-      { id_recette: recipes[10].id_recette, id_ingredient: ingredients[20].id_ingredient, quantite: '3' },   // Œufs
-      { id_recette: recipes[10].id_recette, id_ingredient: ingredients[24].id_ingredient, quantite: '4' },   // Miel
-      { id_recette: recipes[10].id_recette, id_ingredient: ingredients[17].id_ingredient, quantite: '200' }, // Crème
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[8].id_ingredient,
+        quantite: "300",
+      }, // Farine
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[16].id_ingredient,
+        quantite: "200",
+      }, // Sucre
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[20].id_ingredient,
+        quantite: "3",
+      }, // Œufs
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[24].id_ingredient,
+        quantite: "4",
+      }, // Miel
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[17].id_ingredient,
+        quantite: "200",
+      }, // Crème
 
       // Ingrédients pour la Tarte aux pommes
-      { id_recette: recipes[11].id_recette, id_ingredient: ingredients[8].id_ingredient, quantite: '250' },  // Farine
-      { id_recette: recipes[11].id_recette, id_ingredient: ingredients[7].id_ingredient, quantite: '125' },  // Beurre
-      { id_recette: recipes[11].id_recette, id_ingredient: ingredients[16].id_ingredient, quantite: '100' }, // Sucre
-      { id_recette: recipes[11].id_recette, id_ingredient: ingredients[20].id_ingredient, quantite: '1' },   // Œuf
-      { id_recette: recipes[11].id_recette, id_ingredient: ingredients[24].id_ingredient, quantite: '2' },   // Miel
+      {
+        id_recette: recipes[11].id_recette,
+        id_ingredient: ingredients[8].id_ingredient,
+        quantite: "250",
+      }, // Farine
+      {
+        id_recette: recipes[11].id_recette,
+        id_ingredient: ingredients[7].id_ingredient,
+        quantite: "125",
+      }, // Beurre
+      {
+        id_recette: recipes[11].id_recette,
+        id_ingredient: ingredients[16].id_ingredient,
+        quantite: "100",
+      }, // Sucre
+      {
+        id_recette: recipes[11].id_recette,
+        id_ingredient: ingredients[20].id_ingredient,
+        quantite: "1",
+      }, // Œuf
+      {
+        id_recette: recipes[11].id_recette,
+        id_ingredient: ingredients[24].id_ingredient,
+        quantite: "2",
+      }, // Miel
 
       // Ingrédients pour les Cailles en Sarcophage
-      { id_recette: recipes[12].id_recette, id_ingredient: ingredients[8].id_ingredient, quantite: '400' },  // Farine
-      { id_recette: recipes[12].id_recette, id_ingredient: ingredients[7].id_ingredient, quantite: '200' },  // Beurre
-      { id_recette: recipes[12].id_recette, id_ingredient: ingredients[20].id_ingredient, quantite: '2' },   // Œufs
-      { id_recette: recipes[12].id_recette, id_ingredient: ingredients[17].id_ingredient, quantite: '200' }, // Crème
-      { id_recette: recipes[12].id_recette, id_ingredient: ingredients[22].id_ingredient, quantite: '3' },   // Thym
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[8].id_ingredient,
+        quantite: "400",
+      }, // Farine
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[7].id_ingredient,
+        quantite: "200",
+      }, // Beurre
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[20].id_ingredient,
+        quantite: "2",
+      }, // Œufs
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[17].id_ingredient,
+        quantite: "200",
+      }, // Crème
+      {
+        id_recette: recipes[9].id_recette,
+        id_ingredient: ingredients[22].id_ingredient,
+        quantite: "3",
+      }, // Thym
 
       // Ingrédients pour la Soupe de tortue
-      { id_recette: recipes[13].id_recette, id_ingredient: ingredients[27].id_ingredient, quantite: '1000' }, // Bouillon
-      { id_recette: recipes[13].id_recette, id_ingredient: ingredients[4].id_ingredient, quantite: '2' },     // Oignons
-      { id_recette: recipes[13].id_recette, id_ingredient: ingredients[5].id_ingredient, quantite: '3' },     // Ail
-      { id_recette: recipes[13].id_recette, id_ingredient: ingredients[22].id_ingredient, quantite: '2' },    // Thym
-      { id_recette: recipes[13].id_recette, id_ingredient: ingredients[23].id_ingredient, quantite: '1' }     // Laurier
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[27].id_ingredient,
+        quantite: "1000",
+      }, // Bouillon
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[4].id_ingredient,
+        quantite: "2",
+      }, // Oignons
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[5].id_ingredient,
+        quantite: "3",
+      }, // Ail
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[22].id_ingredient,
+        quantite: "2",
+      }, // Thym
+      {
+        id_recette: recipes[10].id_recette,
+        id_ingredient: ingredients[23].id_ingredient,
+        quantite: "1",
+      }, // Laurier
     ]);
 
     // Associations recettes-ustensiles
     await RecipeUtensil.bulkCreate([
       // Ustensiles pour la Ratatouille
-      { id_recette: recipes[0].id_recette, id_ustensile: ustensils[0].id_ustensile }, // Couteau
-      { id_recette: recipes[0].id_recette, id_ustensile: ustensils[1].id_ustensile }, // Planche
-      { id_recette: recipes[0].id_recette, id_ustensile: ustensils[6].id_ustensile }, // Mandoline
-      { id_recette: recipes[0].id_recette, id_ustensile: ustensils[9].id_ustensile }, // Plat
+      {
+        id_recette: recipes[0].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+      {
+        id_recette: recipes[0].id_recette,
+        id_ustensile: ustensils[1].id_ustensile,
+      }, // Planche
+      {
+        id_recette: recipes[0].id_recette,
+        id_ustensile: ustensils[6].id_ustensile,
+      }, // Mandoline
+      {
+        id_recette: recipes[0].id_recette,
+        id_ustensile: ustensils[9].id_ustensile,
+      }, // Plat
 
       // Ustensiles pour le petit-déjeuner hobbit
-      { id_recette: recipes[1].id_recette, id_ustensile: ustensils[3].id_ustensile }, // Poêle
-      { id_recette: recipes[1].id_recette, id_ustensile: ustensils[5].id_ustensile }, // Spatule
-      { id_recette: recipes[1].id_recette, id_ustensile: ustensils[10].id_ustensile }, // Cuillère
+      {
+        id_recette: recipes[1].id_recette,
+        id_ustensile: ustensils[3].id_ustensile,
+      }, // Poêle
+      {
+        id_recette: recipes[1].id_recette,
+        id_ustensile: ustensils[5].id_ustensile,
+      }, // Spatule
+      {
+        id_recette: recipes[1].id_recette,
+        id_ustensile: ustensils[10].id_ustensile,
+      }, // Cuillère
 
       // Ustensiles pour la Bièraubeurre
-      { id_recette: recipes[2].id_recette, id_ustensile: ustensils[2].id_ustensile }, // Casserole
-      { id_recette: recipes[2].id_recette, id_ustensile: ustensils[4].id_ustensile }, // Fouet
-      { id_recette: recipes[2].id_recette, id_ustensile: ustensils[10].id_ustensile }, // Cuillère
+      {
+        id_recette: recipes[2].id_recette,
+        id_ustensile: ustensils[2].id_ustensile,
+      }, // Casserole
+      {
+        id_recette: recipes[2].id_recette,
+        id_ustensile: ustensils[4].id_ustensile,
+      }, // Fouet
+      {
+        id_recette: recipes[2].id_recette,
+        id_ustensile: ustensils[10].id_ustensile,
+      }, // Cuillère
 
       // Ustensiles pour les Donuts
-      { id_recette: recipes[3].id_recette, id_ustensile: ustensils[4].id_ustensile }, // Fouet
-      { id_recette: recipes[3].id_recette, id_ustensile: ustensils[8].id_ustensile }, // Four
-      { id_recette: recipes[3].id_recette, id_ustensile: ustensils[3].id_ustensile }, // Poêle
+      {
+        id_recette: recipes[3].id_recette,
+        id_ustensile: ustensils[4].id_ustensile,
+      }, // Fouet
+      {
+        id_recette: recipes[3].id_recette,
+        id_ustensile: ustensils[8].id_ustensile,
+      }, // Four
+      {
+        id_recette: recipes[3].id_recette,
+        id_ustensile: ustensils[3].id_ustensile,
+      }, // Poêle
 
       // Ustensiles pour le Bœuf Bourguignon
-      { id_recette: recipes[4].id_recette, id_ustensile: ustensils[0].id_ustensile }, // Couteau
-      { id_recette: recipes[4].id_recette, id_ustensile: ustensils[2].id_ustensile }, // Casserole
-      { id_recette: recipes[4].id_recette, id_ustensile: ustensils[10].id_ustensile }, // Cuillère
+      {
+        id_recette: recipes[4].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+      {
+        id_recette: recipes[4].id_recette,
+        id_ustensile: ustensils[2].id_ustensile,
+      }, // Casserole
+      {
+        id_recette: recipes[4].id_recette,
+        id_ustensile: ustensils[10].id_ustensile,
+      }, // Cuillère
 
       // Ustensiles pour la Tourte au Poulet
-      { id_recette: recipes[5].id_recette, id_ustensile: ustensils[0].id_ustensile }, // Couteau
-      { id_recette: recipes[5].id_recette, id_ustensile: ustensils[11].id_ustensile }, // Moule à tarte
-      { id_recette: recipes[5].id_recette, id_ustensile: ustensils[8].id_ustensile },  // Four
+      {
+        id_recette: recipes[5].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+      {
+        id_recette: recipes[5].id_recette,
+        id_ustensile: ustensils[1].id_ustensile,
+      }, // Planche
+      {
+        id_recette: recipes[5].id_recette,
+        id_ustensile: ustensils[8].id_ustensile,
+      }, // Four
+      {
+        id_recette: recipes[5].id_recette,
+        id_ustensile: ustensils[11].id_ustensile,
+      }, // Moule à tarte
 
       // Ustensiles pour le Pain Elfique
-      { id_recette: recipes[6].id_recette, id_ustensile: ustensils[4].id_ustensile }, // Fouet
-      { id_recette: recipes[6].id_recette, id_ustensile: ustensils[8].id_ustensile }, // Four
-      { id_recette: recipes[6].id_recette, id_ustensile: ustensils[10].id_ustensile }, // Cuillère
+      {
+        id_recette: recipes[6].id_recette,
+        id_ustensile: ustensils[4].id_ustensile,
+      }, // Fouet
+      {
+        id_recette: recipes[6].id_recette,
+        id_ustensile: ustensils[8].id_ustensile,
+      }, // Four
+      {
+        id_recette: recipes[6].id_recette,
+        id_ustensile: ustensils[9].id_ustensile,
+      }, // Plat de cuisson
 
       // Ustensiles pour le Festin de Winterfell
-      { id_recette: recipes[7].id_recette, id_ustensile: ustensils[2].id_ustensile }, // Casserole
-      { id_recette: recipes[7].id_recette, id_ustensile: ustensils[0].id_ustensile }, // Couteau
-      { id_recette: recipes[7].id_recette, id_ustensile: ustensils[10].id_ustensile }, // Cuillère
+      {
+        id_recette: recipes[7].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+      {
+        id_recette: recipes[7].id_recette,
+        id_ustensile: ustensils[2].id_ustensile,
+      }, // Casserole
+      {
+        id_recette: recipes[7].id_recette,
+        id_ustensile: ustensils[9].id_ustensile,
+      }, // Plat de cuisson
+      {
+        id_recette: recipes[7].id_recette,
+        id_ustensile: ustensils[10].id_ustensile,
+      }, // Cuillère en bois
 
       // Ustensiles pour le Chocolat Chaud Épicé
-      { id_recette: recipes[8].id_recette, id_ustensile: ustensils[2].id_ustensile }, // Casserole
-      { id_recette: recipes[8].id_recette, id_ustensile: ustensils[4].id_ustensile }, // Fouet
-      { id_recette: recipes[8].id_recette, id_ustensile: ustensils[10].id_ustensile }, // Cuillère
+      {
+        id_recette: recipes[8].id_recette,
+        id_ustensile: ustensils[2].id_ustensile,
+      }, // Casserole
+      {
+        id_recette: recipes[8].id_recette,
+        id_ustensile: ustensils[4].id_ustensile,
+      }, // Fouet
+      {
+        id_recette: recipes[8].id_recette,
+        id_ustensile: ustensils[10].id_ustensile,
+      }, // Cuillère
 
       // Ustensiles pour le Risotto
-      { id_recette: recipes[9].id_recette, id_ustensile: ustensils[2].id_ustensile }, // Casserole
-      { id_recette: recipes[9].id_recette, id_ustensile: ustensils[10].id_ustensile }, // Cuillère
-      { id_recette: recipes[9].id_recette, id_ustensile: ustensils[0].id_ustensile },  // Couteau
+      {
+        id_recette: recipes[9].id_recette,
+        id_ustensile: ustensils[2].id_ustensile,
+      }, // Casserole
+      {
+        id_recette: recipes[9].id_recette,
+        id_ustensile: ustensils[10].id_ustensile,
+      }, // Cuillère
+      {
+        id_recette: recipes[9].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
 
       // Ustensiles pour le Pudding de Noël
-      { id_recette: recipes[10].id_recette, id_ustensile: ustensils[4].id_ustensile }, // Fouet
-      { id_recette: recipes[10].id_recette, id_ustensile: ustensils[8].id_ustensile }, // Four
-      { id_recette: recipes[10].id_recette, id_ustensile: ustensils[10].id_ustensile }, // Cuillère
+      {
+        id_recette: recipes[10].id_recette,
+        id_ustensile: ustensils[4].id_ustensile,
+      }, // Fouet
+      {
+        id_recette: recipes[10].id_recette,
+        id_ustensile: ustensils[8].id_ustensile,
+      }, // Four
+      {
+        id_recette: recipes[10].id_recette,
+        id_ustensile: ustensils[10].id_ustensile,
+      }, // Cuillère
 
       // Ustensiles pour la Tarte aux pommes
-      { id_recette: recipes[11].id_recette, id_ustensile: ustensils[0].id_ustensile }, // Couteau
-      { id_recette: recipes[11].id_recette, id_ustensile: ustensils[11].id_ustensile }, // Moule à tarte
-      { id_recette: recipes[11].id_recette, id_ustensile: ustensils[8].id_ustensile }, // Four
+      {
+        id_recette: recipes[11].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+      {
+        id_recette: recipes[11].id_recette,
+        id_ustensile: ustensils[11].id_ustensile,
+      }, // Moule à tarte
+      {
+        id_recette: recipes[11].id_recette,
+        id_ustensile: ustensils[8].id_ustensile,
+      }, // Four
 
       // Ustensiles pour les Cailles en Sarcophage
-      { id_recette: recipes[12].id_recette, id_ustensile: ustensils[0].id_ustensile }, // Couteau
-      { id_recette: recipes[12].id_recette, id_ustensile: ustensils[8].id_ustensile }, // Four
-      { id_recette: recipes[12].id_recette, id_ustensile: ustensils[9].id_ustensile }, // Plat
+      {
+        id_recette: recipes[9].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+      {
+        id_recette: recipes[9].id_recette,
+        id_ustensile: ustensils[8].id_ustensile,
+      }, // Four
+      {
+        id_recette: recipes[9].id_recette,
+        id_ustensile: ustensils[9].id_ustensile,
+      }, // Plat
 
       // Ustensiles pour la Soupe de tortue
-      { id_recette: recipes[13].id_recette, id_ustensile: ustensils[2].id_ustensile }, // Casserole
-      { id_recette: recipes[13].id_recette, id_ustensile: ustensils[0].id_ustensile }, // Couteau
-      { id_recette: recipes[13].id_recette, id_ustensile: ustensils[10].id_ustensile } // Cuillère
+      {
+        id_recette: recipes[10].id_recette,
+        id_ustensile: ustensils[2].id_ustensile,
+      }, // Casserole
+      {
+        id_recette: recipes[10].id_recette,
+        id_ustensile: ustensils[0].id_ustensile,
+      }, // Couteau
+      {
+        id_recette: recipes[10].id_recette,
+        id_ustensile: ustensils[10].id_ustensile,
+      }, // Cuillère
     ]);
 
     // Création des commentaires pour toutes les recettes

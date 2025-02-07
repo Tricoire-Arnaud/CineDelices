@@ -43,66 +43,58 @@ const mainController = {
   getCatalog: async (req, res) => {
     try {
       const { page = 1, category, sort = "recent" } = req.query;
-
-      const queryRecipes = Array.isArray(req.query.queryRecipes)
-        ? req.query.queryRecipes[0]
-        : req.query.queryRecipes || "";
-
+      const queryRecipes = req.query.queryRecipes || "";
       const limit = 12;
       const offset = (page - 1) * limit;
-      const whereClause = category ? { id_categorie: category } : {};
 
-      // Condition de recherche pour les recettes
-      const searchConditionRecipes = queryRecipes
-        ? { titre: { [Op.iLike]: `%${queryRecipes}%` } }
-        : {};
+      // Construction de la clause WHERE de base
+      let whereClause = {};
 
-      let recipes = [];
-      let categories = [];
-
-      console.log(queryRecipes);
-
-      if (!queryRecipes) {
-        // Si aucune recherche n'est faite, récupérer les recettes avec pagination
-        [recipes, categories] = await Promise.all([
-          Recipe.findAndCountAll({
-            where: whereClause,
-            include: [{ model: Movie }, { model: Category, as: "category" }],
-            order: getSortingOrder(sort),
-            limit,
-            offset,
-          }),
-          Category.findAll(),
-        ]);
-      } else {
-        // Si une recherche est effectuée, récupérer les recettes filtrées par titre
-        [recipes, categories] = await Promise.all([
-          Recipe.findAndCountAll({
-            where: {
-              ...whereClause,
-              ...searchConditionRecipes,
-            },
-            include: [{ model: Movie }, { model: Category, as: "category" }],
-            order: getSortingOrder(sort),
-            limit,
-            offset,
-          }),
-          Category.findAll(),
-        ]);
+      // Ajout du filtre par catégorie si présent
+      if (category) {
+        whereClause.id_categorie = category;
       }
 
-      // Vérifier s'il y a des résultats
-      const noResults = queryRecipes && recipes.count === 0;
+      // Ajout de la recherche par titre si présente
+      if (queryRecipes) {
+        whereClause.titre = {
+          [Op.iLike]: `%${queryRecipes}%`,
+        };
+      }
+
+      // Récupération des recettes et catégories
+      const [recipes, categories] = await Promise.all([
+        Recipe.findAndCountAll({
+          where: whereClause,
+          include: [
+            {
+              model: Movie,
+              attributes: ["titre", "annee"],
+            },
+            {
+              model: Category,
+              as: "category",
+              attributes: ["libelle"],
+            },
+          ],
+          order: getSortingOrder(sort),
+          limit,
+          offset,
+        }),
+        Category.findAll({
+          attributes: ["id_categorie", "libelle"], // Assurez-vous d'inclure l'ID
+        }),
+      ]);
 
       res.render("recipes/catalog", {
         recipes: recipes.rows,
         categories,
-        currentPage: Number.parseInt(page),
+        currentPage: parseInt(page),
         totalPages: Math.ceil(recipes.count / limit),
-        currentCategory: category,
+        currentCategory: category ? parseInt(category) : null, // Convertir en nombre
         currentSort: sort,
         currentQueryRecipes: queryRecipes,
-        noResults, // Permettra d'afficher "Aucun résultat" dans la vue
+        noResults: queryRecipes && recipes.count === 0,
         user: req.session.user,
       });
     } catch (error) {
