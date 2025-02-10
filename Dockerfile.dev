@@ -2,8 +2,14 @@
 #  projet Cinedelices en dev
 
 FROM node:20-alpine
+
+# Installer bash
+RUN apk add --no-cache bash
+
+# créer un répertoire de travail et s'y déplacer
 WORKDIR /app
 
+# on récupère le package.json depuis le dossier de build (./ => "server" => le "context" dans mon docker-compose)
 COPY ./package.json /app
 
 RUN npm i
@@ -16,4 +22,4 @@ COPY . /app
 EXPOSE 3000
 
 # on lance l'application en dev
-CMD ["nodemon", "app.js"]
+CMD ["bash", "-c","nodemon", "app.js"]
