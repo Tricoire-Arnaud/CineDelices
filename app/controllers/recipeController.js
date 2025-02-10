@@ -174,7 +174,8 @@ const {
 
     // voir la page de proposition de recette user
     getProposeRecipe : (req, res) => {
-        res.render('user/addRecipe');
+        console.log("test!"); 
+        res.render("users/addRecipe");
     },
 
     //proposer une recette (user uniquement)
