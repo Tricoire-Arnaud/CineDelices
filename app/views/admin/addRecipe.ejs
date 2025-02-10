@@ -1,0 +1,286 @@
+<%- contentFor('body') %>
+
+<!-- En-tête de la page -->
+<div class="p-8">
+  <div class="mb-8">
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-semibold text-gray-900">
+          <%= recipe ? 'Modifier la recette' : 'Ajouter une recette' %>
+        </h1>
+        <p class="mt-2 text-sm text-gray-600">
+          <%= recipe ? 'Modifiez les informations de votre recette ci-dessous' : 'Remplissez les informations pour créer une nouvelle recette' %>
+        </p>
+      </div>
+      <a href="/admin/recette" 
+         class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200">
+        <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Retour à la liste
+      </a>
+    </div>
+  </div>
+
+  <!-- Formulaire -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <form action="<%= recipe ? `/admin/recipes/${recipe.id_recette}?_method=PUT` : '/admin/recipes' %>" method="POST" enctype="multipart/form-data" class="divide-y divide-gray-200">
+      <% if (recipe) { %>
+        <input type="hidden" name="_method" value="PUT">
+      <% } %>
+      <div class="p-6 space-y-8">
+        <!-- Informations de base -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-2">
+            <label for="titre" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+              <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+              Titre de la recette
+            </label>
+            <input type="text" id="titre" name="titre" required 
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200"
+                   value="<%= recipe ? recipe.titre : '' %>"
+                   placeholder="Ex: Ratatouille à la Rémy">
+          </div>
+
+          <div class="space-y-2">
+            <label for="id_categorie" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+              <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+              </svg>
+              Catégorie
+            </label>
+            <select id="id_categorie" name="id_categorie" required
+                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200">
+              <option value="">Sélectionner une catégorie</option>
+              <% categories.forEach(category => { %>
+                <option value="<%= category.id_categorie %>" 
+                        <%= recipe && recipe.id_categorie === category.id_categorie ? 'selected' : '' %>>
+                  <%= category.libelle %>
+                </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+
+        <!-- Description et anecdote -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-2">
+            <label for="description" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+              <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+              </svg>
+              Description
+            </label>
+            <textarea id="description" name="description" rows="4" required
+                      class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200"
+                      placeholder="Décrivez votre recette en quelques phrases..."><%= recipe ? recipe.description : '' %></textarea>
+          </div>
+
+          <div class="space-y-2">
+            <label for="anecdote" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+              <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+              </svg>
+              Anecdote
+            </label>
+            <textarea id="anecdote" name="anecdote" rows="4"
+                      class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200"
+                      placeholder="Partagez une anecdote sur cette recette..."><%= recipe ? recipe.anecdote : '' %></textarea>
+          </div>
+        </div>
+
+        <!-- Temps et difficulté -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="space-y-2">
+            <label for="temps_preparation" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+              <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Temps de préparation
+            </label>
+            <div class="relative">
+              <input type="number" id="temps_preparation" name="temps_preparation" min="0" required
+                     class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200 pr-12"
+                     value="<%= recipe ? recipe.temps_preparation : '' %>"
+                     placeholder="30">
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">min</span>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label for="temps_cuisson" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+              <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/>
+              </svg>
+              Temps de cuisson
+            </label>
+            <div class="relative">
+              <input type="number" id="temps_cuisson" name="temps_cuisson" min="0" required
+                     class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200 pr-12"
+                     value="<%= recipe ? recipe.temps_cuisson : '' %>"
+                     placeholder="45">
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">min</span>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label for="difficulte" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+              <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+              Difficulté
+            </label>
+            <select id="difficulte" name="difficulte" required
+                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200">
+              <% for(let i = 1; i <= 5; i++) { %>
+                <option value="<%= i %>" <%= recipe && recipe.difficulte === i ? 'selected' : '' %>>
+                  <%= i %> <%= i === 1 ? '(Très facile)' : i === 5 ? '(Très difficile)' : '' %>
+                </option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+
+        <!-- Film/Série associé -->
+        <div class="space-y-2">
+          <label for="id_oeuvre" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
+            </svg>
+            Film/Série associé
+          </label>
+          <select id="id_oeuvre" name="id_oeuvre" required
+                  class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200">
+            <option value="">Sélectionner un film/série</option>
+            <% movies.forEach(movie => { %>
+              <option value="<%= movie.id_oeuvre %>"
+                      <%= recipe && recipe.id_oeuvre === movie.id_oeuvre ? 'selected' : '' %>>
+                <%= movie.titre %> (<%= movie.type %>)
+              </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <!-- Étapes de préparation -->
+        <div class="space-y-4">
+          <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+            </svg>
+            Étapes de préparation
+          </label>
+          <div id="etapes-container" class="space-y-4">
+            <% if (recipe && recipe.etapes) { 
+                const etapes = JSON.parse(recipe.etapes);
+                etapes.forEach((etape, index) => { %>
+                  <div class="flex items-center gap-4 group">
+                    <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-full font-medium"><%= index + 1 %></span>
+                    <input type="text" name="etapes[]" value="<%= etape %>" required
+                           class="flex-1 rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200"
+                           placeholder="Décrivez cette étape...">
+                    <button type="button" onclick="removeEtape(this)" 
+                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                      </svg>
+                    </button>
+                  </div>
+                <% });
+              } else { %>
+              <div class="flex items-center gap-4 group">
+                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-full font-medium">1</span>
+                <input type="text" name="etapes[]" required
+                       class="flex-1 rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200"
+                       placeholder="Décrivez cette étape...">
+              </div>
+            <% } %>
+          </div>
+          <button type="button" onclick="addEtape()" 
+                  class="inline-flex items-center px-4 py-2 text-sm font-medium text-orange-600 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors duration-200">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            Ajouter une étape
+          </button>
+        </div>
+
+        <!-- Image -->
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            Image de la recette
+          </label>
+          <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-orange-500 transition-colors duration-200">
+            <div class="space-y-1 text-center">
+              <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="flex text-sm text-gray-600">
+                <label for="image" class="relative cursor-pointer bg-white rounded-md font-medium text-orange-600 hover:text-orange-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-orange-500">
+                  <span>Télécharger une image</span>
+                  <input id="image" name="image" type="file" class="sr-only" accept="image/*">
+                </label>
+              </div>
+              <p class="text-xs text-gray-500">PNG, JPG, GIF jusqu'à 10MB</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="px-6 py-4 bg-gray-50 flex justify-end space-x-4">
+        <a href="/admin/recette" 
+           class="px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200">
+          Annuler
+        </a>
+        <button type="submit" 
+                class="px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200">
+          <%= recipe ? 'Mettre à jour la recette' : 'Créer la recette' %>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function addEtape() {
+  const container = document.getElementById('etapes-container');
+  const etapes = container.children;
+  const newEtape = document.createElement('div');
+  newEtape.className = 'flex items-center gap-4 group';
+  newEtape.innerHTML = `
+    <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-full font-medium">${etapes.length + 1}</span>
+    <input type="text" name="etapes[]" required
+           class="flex-1 rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200"
+           placeholder="Décrivez cette étape...">
+    <button type="button" onclick="removeEtape(this)" 
+            class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+      </svg>
+    </button>
+  `;
+  container.appendChild(newEtape);
+  renumberEtapes();
+}
+
+function removeEtape(button) {
+  const container = document.getElementById('etapes-container');
+  if (container.children.length > 1) {
+    button.closest('.group').remove();
+    renumberEtapes();
+  }
+}
+
+function renumberEtapes() {
+  const container = document.getElementById('etapes-container');
+  Array.from(container.children).forEach((etape, index) => {
+    etape.querySelector('span').textContent = index + 1;
+  });
+}
+</script> 
