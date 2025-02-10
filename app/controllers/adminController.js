@@ -223,6 +223,48 @@ const adminController = {
     }
   },
 
+  // Récupère la liste de toutes les recettes à valider
+  getRecipesToValidate: async (req, res) => {
+    try {
+      const recipes = await Recipe.findAll({
+        where: { statut: "en attente" }, // Ajout du filtre pour les recettes en attente
+        include: [
+          {
+            model: Movie,
+            as: "oeuvre",
+          },
+          {
+            model: Category,
+            as: "category",
+          },
+          {
+            model: User,
+            as: "author",
+            attributes: ["nom_utilisateur"],
+          },
+        ],
+        order: [["created_at", "DESC"]],
+      });
+
+      console.log(recipes);
+      res.render("admin/recipes", {
+        layout: "layouts/admin",
+        recipes,
+        user: req.user,
+        path: "/admin/recette-moderation",
+        messages: req.flash(),
+      });
+    } catch (error) {
+      console.error("Erreur lors de la récupération des recettes à valider:", error);
+      res.status(500).render("errors/500", {
+        layout: "layouts/admin",
+        user: req.user,
+        path: "/admin/recette-moderation",
+        messages: req.flash(),
+      });
+    }
+  },
+
   // Affiche la page d'ajout d'une oeuvre
   showaddmoviesTvShows: async (req, res) => {
     try {
