@@ -7,17 +7,17 @@ FROM node:20-alpine
 RUN apk add --no-cache bash
 
 # créer un répertoire de travail et s'y déplacer
-WORKDIR /app
+WORKDIR /cinedelices
 
 # on récupère le package.json depuis le dossier de build (./ => "server" => le "context" dans mon docker-compose)
-COPY ./package.json /app
+COPY ./package.json /cinedelices/
 
 RUN npm i
 # on a besoin de nodemon pour relancer
 # automatiquement le serveur en dev
 RUN npm i -g nodemon
 
-COPY . /app
+COPY . /cinedelices/
 
 EXPOSE 3000
 

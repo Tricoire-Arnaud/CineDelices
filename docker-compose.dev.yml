@@ -3,7 +3,7 @@
 services:
 
   # nom du service sur le réseau docker => server:3000
-  cinedelices-app:
+  app.dev:
     container_name: cinedelices-app-dev
 
     # informations relatives à l'image (=> construire une image Docker à partir de notre code pour pouvoir ensuite le faire tourner dans un conteneur)
@@ -28,8 +28,8 @@ services:
         condition: service_healthy
 
     volumes:
-      - .:/app:delegated
-      - node_modules:/app/node_modules
+      - .:/cinedelices:delegated
+      - node_modules:/cinedelices/node_modules
 
     env_file:
       - .env.docker-compose
