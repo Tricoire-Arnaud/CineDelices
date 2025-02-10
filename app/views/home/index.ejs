@@ -301,7 +301,8 @@
   </section>
 </main>
 
-<%- contentFor('script') %>
+<!-- il faut commenter cette balise EJS car elle bloque le script -->
+<%#- contentFor('script') %> 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("searchForm");
