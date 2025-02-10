@@ -27,7 +27,7 @@ const recipeController = {
                     { model: Category, attributes: ['libelle'] },
                     { model: Ingredient },
                     { model: Utensil },
-                    { 
+                    {
                         model: Comment,
                         include: [{ model: User, attributes: ['nom_utilisateur'] }]
                     },
@@ -45,6 +45,62 @@ const recipeController = {
         }
     },
 
+
+    // voir la page de proposition de recette user
+    getProposeRecipe : (req, res) => {
+        res.render('user/addRecipe');
+    },
+
+    //proposer une recette (user uniquement)
+    proposeRecipe: async (req, res) => {
+        try {
+          const { 
+            titre, 
+            description, 
+            etapes, 
+            temps_preparation, 
+            temps_cuisson, 
+            difficulte, 
+            id_oeuvre, 
+            id_categorie,
+            ingredients, 
+            ustensils,
+            anecdote, 
+            image 
+          } = req.body;
+      
+          const recipe = await Recipe.create({
+            titre,
+            description,
+            etapes: JSON.stringify(etapes),
+            temps_preparation,
+            temps_cuisson,
+            difficulte,
+            id_oeuvre,
+            id_categorie,
+            statut: 'en attente', // Statut par défaut : en attente
+            anecdote, // Ajout de l'anecdote
+            image // Ajout de l'image
+          });
+      
+          // Ajouter les ingrédients
+          if (ingredients && ingredients.length > 0) {
+            await recipe.addIngredients(ingredients.map(ing => ing.id), {
+              through: { quantite: ing.quantite }
+            });
+          }
+      
+          // Ajouter les ustensiles
+          if (ustensils && ustensils.length > 0) {
+            await recipe.addUtensils(ustensils);
+          }
+      
+          res.status(201).json(recipe);
+        } catch (error) {
+          console.error("Erreur lors de la proposition de la recette :", error);
+          res.status(500).json({ message: 'Erreur lors de la proposition de la recette' });
+        }
+      },
     // Créer une nouvelle recette (admin uniquement)
     createRecipe: async (req, res) => {
         try {
@@ -52,11 +108,10 @@ const recipeController = {
             if (req.user.role !== 'admin') {
                 return res.status(403).json({ message: 'Accès non autorisé' });
             }
-            
-            const { 
-                titre, description, etapes, temps_preparation, 
+            const {
+                titre, description, etapes, temps_preparation,
                 temps_cuisson, difficulte, id_oeuvre, id_categorie,
-                ingredients, ustensils 
+                ingredients, ustensils
             } = req.body;
 
             const recipe = await Recipe.create({
