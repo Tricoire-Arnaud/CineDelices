@@ -266,6 +266,86 @@ const userController = {
         .json({ message: "Erreur lors de la suppression du compte" });
     }
   },
+
+  // voir la page de proposition de recette user
+  getProposeRecipe: async (req, res) => {
+    try {
+      const [categories, movies] = await Promise.all([
+        Category.findAll({ order: [["libelle", "ASC"]] }),
+        Movie.findAll({ order: [["titre", "ASC"]] }),
+      ]);      
+      res.render("users/addRecipe", {
+        categories,
+        movies,
+        // messages: {
+        //   success: req.flash("success"),
+        //   error: req.flash("error"),
+        // },
+      });
+    } catch (error) {
+      console.error("Erreur lors du chargement du formulaire:", error);
+      req.flash("error", "Erreur lors du chargement du formulaire");
+      res.redirect("/mon-profil");
+    }
+  },
+
+
+  //proposer une recette (à partir du profil user uniquement)
+  proposeRecipe: async (req, res) => {
+    try {
+      const {
+        titre,
+        description,
+        etapes,
+        temps_preparation,
+        temps_cuisson,
+        difficulte,
+        id_oeuvre,
+        id_categorie,
+        ingredients,
+        ustensils,
+        anecdote,
+        image
+      } = req.body;
+
+      console.log(req.session.user.id);
+
+      const id_utilisateur = req.session.user.id;
+
+      const recipe = await Recipe.create({
+        titre,
+        description,
+        etapes: JSON.stringify(etapes),
+        temps_preparation,
+        temps_cuisson,
+        difficulte,
+        id_oeuvre,
+        id_categorie,
+        id_utilisateur,
+        statut: 'en attente', // Statut par défaut : en attente
+        anecdote, // Ajout de l'anecdote
+        image // Ajout de l'image
+      });
+
+      // Ajouter les ingrédients
+      if (ingredients && ingredients.length > 0) {
+        await recipe.addIngredients(ingredients.map(ing => ing.id), {
+          through: { quantite: ing.quantite }
+        });
+      }
+
+      // Ajouter les ustensiles
+      if (ustensils && ustensils.length > 0) {
+        await recipe.addUtensils(ustensils);
+      }
+
+      res.status(201).json(recipe);
+    } catch (error) {
+      console.error("Erreur lors de la proposition de la recette :", error);
+      res.status(500).json({ message: 'Erreur lors de la proposition de la recette' });
+    }
+  },
+
 };
 
 module.exports = userController;

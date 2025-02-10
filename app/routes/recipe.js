@@ -19,10 +19,6 @@ router.get(
 );
 
 // Routes protégées (nécessite authentification)
-//user
-router.get("/proposition-recette", isAuthenticated, recipeController.getProposeRecipe);
-router.post("/proposition-recette", isAuthenticated, recipeController.proposeRecipe);
-//admin
 router.post("/recette", isAuthenticated, recipeController.createRecipe);
 router.put("/recette/:id", isAuthenticated, recipeController.updateRecipe);
 router.delete("/recette/:id", isAuthenticated, recipeController.deleteRecipe);
