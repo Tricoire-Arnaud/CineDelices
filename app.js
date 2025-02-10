@@ -75,7 +75,7 @@ app.use(
   authMiddleware.isAuthenticated,
   mainController.getRecipeDetails
 );
-app.use("/mon-profil", authMiddleware.isAuthenticated, userRoutes);
+app.use("/mon-profil", authMiddleware.isAuthenticated, userRoutes); // route du profil + ajout de recette
 app.use("/admin", authMiddleware.isAdmin, adminRoutes);
 app.use("/auth", authRoutes);
 
