@@ -222,6 +222,7 @@ async function seedDatabase() {
         image: "ratatouille-reelle.jpg",
         id_oeuvre: movies[0].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[0].id_utilisateur,
       },
       {
         titre: "Second petit-déjeuner de Hobbit Complet",
@@ -240,6 +241,7 @@ async function seedDatabase() {
         image: "hobbit-breakfast.jpg",
         id_oeuvre: movies[1].id_oeuvre,
         id_categorie: categories[0].id_categorie,
+        id_utilisateur: users[1].id_utilisateur,
       },
       {
         titre: "Bière au Beurre Authentique",
@@ -248,17 +250,16 @@ async function seedDatabase() {
           "Faire fondre 50g de beurre dans une casserole.",
           "Ajouter 50g de sucre roux et 2 cuillères à café de caramel liquide.",
           "Verser 500ml de bière sans alcool et 250ml de lait d'amande.",
-          "Porter à frémissement en remuant constamment.",
-          "Servir chaud avec de la crème fouettée et de la noix de muscade.",
+          "Chauffer à feu doux en remuant jusqu'à obtenir une mousse onctueuse.",
+          "Servir chaud avec une touche de crème fouettée.",
         ]),
-        temps_preparation: 10,
-        temps_cuisson: 15,
+        temps_preparation: 15,
+        temps_cuisson: 10,
         difficulte: 1,
-        anecdote:
-          "Les studios Harry Potter proposent une version non alcoolisée dans leurs parcs à thème",
-        image: "butterbeer_real.jpg",
+        image: "butterbeer.jpg",
         id_oeuvre: movies[2].id_oeuvre,
         id_categorie: categories[3].id_categorie,
+        id_utilisateur: users[2].id_utilisateur,
       },
       {
         titre: "Tourte au Poulet façon Mrs Weasley",
@@ -279,6 +280,7 @@ async function seedDatabase() {
         image: "chicken_pie_real.jpg",
         id_oeuvre: movies[2].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[1].id_utilisateur,
       },
       {
         titre: "Pain Elfique Lembas",
@@ -298,6 +300,7 @@ async function seedDatabase() {
         image: "lembas.jpg",
         id_oeuvre: movies[1].id_oeuvre,
         id_categorie: categories[4].id_categorie,
+        id_utilisateur: users[2].id_utilisateur,
       },
       {
         titre: "Festin de Winterfell",
@@ -315,6 +318,7 @@ async function seedDatabase() {
         image: "winterfell-stew.jpg",
         id_oeuvre: movies[4].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[3].id_utilisateur,
       },
       {
         titre: "Donuts d'Homer",
@@ -334,6 +338,7 @@ async function seedDatabase() {
         image: "simpsons_donuts_real.jpg",
         id_oeuvre: movies[6].id_oeuvre,
         id_categorie: categories[4].id_categorie,
+        id_utilisateur: users[1].id_utilisateur,
       },
       {
         titre: "Bœuf Bourguignon de Julia Child",
@@ -354,6 +359,7 @@ async function seedDatabase() {
         image: "boeuf_bourguignon_real.jpg",
         id_oeuvre: movies[7].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[2].id_utilisateur,
       },
       {
         titre: "Sushi à la Jiro",
@@ -372,6 +378,7 @@ async function seedDatabase() {
         image: "jiro-sushi.jpg",
         id_oeuvre: movies[8].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[3].id_utilisateur,
       },
       {
         titre: "Sole Meunière de Septime",
@@ -390,6 +397,7 @@ async function seedDatabase() {
         image: "sole-meuniere.jpg",
         id_oeuvre: movies[8].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[1].id_utilisateur,
       },
       {
         titre: "Canard à l'orange façon Septime",
@@ -407,6 +415,7 @@ async function seedDatabase() {
         image: "canard-orange.jpg",
         id_oeuvre: movies[8].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[2].id_utilisateur,
       },
       {
         titre: "Chocolat chaud épicé",
@@ -424,6 +433,7 @@ async function seedDatabase() {
         image: "chocolat-epice.jpg",
         id_oeuvre: movies[9].id_oeuvre,
         id_categorie: categories[3].id_categorie,
+        id_utilisateur: users[3].id_utilisateur,
       },
       {
         titre: "Truffes au chocolat maya",
@@ -441,6 +451,7 @@ async function seedDatabase() {
         image: "truffes-maya.jpg",
         id_oeuvre: movies[9].id_oeuvre,
         id_categorie: categories[2].id_categorie,
+        id_utilisateur: users[1].id_utilisateur,
       },
       {
         titre: "Italian Beef Sandwich",
@@ -458,6 +469,7 @@ async function seedDatabase() {
         image: "italian-beef.jpg",
         id_oeuvre: movies[10].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[2].id_utilisateur,
       },
       {
         titre: "Risotto aux champignons de Carmy",
@@ -475,6 +487,7 @@ async function seedDatabase() {
         image: "risotto.jpg",
         id_oeuvre: movies[10].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[3].id_utilisateur,
       },
       {
         titre: "Pudding de Noël",
@@ -492,6 +505,7 @@ async function seedDatabase() {
         image: "christmas-pudding.jpg",
         id_oeuvre: movies[11].id_oeuvre,
         id_categorie: categories[2].id_categorie,
+        id_utilisateur: users[1].id_utilisateur,
       },
       {
         titre: "Tarte aux pommes",
@@ -509,6 +523,7 @@ async function seedDatabase() {
         image: "apple-pie.jpg",
         id_oeuvre: movies[8].id_oeuvre,
         id_categorie: categories[2].id_categorie,
+        id_utilisateur: users[2].id_utilisateur,
       },
       {
         titre: "Cailles en Sarcophage",
@@ -527,6 +542,7 @@ async function seedDatabase() {
         image: "cailles.jpg",
         id_oeuvre: movies[12].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[3].id_utilisateur,
       },
       {
         titre: "Soupe de tortue à la française",
@@ -544,6 +560,7 @@ async function seedDatabase() {
         image: "turtle-soup.jpg",
         id_oeuvre: movies[12].id_oeuvre,
         id_categorie: categories[0].id_categorie,
+        id_utilisateur: users[1].id_utilisateur,
       },
       {
         titre: "Cubano Parfait",
@@ -566,6 +583,7 @@ async function seedDatabase() {
           "Le Cubano est le sandwich emblématique du film Chef, où Jon Favreau apprend à son fils l'importance de la perfection dans la cuisine.",
         id_oeuvre: movies[3].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[2].id_utilisateur,
       },
       {
         titre: "Pasta Aglio e Olio",
@@ -586,6 +604,7 @@ async function seedDatabase() {
           "Cette recette est préparée par Carl Casper pour Molly dans une scène mémorable du film.",
         id_oeuvre: movies[3].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[3].id_utilisateur,
       },
       {
         titre: "Los Pollos Hermanos Chicken",
@@ -593,19 +612,18 @@ async function seedDatabase() {
           "Poulet frit épicé inspiré du restaurant emblématique de la série Breaking Bad, avec un mélange secret d'épices.",
         etapes: JSON.stringify([
           "Mariner le poulet dans le babeurre et les épices pendant 12h",
-          "Préparer la panure avec farine et épices",
-          "Enrober les morceaux de poulet",
-          "Frire à 170°C jusqu'à dorure",
+          "Égoutter et enrober de farine assaisonnée",
+          "Frire à 170°C jusqu'à coloration dorée",
           "Servir avec la sauce spéciale",
         ]),
-        temps_preparation: 30,
-        temps_cuisson: 20,
-        difficulte: 4,
-        image: "pollos-hermanos.jpg",
-        anecdote:
-          "Los Pollos Hermanos est la façade du réseau de distribution de Gus Fring dans Breaking Bad.",
+        temps_preparation: 720,
+        temps_cuisson: 15,
+        difficulte: 3,
+        anecdote: "La recette secrète qui a fait la renommée de Gus Fring",
+        image: "los-pollos.jpg",
         id_oeuvre: movies[5].id_oeuvre,
         id_categorie: categories[1].id_categorie,
+        id_utilisateur: users[1].id_utilisateur,
       },
       {
         titre: "Blue Crystal Rock Candy",
@@ -626,6 +644,7 @@ async function seedDatabase() {
           "Un clin d'œil humoristique au fameux produit bleu de Walter White, mais en version confiserie !",
         id_oeuvre: movies[5].id_oeuvre,
         id_categorie: categories[2].id_categorie,
+        id_utilisateur: users[4].id_utilisateur,
       },
     ]);
 

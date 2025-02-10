@@ -1,60 +1,500 @@
-<!-- Tableau de bord administrateur -->
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-8">Tableau de bord</h1>
+<%- contentFor('body') %>
 
-  <!-- Statistiques -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <!-- Utilisateurs -->
-    <div class="bg-blue-500 text-white p-5 rounded-lg shadow">
-      <h2 class="text-lg font-semibold">Utilisateurs</h2>
-      <p class="text-3xl font-bold"><%= usersCount %></p>
+<!-- Contenu principal -->
+<div class="min-h-screen bg-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- En-tête -->
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Tableau de bord</h1>
+        <p class="mt-1 text-sm text-gray-500">
+          Vue d'ensemble de votre plateforme
+        </p>
+      </div>
+      <div class="flex items-center space-x-3">
+        <span class="text-sm text-gray-500"
+          >Dernière mise à jour : <%= new Date().toLocaleString('fr-FR')
+          %></span
+        >
+        <button
+          onclick="window.location.reload()"
+          class="p-2 hover:bg-gray-100 rounded-full"
+        >
+          <svg
+            class="w-5 h-5 text-gray-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <!-- Recettes -->
-    <div class="bg-gray-500 text-white p-5 rounded-lg shadow">
-      <h2 class="text-lg font-semibold">Recettes</h2>
-      <p class="text-3xl font-bold"><%= recipesCount %></p>
+    <!-- Statistiques principales -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Utilisateurs -->
+      <div
+        class="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-6 rounded-xl shadow-lg relative overflow-hidden"
+      >
+        <div
+          class="absolute right-0 top-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between mb-2">
+            <p class="text-sm font-medium opacity-75">Utilisateurs</p>
+            <div class="bg-white/20 p-2 rounded-lg">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <p class="text-3xl font-bold"><%= usersCount %></p>
+          <div class="flex items-center mt-2 text-sm">
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+              ></path>
+            </svg>
+            <span
+              >+<%= Math.round((recentActivities.recentUsers.length /
+              usersCount) * 100) %>% ce mois</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Recettes -->
+      <div
+        class="bg-gradient-to-br from-orange-400 to-orange-500 text-white p-6 rounded-xl shadow-lg relative overflow-hidden"
+      >
+        <div
+          class="absolute right-0 top-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between mb-2">
+            <p class="text-sm font-medium opacity-75">Recettes</p>
+            <div class="bg-white/20 p-2 rounded-lg">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <p class="text-3xl font-bold"><%= recipesCount %></p>
+          <div class="flex items-center mt-2 text-sm">
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+              ></path>
+            </svg>
+            <span
+              >+<%= Math.round((recentActivities.recentRecipes.length /
+              recipesCount) * 100) %>% ce mois</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Films & Séries -->
+      <div
+        class="bg-gradient-to-br from-orange-300 to-orange-400 text-white p-6 rounded-xl shadow-lg relative overflow-hidden"
+      >
+        <div
+          class="absolute right-0 top-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between mb-2">
+            <p class="text-sm font-medium opacity-75">Films & Séries</p>
+            <div class="bg-white/20 p-2 rounded-lg">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <p class="text-3xl font-bold"><%= moviesCount %></p>
+          <div class="flex items-center mt-2 text-sm">
+            <span class="bg-white/20 px-2 py-0.5 rounded text-xs">
+              <%= Math.round(recipesCount / moviesCount) %> recettes/œuvre
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commentaires -->
+      <div
+        class="bg-gradient-to-br from-orange-200 to-orange-300 text-white p-6 rounded-xl shadow-lg relative overflow-hidden"
+      >
+        <div
+          class="absolute right-0 top-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"
+        ></div>
+        <div class="relative">
+          <div class="flex items-center justify-between mb-2">
+            <p class="text-sm font-medium opacity-75">Commentaires</p>
+            <div class="bg-white/20 p-2 rounded-lg">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <p class="text-3xl font-bold">
+            <%= recentActivities.recentComments.length %>
+          </p>
+          <div class="flex items-center mt-2 text-sm">
+            <span class="bg-white/20 px-2 py-0.5 rounded text-xs">
+              Derniers 30 jours
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Films & Séries -->
-    <div class="bg-orange-500 text-white p-5 rounded-lg shadow">
-      <h2 class="text-lg font-semibold">Films & Séries</h2>
-      <p class="text-3xl font-bold"><%= moviesCount %></p>
+    <!-- Graphiques -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">
+            Évolution des inscriptions
+          </h3>
+          <div class="flex items-center space-x-2">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
+            >
+              <svg
+                class="-ml-0.5 mr-1.5 h-2 w-2 text-green-400"
+                fill="currentColor"
+                viewBox="0 0 8 8"
+              >
+                <circle cx="4" cy="4" r="3" />
+              </svg>
+              Croissance
+            </span>
+          </div>
+        </div>
+        <div class="h-64">
+          <canvas id="userChart"></canvas>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">
+            Évolution des recettes
+          </h3>
+          <div class="flex items-center space-x-2">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800"
+            >
+              <svg
+                class="-ml-0.5 mr-1.5 h-2 w-2 text-orange-400"
+                fill="currentColor"
+                viewBox="0 0 8 8"
+              >
+                <circle cx="4" cy="4" r="3" />
+              </svg>
+              Publications
+            </span>
+          </div>
+        </div>
+        <div class="h-64">
+          <canvas id="recipeChart"></canvas>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Actions rapides -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <a
-      href="/admin/utilisateur"
-      class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow"
-    >
-      <h3 class="font-semibold mb-2">Gérer les utilisateurs</h3>
-      <p class="text-gray-600">Voir et gérer les comptes utilisateurs</p>
-    </a>
+    <!-- Activités récentes -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Nouveaux utilisateurs -->
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">
+            Nouveaux utilisateurs
+          </h3>
+          <a
+            href="/admin/utilisateur"
+            class="text-orange-500 hover:text-orange-600 text-sm font-medium"
+          >
+            Voir tout
+          </a>
+        </div>
+        <div class="space-y-4">
+          <% recentActivities.recentUsers.forEach(user => { %>
+          <div
+            class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors duration-150"
+          >
+            <div class="flex items-center">
+              <div
+                class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-medium"
+              >
+                <%= user.nom_utilisateur.charAt(0).toUpperCase() %>
+              </div>
+              <span class="ml-3 text-gray-600"
+                ><%= user.nom_utilisateur %></span
+              >
+            </div>
+            <span class="text-sm text-gray-400">
+              <%= new Date(user.created_at).toLocaleDateString('fr-FR', { day:
+              'numeric', month: 'short' }) %>
+            </span>
+          </div>
+          <% }) %>
+        </div>
+      </div>
 
-    <a
-      href="/admin/recette"
-      class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow"
-    >
-      <h3 class="font-semibold mb-2">Gérer les recettes</h3>
-      <p class="text-gray-600">Ajouter ou modifier des recettes</p>
-    </a>
+      <!-- Nouvelles recettes -->
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">
+            Nouvelles recettes
+          </h3>
+          <a
+            href="/admin/recette"
+            class="text-orange-500 hover:text-orange-600 text-sm font-medium"
+          >
+            Voir tout
+          </a>
+        </div>
+        <div class="space-y-4">
+          <% recentActivities.recentRecipes.forEach(recipe => { %>
+          <div
+            class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors duration-150"
+          >
+            <div class="flex items-center">
+              <div
+                class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  ></path>
+                </svg>
+              </div>
+              <span class="ml-3 text-gray-600"><%= recipe.titre %></span>
+            </div>
+            <span class="text-sm text-gray-400">
+              <%= new Date(recipe.created_at).toLocaleDateString('fr-FR', { day:
+              'numeric', month: 'short' }) %>
+            </span>
+          </div>
+          <% }) %>
+        </div>
+      </div>
 
-    <a
-      href="/admin/films-series"
-      class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow"
-    >
-      <h3 class="font-semibold mb-2">Gérer les films & séries</h3>
-      <p class="text-gray-600">Ajouter ou modifier des œuvres</p>
-    </a>
-
-    <a
-      href="/admin/categories"
-      class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow"
-    >
-      <h3 class="font-semibold mb-2">Gérer les catégories</h3>
-      <p class="text-gray-600">Gérer les catégories de recettes</p>
-    </a>
+      <!-- Derniers commentaires -->
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">
+            Derniers commentaires
+          </h3>
+          <button
+            class="text-orange-500 hover:text-orange-600 text-sm font-medium"
+          >
+            Gérer
+          </button>
+        </div>
+        <div class="space-y-4">
+          <% if (recentActivities.recentComments &&
+          recentActivities.recentComments.length > 0) { %> <%
+          recentActivities.recentComments.forEach(comment => { %>
+          <div
+            class="p-3 hover:bg-gray-50 rounded-lg transition-colors duration-150"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center">
+                <div
+                  class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-medium"
+                >
+                  <%= comment.author ?
+                  comment.author.nom_utilisateur.charAt(0).toUpperCase() : '?'
+                  %>
+                </div>
+                <span class="ml-3 text-gray-900 font-medium">
+                  <%= comment.author ? comment.author.nom_utilisateur :
+                  'Utilisateur supprimé' %>
+                </span>
+              </div>
+              <span class="text-sm text-gray-400">
+                <%= new Date(comment.created_at).toLocaleDateString('fr-FR', {
+                day: 'numeric', month: 'short' }) %>
+              </span>
+            </div>
+            <p class="text-gray-600 text-sm ml-11">
+              sur
+              <span class="font-medium"
+                ><%= comment.Recipe ? comment.Recipe.titre : 'Recette supprimée'
+                %></span
+              >
+            </p>
+          </div>
+          <% }) %> <% } else { %>
+          <div class="text-center py-8">
+            <svg
+              class="mx-auto h-12 w-12 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+              />
+            </svg>
+            <p class="mt-2 text-sm text-gray-500">
+              Aucun commentaire pour le moment
+            </p>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<%- contentFor('script') %>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Configuration commune pour les graphiques
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: {
+          color: "rgba(0, 0, 0, 0.1)",
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
+  // Configuration du graphique des utilisateurs
+  const userCtx = document.getElementById("userChart").getContext("2d");
+  new Chart(userCtx, {
+    type: "line",
+    data: {
+      labels: chartData.userStats.map((stat) =>
+        new Date(stat.month).toLocaleDateString("fr-FR", {
+          month: "short",
+          year: "numeric",
+        })
+      ),
+      datasets: [
+        {
+          label: "Nouveaux utilisateurs",
+          data: chartData.userStats.map((stat) => stat.count),
+          borderColor: "rgb(249, 115, 22)",
+          backgroundColor: "rgba(249, 115, 22, 0.1)",
+          tension: 0.4,
+          fill: true,
+        },
+      ],
+    },
+    options: chartOptions,
+  });
+
+  // Configuration du graphique des recettes
+  const recipeCtx = document.getElementById("recipeChart").getContext("2d");
+  new Chart(recipeCtx, {
+    type: "line",
+    data: {
+      labels: chartData.recipeStats.map((stat) =>
+        new Date(stat.month).toLocaleDateString("fr-FR", {
+          month: "short",
+          year: "numeric",
+        })
+      ),
+      datasets: [
+        {
+          label: "Nouvelles recettes",
+          data: chartData.recipeStats.map((stat) => stat.count),
+          borderColor: "rgb(249, 115, 22)",
+          backgroundColor: "rgba(249, 115, 22, 0.1)",
+          tension: 0.4,
+          fill: true,
+        },
+      ],
+    },
+    options: chartOptions,
+  });
+</script>

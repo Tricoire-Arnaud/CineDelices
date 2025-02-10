@@ -73,9 +73,21 @@ const Recipe = sequelize.define(
         key: "id_categorie",
       },
     },
+    // Référence à l'utilisateur qui a créé la recette
+    id_utilisateur: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "utilisateurs",
+        key: "id_utilisateur",
+      },
+    },
   },
   {
     tableName: "recettes",
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   }
 );
 
@@ -88,6 +100,11 @@ Recipe.associate = (models) => {
   Recipe.belongsTo(models.Category, {
     foreignKey: "id_categorie",
     as: "category",
+  });
+
+  Recipe.belongsTo(models.User, {
+    foreignKey: "id_utilisateur",
+    as: "author",
   });
 
   Recipe.belongsToMany(models.User, {
