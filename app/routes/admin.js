@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const adminMiddleware = require("../middlewares/admin");
 const auth = require("../middlewares/auth");
+const upload = require("../middlewares/upload");
 
 const adminController = require("../controllers/adminController");
 const ingredientController = require("../controllers/ingredientController");
@@ -34,13 +35,20 @@ router.delete("/utensils/:id", utensilController.deleteUtensil);
 
 // Routes de gestion des recettes
 router.get("/recette", adminController.getRecipes);
-router.post("/recipes", recipeController.createRecipe);
-router.put("/recipes/:id", recipeController.updateRecipe);
+router.get("/recettes/ajouter", recipeController.getAddRecipeForm);
+router.get("/recettes/modifier/:id", recipeController.getEditRecipeForm);
+router.post("/recipes", upload.single("image"), recipeController.createRecipe);
+router.put(
+  "/recipes/:id",
+  upload.single("image"),
+  recipeController.updateRecipe
+);
 router.delete("/recipes/:id", recipeController.deleteRecipe);
 
 // Routes de gestion des films/séries
-router.get("/films-series", adminController.showaddmoviesTvShows);
-router.post("/films-series", adminController.addmoviesTvShows);
+router.get("/films-series", movieController.getAllMoviesAdmin);
+router.get("/films-series/ajouter", movieController.showAddMovieForm);
+router.get("/films-series/modifier/:id", movieController.showEditMovieForm);
 router.post("/movies", movieController.createMovie);
 router.put("/movies/:id", movieController.updateMovie);
 router.delete("/movies/:id", movieController.deleteMovie);

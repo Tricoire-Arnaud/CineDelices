@@ -9,6 +9,7 @@ const MemoryStore = require("memorystore")(session);
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const expressLayouts = require("express-ejs-layouts");
+const methodOverride = require("method-override");
 const authMiddleware = require("./app/middlewares/auth");
 const mainController = require("./app/controllers/mainController");
 
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(expressLayouts);
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride("_method"));
 
 // Configuration de la session
 app.use(
