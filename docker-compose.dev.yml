@@ -28,13 +28,15 @@ services:
         condition: service_healthy
 
     volumes:
-      - .:/app
-      - /app/node_modules
+      - .:/app:delegated
+      - node_modules:/app/node_modules
 
     env_file:
       - .env.docker-compose
 
-    command: npm run setup-dev
+    command: [ "bash", "-c", "node scripts/initDb.js && nodemon app.js" ]
+
+    restart: always
 
   # service pour la base de données
   db:
@@ -66,7 +68,7 @@ services:
       start_period: 10s
 
     # on peut partager un répertoire de notre projet
-    # sur notre système hôte avec le conteneur
+    # sur notre système hôte avec le conteneur
     # c'est un "bind mount"
     #  - bind : lien
     #  - mount : monter
@@ -82,3 +84,4 @@ services:
 # mais c'est Docker qui gère tout !
 volumes:
   cinedelices-volume-dev:
+  node_modules:
