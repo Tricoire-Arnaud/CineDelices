@@ -10,13 +10,13 @@ FROM node:20-alpine
 WORKDIR /app
 
 # on récupère le package.json depuis le dossier de build (./ => "server" => le "context" dans mon docker-compose)
-COPY ./package.json /app
+COPY ./package*.json /cinedelices/
 
 # on installe les dépendances
 RUN npm i --omit=dev
 
 # on copie le reste des fichiers de l'application
-COPY . /app
+COPY . /cinedelices/
 
 # rendre utilisable le port de l'app
 EXPOSE 3000
