@@ -96,7 +96,7 @@ const adminController = {
   // Récupère la liste de toutes les recettes à valider
   _RecipesToValidate: async (req, res) => {
     try {
-      const  recipesToValidate = await Recipe.findAll({
+      const recipesToValidate = await Recipe.findAll({
         where: { statut: "en attente" }, // Ajout du filtre pour les recettes en attente
         include: [
           {
@@ -294,6 +294,29 @@ const adminController = {
         path: "/admin/recette-moderation",
         messages: req.flash(),
       });
+    }
+  },
+
+  //valider la recette afin de la publier
+  validateRecipes: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const recipe = await Recipe.findByPk(id);
+      if (!recipe) {
+        req.flash("error", "Recette non trouvée");
+        return res.redirect("/admin/recette-moderation");
+      }
+
+      // Mettre à jour uniquement le statut
+      await recipe.update({ statut: "validée" });
+
+      req.flash("success", "Recette validée avec succès !");
+      res.redirect("/recette-moderation");
+    } catch (error) {
+      console.error("Erreur lors de la validation de la recette:", error);
+      req.flash("error", "Erreur lors de la validation de la recette");
+      res.redirect("/recette-moderation");
     }
   },
 
