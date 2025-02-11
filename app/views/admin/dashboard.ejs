@@ -349,6 +349,54 @@
         </div>
       </div>
 
+       <!-- Recettes à valider-->
+       <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">
+            Recettes à valider
+          </h3>
+          <a
+            href="/admin/recette-moderation"
+            class="text-orange-500 hover:text-orange-600 text-sm font-medium"
+          >
+            Voir tout
+          </a>
+        </div>
+        <div class="space-y-4">
+            <% recipesToValidate.recipesToValidate.forEach(recipe => { %> 
+            <!-- changer en liste de recettes à valider -->
+          <div
+            class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors duration-150"
+          >
+            <div class="flex items-center">
+              <div
+                class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  ></path>
+                </svg>
+              </div>
+              <span class="ml-3 text-gray-600"><%= recipe.titre %></span>
+            </div>
+            <span class="text-sm text-gray-400">
+              <%= new Date(recipe.created_at).toLocaleDateString('fr-FR', { day:
+              'numeric', month: 'short' }) %>
+            </span>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+
       <!-- Derniers commentaires -->
       <div class="bg-white p-6 rounded-xl shadow-lg">
         <div class="flex items-center justify-between mb-4">

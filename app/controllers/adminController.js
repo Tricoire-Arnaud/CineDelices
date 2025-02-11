@@ -15,6 +15,7 @@ const adminController = {
 
       const recentActivities = await adminController._getRecentActivities();
       const chartData = await adminController.getChartData();
+      const recipesToValidate = await adminController._RecipesToValidate();
 
       res.render("admin/dashboard", {
         layout: "layouts/admin",
@@ -22,6 +23,7 @@ const adminController = {
         recipesCount,
         moviesCount,
         recentActivities,
+        recipesToValidate,
         chartData,
         user: req.user,
         path: "/admin/tableau-de-bord",
@@ -87,6 +89,38 @@ const adminController = {
         recentUsers: [],
         recentRecipes: [],
         recentComments: [],
+      };
+    }
+  },
+
+  // Récupère la liste de toutes les recettes à valider
+  _RecipesToValidate: async (req, res) => {
+    try {
+      const recipesToValidate = await Recipe.findAll({
+        where: { statut: "en attente" }, // Ajout du filtre pour les recettes en attente
+        include: [
+          {
+            model: Movie,
+            as: "oeuvre",
+          },
+          {
+            model: Category,
+            as: "category",
+          },
+          {
+            model: User,
+            as: "author",
+            attributes: ["nom_utilisateur"],
+          },
+        ],
+        order: [["created_at", "DESC"]],
+      });
+      // console.log("recipesToValidate:", recipesToValidate);
+      return { recipesToValidate };
+    } catch (error) {
+      console.error("Erreur récupération recettes à valider :", error);
+      return {
+        recipesToValidate: [],
       };
     }
   },
@@ -220,6 +254,69 @@ const adminController = {
         path: "/admin/recette",
         messages: req.flash(),
       });
+    }
+  },
+
+  // Récupère la liste de toutes les recettes à valider
+  getRecipesToValidate: async (req, res) => {
+    try {
+      const recipes = await Recipe.findAll({
+        where: { statut: "en attente" }, // Ajout du filtre pour les recettes en attente
+        include: [
+          {
+            model: Movie,
+            as: "oeuvre",
+          },
+          {
+            model: Category,
+            as: "category",
+          },
+          {
+            model: User,
+            as: "author",
+            attributes: ["nom_utilisateur"],
+          },
+        ],
+        order: [["created_at", "DESC"]],
+      });
+      res.render("admin/recipesToValidate", {
+        layout: "layouts/admin",
+        recipes,
+        user: req.user,
+        path: "/admin/recette-moderation",
+        messages: req.flash(),
+      });
+    } catch (error) {
+      console.error("Erreur lors de la récupération des recettes à valider:", error);
+      res.status(500).render("errors/500", {
+        layout: "layouts/admin",
+        user: req.user,
+        path: "/admin/recette-moderation",
+        messages: req.flash(),
+      });
+    }
+  },
+
+  //valider la recette afin de la publier
+  validateRecipes: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const recipe = await Recipe.findOne({ where: { id_recette: id } });
+
+      if (!recipe) {
+        req.flash("error", "Recette non trouvée");
+        return res.redirect("/admin/tableau-de-bord");
+      }
+
+      // Mettre à jour uniquement le statut
+      await recipe.update({ statut: "validée" });
+      // console.log(recipe);
+      req.flash("success", "Recette validée avec succès !");
+      res.redirect("/admin/tableau-de-bord");
+    } catch (error) {
+      console.error("Erreur lors de la validation de la recette:", error);
+      req.flash("error", "Erreur lors de la validation de la recette");
+      res.redirect("/admin/tableau-de-bord");
     }
   },
 

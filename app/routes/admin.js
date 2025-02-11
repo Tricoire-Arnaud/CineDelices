@@ -35,6 +35,8 @@ router.delete("/utensils/:id", utensilController.deleteUtensil);
 
 // Routes de gestion des recettes
 router.get("/recette", adminController.getRecipes);
+router.get("/recette-moderation", adminController.getRecipesToValidate);
+router.post("/recettes/valider/:id", adminController.validateRecipes);
 router.get("/recettes/ajouter", recipeController.getAddRecipeForm);
 router.get("/recettes/modifier/:id", recipeController.getEditRecipeForm);
 router.post("/recipes", upload.single("image"), recipeController.createRecipe);

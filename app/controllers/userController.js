@@ -7,6 +7,9 @@ const {
   Favorite,
   Comment,
   Rating,
+  Ingredient,
+  RecipeIngredient,
+  Utensil,
   Like,
 } = require("../models");
 const bcrypt = require("bcrypt");
@@ -270,13 +273,17 @@ const userController = {
   // voir la page de proposition de recette user
   getProposeRecipe: async (req, res) => {
     try {
-      const [categories, movies] = await Promise.all([
+      const [categories, movies, ingredients, utensils] = await Promise.all([
         Category.findAll({ order: [["libelle", "ASC"]] }),
         Movie.findAll({ order: [["titre", "ASC"]] }),
-      ]);      
+        Ingredient.findAll({ order: [["nom_ingredient", "ASC"]] }),
+        Utensil.findAll({ order: [["nom_ustensile", "ASC"]] }),
+      ]);
       res.render("users/addRecipe", {
         categories,
         movies,
+        ingredients,
+        utensils
         // messages: {
         //   success: req.flash("success"),
         //   error: req.flash("error"),
@@ -329,17 +336,35 @@ const userController = {
 
       // Ajouter les ingrédients
       if (ingredients && ingredients.length > 0) {
-        await recipe.addIngredients(ingredients.map(ing => ing.id), {
-          through: { quantite: ing.quantite }
-        });
+        // await recipe.addIngredients(ingredients.map(ing => ing.id), {
+        //   through: { quantite: ing.quantite }
+        // });
+        await Promise.all(ingredients.map(async ing => {
+          await Recipe.addIngredient(ing.id, { through: { quantite: ing.quantite } });
+        }));
+
       }
 
       // Ajouter les ustensiles
       if (ustensils && ustensils.length > 0) {
-        await recipe.addUtensils(ustensils);
-      }
+        // await recipe.addUtensils(ustensils);
+        await Recipe.addUtensil(ustensils.map(ust => ust.id));
 
-      res.status(201).json(recipe);
+      }
+      // res.status(201).json(recipe);
+
+      console.log(typeof Recipe.addIngredient); // Devrait afficher "function"
+      console.log(typeof Recipe.addUtensil);    // Devrait afficher "function"
+
+      // Récupérer la recette complète avec ses relations
+      const fullRecipe = await Recipe.findByPk(recipe.id_recette, {
+        include: [
+          { model: Ingredient, through: { attributes: ['quantite'] } },
+          { model: Utensil }
+        ]
+      });
+
+      res.status(201).json(fullRecipe);
     } catch (error) {
       console.error("Erreur lors de la proposition de la recette :", error);
       res.status(500).json({ message: 'Erreur lors de la proposition de la recette' });
