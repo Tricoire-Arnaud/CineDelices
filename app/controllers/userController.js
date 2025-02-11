@@ -9,6 +9,7 @@ const {
   Rating,
   Ingredient,
   RecipeIngredient,
+  RecipeUtensil,
   Utensil,
   Like,
 } = require("../models");
@@ -300,70 +301,84 @@ const userController = {
   //proposer une recette (à partir du profil user uniquement)
   proposeRecipe: async (req, res) => {
     try {
-      const {
-        titre,
-        description,
-        etapes,
-        temps_preparation,
-        temps_cuisson,
-        difficulte,
-        id_oeuvre,
-        id_categorie,
-        ingredients,
-        ustensils,
-        anecdote,
-        image
-      } = req.body;
-
-      console.log(req.session.user.id);
-
-      const id_utilisateur = req.session.user.id;
-
+      // Création de la recette
       const recipe = await Recipe.create({
-        titre,
-        description,
-        etapes: JSON.stringify(etapes),
-        temps_preparation,
-        temps_cuisson,
-        difficulte,
-        id_oeuvre,
-        id_categorie,
-        id_utilisateur,
-        statut: 'en attente', // Statut par défaut : en attente
-        anecdote, // Ajout de l'anecdote
-        image // Ajout de l'image
+        titre: req.body.titre,
+        description: req.body.description,
+        etapes: JSON.stringify(req.body.etapes), // Si c'est un tableau
+        temps_preparation: req.body.temps_preparation,
+        temps_cuisson: req.body.temps_cuisson,
+        difficulte: req.body.difficulte,
+        anecdote: req.body.anecdote,
+        image: req.body.image || null,
+        statut: 'en attente',
+        id_oeuvre: req.body.id_oeuvre,
+        id_categorie: req.body.id_categorie,
+        id_utilisateur: req.session.user.id
       });
 
-      // Ajouter les ingrédients
-      if (ingredients && ingredients.length > 0) {
-        // await recipe.addIngredients(ingredients.map(ing => ing.id), {
-        //   through: { quantite: ing.quantite }
-        // });
-        await Promise.all(ingredients.map(async ing => {
-          await Recipe.addIngredient(ing.id, { through: { quantite: ing.quantite } });
+      // Convertir req.body.ingredients en tableau exploitable (là ce sont des numéros 6,2,8)
+      const ingredientsArray = Array.isArray(req.body.ingredients)
+      ? req.body.ingredients // Si c'est déjà un tableau
+      : req.body.ingredients.split(','); // Convertir une chaîne CSV en tableau
+
+      console.log("Ingrédients après parsing:", ingredientsArray);
+
+      console.log("ingrédients du body" + req.body.ingredients);
+      console.log("session du user" + req.session.user.id);
+
+      console.log("Recette créée avec l'ID :", recipe.id_recette);
+
+      // Vérifier que la recette crée a bien un ID avant de poursuivre (notamment pour les ingrédients + ustensiles)
+      if (!recipe.id_recette) {
+        throw new Error("L'ID de la recette est indéfini après la création.");
+      }
+
+      //contrôle pour s'assurer que chaque ingrédient a un id valide avant de tenter de l'insérer dans la base de données
+      // sinon il ne s'insère pas et ne provoque pas d'erreur
+      if (ingredientsArray.length > 0) {
+        const recipeIngredients = ingredientsArray.map(ingId => ({
+          id_recette: recipe.id_recette,
+          id_ingredient: parseInt(ingId, 10), // Convertir en entier
+          quantite: 1 // Mettre une quantité par défaut (ajuster selon besoin)
         }));
-
+      
+        if (recipeIngredients.length > 0) {
+          await RecipeIngredient.bulkCreate(recipeIngredients);
+          console.log("Ingrédients ajoutés !");
+        } else {
+          console.log("Aucun ingrédient valide à ajouter.");
+        }
       }
 
-      // Ajouter les ustensiles
-      if (ustensils && ustensils.length > 0) {
-        // await recipe.addUtensils(ustensils);
-        await Recipe.addUtensil(ustensils.map(ust => ust.id));
-
+      //contrôle pour s'assurer que chaque ustensile a un id valide avant de tenter de l'insérer dans la base de données
+      // sinon il ne s'insère pas et ne provoque pas d'erreur
+      if (req.body.utensils && req.body.utensils.length > 0) {
+        // Filtrer les ustensiles invalides (ceux sans ID)
+        const recipeUtensils = req.body.utensils
+          .filter(ut => ut) // Ne garder que les valeurs non nulles
+          .map(ut => ({
+            id_recette: recipe.id_recette,
+            id_ustensile: ut // Assurer que `ut` est un id valide
+          }));
+      
+        if (recipeUtensils.length > 0) {
+          await RecipeUtensil.bulkCreate(recipeUtensils); // envoyer les infos sur RecipeUtensil
+          console.log("Ustensiles ajoutés !");
+        } else {
+          console.log("Aucun ustensile valide à ajouter.");
+        }
       }
-      // res.status(201).json(recipe);
-
-      console.log(typeof Recipe.addIngredient); // Devrait afficher "function"
-      console.log(typeof Recipe.addUtensil);    // Devrait afficher "function"
 
       // Récupérer la recette complète avec ses relations
-      const fullRecipe = await Recipe.findByPk(recipe.id_recette, {
-        include: [
-          { model: Ingredient, through: { attributes: ['quantite'] } },
-          { model: Utensil }
-        ]
-      });
-      // res.status(201).json(fullRecipe);
+      // const fullRecipe = await Recipe.findByPk(recipe.id_recette, {
+      //   include: [
+      //     { model: Ingredient, through: { attributes: ['quantite'] } },
+      //     { model: Utensil }
+      //   ]
+      // });
+      // console.log("recette complète" + fullRecipe);
+ 	    
       req.flash("success", "Recette envoyée en modération");
       res.redirect("/mon-profil");
     } catch (error) {
