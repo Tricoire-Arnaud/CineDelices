@@ -279,9 +279,7 @@ const adminController = {
         ],
         order: [["created_at", "DESC"]],
       });
-
-      console.log(recipes);
-      res.render("admin/recipes", {
+      res.render("admin/recipesToValidate", {
         layout: "layouts/admin",
         recipes,
         user: req.user,
