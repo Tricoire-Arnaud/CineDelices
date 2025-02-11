@@ -26,6 +26,7 @@ const mainController = {
               as: "category",
             },
           ],
+          where: { statut: "validée" }, // Filtrer par statut "validée"
           order: [["created_at", "DESC"]],
           limit: 6,
           raw: false,
@@ -61,7 +62,7 @@ const mainController = {
 
   getCatalog: async (req, res) => {
     try {
-      let whereClause = {};
+      let whereClause = { statut: "validée" }; // Filtrer par statut "validée"
       let includeClause = [
         {
           model: Movie,
@@ -168,6 +169,7 @@ const mainController = {
               model: Recipe,
               as: "recipes",
               attributes: ["id_recette", "titre", "image"],
+              where: { statut: "validée" }, // Filtrer les recettes par statut "validée"
             },
           ],
         });
@@ -185,6 +187,7 @@ const mainController = {
                 model: Recipe,
                 as: "recipes",
                 attributes: ["id_recette", "titre", "image"],
+                where: { statut: "validée" }, // Filtrer les recettes par statut "validée"
               },
             ],
             order: [["titre", "ASC"]],
@@ -196,6 +199,7 @@ const mainController = {
                 model: Recipe,
                 as: "recipes",
                 attributes: ["id_recette", "titre", "image"],
+                where: { statut: "validée" }, // Filtrer les recettes par statut "validée"
               },
             ],
             order: [["titre", "ASC"]],
@@ -227,6 +231,7 @@ const mainController = {
           {
             model: Recipe,
             as: "recipes", // Utiliser le même alias que dans le modèle
+            where: { statut: "validée" }, // Filtrer les recettes par statut "validée"
             include: [
               {
                 model: Category,
