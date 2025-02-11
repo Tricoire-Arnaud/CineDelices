@@ -270,7 +270,7 @@ const mainController = {
 
   //CGU
   getCGU: (req, res) => {
-    res.render("legal/cgu", {
+    res.render("legal/CGU", {
       title: "Conditions Générales d'Utilisation",
     });
   },
