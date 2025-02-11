@@ -301,22 +301,22 @@ const adminController = {
   validateRecipes: async (req, res) => {
     try {
       const { id } = req.params;
+      const recipe = await Recipe.findOne({ where: { id_recette: id } });
 
-      const recipe = await Recipe.findByPk(id);
       if (!recipe) {
         req.flash("error", "Recette non trouvée");
-        return res.redirect("/admin/recette-moderation");
+        return res.redirect("/admin/tableau-de-bord");
       }
 
       // Mettre à jour uniquement le statut
       await recipe.update({ statut: "validée" });
-
+      // console.log(recipe);
       req.flash("success", "Recette validée avec succès !");
-      res.redirect("/recette-moderation");
+      res.redirect("/admin/tableau-de-bord");
     } catch (error) {
       console.error("Erreur lors de la validation de la recette:", error);
       req.flash("error", "Erreur lors de la validation de la recette");
-      res.redirect("/recette-moderation");
+      res.redirect("/admin/tableau-de-bord");
     }
   },
 

@@ -50,11 +50,10 @@
                 class="px-3 py-1 bg-blue-500 text-white rounded"
                 >Voir/Modifier</a
               >
-              <a
-                href="/admin/recettes/valider/<%= recipe.id_recette %>"
-                class="px-3 py-1 bg-green-500 text-white rounded"
-                >Valider</a
-              >
+              <form action="/admin/recettes/valider/<%= recipe.id_recette %>" method="POST">
+                <button type="submit" class="px-3 py-1 bg-green-500  text-white rounded">Valider</button>
+              </form>
+              
               <form
                 action="/admin/recipes/<%= recipe.id_recette %>?_method=DELETE"
                 method="POST"
