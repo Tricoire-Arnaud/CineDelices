@@ -17,6 +17,9 @@ RUN npm i
 # automatiquement le serveur en dev
 RUN npm i -g nodemon
 
+# Installer Biome avec version exacte
+RUN npm install --save-dev --save-exact @biomejs/biome
+
 COPY . /cinedelices/
 
 EXPOSE 3000

@@ -7,9 +7,7 @@
     "init-db": "node scripts/initDb.js",
     "reseed": "node scripts/reseed.js",
     "start": "node app.js",
-    "dev": "nodemon app.js",
-    "setup": "npm run init-db && npm run start",
-    "setup-dev": "npm run init-db && npm run dev"
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
