@@ -363,8 +363,9 @@ const userController = {
           { model: Utensil }
         ]
       });
-
-      res.status(201).json(fullRecipe);
+      // res.status(201).json(fullRecipe);
+      req.flash("success", "Recette envoyée en modération");
+      res.redirect("/mon-profil");
     } catch (error) {
       console.error("Erreur lors de la proposition de la recette :", error);
       res.status(500).json({ message: 'Erreur lors de la proposition de la recette' });
