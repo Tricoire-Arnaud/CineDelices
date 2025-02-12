@@ -6,16 +6,15 @@ const sequelize = require('../../config/database');
  * Table pivot qui associe les ustensiles nécessaires aux recettes
  */
 const RecipeUtensil = sequelize.define('RecipeUtensil', {
-    // Référence à la recette
     id_recette: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         references: {
             model: 'recettes',
             key: 'id_recette'
-        }
+        },
+        onDelete: "CASCADE" // Ajout ici
     },
-    // Référence à l'ustensile
     id_ustensile: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -28,4 +27,4 @@ const RecipeUtensil = sequelize.define('RecipeUtensil', {
     tableName: 'recette_ustensile'
 });
 
-module.exports = RecipeUtensil; 
+module.exports = RecipeUtensil;
