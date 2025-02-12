@@ -114,7 +114,7 @@ const {
           return res.redirect("/admin/recette");
         }
   
-        res.render("admin/addRecipe", {
+        res.render("admin/modifyRecipe", {
           recipe,
           categories,
           movies,
