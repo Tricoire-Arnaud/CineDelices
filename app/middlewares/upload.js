@@ -4,7 +4,7 @@ const path = require("path");
 // Configuration du stockage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads/recipes"); // Assurez-vous que ce dossier existe
+    cb(null, "public/images/uploads/recipes"); // on a un dossier uploads dans le dossier images pour les recettes proposées par user
   },
   filename: function (req, file, cb) {
     // Générer un nom de fichier unique avec timestamp

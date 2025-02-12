@@ -306,7 +306,7 @@ const userController = {
         temps_cuisson: req.body.temps_cuisson,
         difficulte: req.body.difficulte,
         anecdote: req.body.anecdote,
-        image: req.body.image || null,
+        image: `uploads/recipes/${req.file.filename}` || null, //objet de l'image via upload (voir le middleware)
         statut: 'en attente',
         id_oeuvre: req.body.id_oeuvre,
         id_categorie: req.body.id_categorie,
