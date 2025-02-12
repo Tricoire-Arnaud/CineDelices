@@ -285,10 +285,6 @@ const userController = {
         movies,
         ingredients,
         utensils
-        // messages: {
-        //   success: req.flash("success"),
-        //   error: req.flash("error"),
-        // },
       });
     } catch (error) {
       console.error("Erreur lors du chargement du formulaire:", error);
@@ -336,20 +332,19 @@ const userController = {
 
       //contrôle pour s'assurer que chaque ingrédient a un id valide avant de tenter de l'insérer dans la base de données
       // sinon il ne s'insère pas et ne provoque pas d'erreur
-      if (ingredientsArray.length > 0) {
-        const recipeIngredients = ingredientsArray.map(ingId => ({
-          id_recette: recipe.id_recette,
-          id_ingredient: parseInt(ingId, 10), // Convertir en entier
-          quantite: 1 // Mettre une quantité par défaut (ajuster selon besoin)
-        }));
-      
-        if (recipeIngredients.length > 0) {
-          await RecipeIngredient.bulkCreate(recipeIngredients);
-          console.log("Ingrédients ajoutés !");
+      if (req.body.ingredients && req.body.ingredients.length > 0) {
+        const recipeIngredients = req.body.ingredients.map(ingredientId => {
+          return {
+            id_recette: recipe.id_recette,
+            id_ingredient: ingredientId,
+            quantite: req.body.quantities?.[ingredientId] || 1  // Récupérer la quantité, sinon 1 par défaut
+          };
+        });
+        await RecipeIngredient.bulkCreate(recipeIngredients);
+        console.log("Ingrédients avec quantités ajoutés !");
         } else {
           console.log("Aucun ingrédient valide à ajouter.");
-        }
-      }
+        };
 
       //contrôle pour s'assurer que chaque ustensile a un id valide avant de tenter de l'insérer dans la base de données
       // sinon il ne s'insère pas et ne provoque pas d'erreur

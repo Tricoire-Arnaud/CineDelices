@@ -29,7 +29,7 @@
           <% if (recipe.dataValues.Ingredients && recipe.dataValues.Ingredients.length) { %>
             <ul class="space-y-2 rounded-lg bg-red-50 p-4 list-disc list-inside">
               <% recipe.dataValues.Ingredients.forEach(ingredient => { %>
-                <li><%= ingredient.dataValues.nom_ingredient %> (<%= ingredient.dataValues.unite_mesure %>)</li>
+                <li><%= ingredient.dataValues.nom_ingredient %> ( <%= ingredient.dataValues.RecipeIngredient.quantite %> <%= ingredient.dataValues.unite_mesure %>)</li>
               <% }); %>
             </ul>
           <!-- en cas ou l'user n'a pas ajouter d'ingredient -->

@@ -447,8 +447,8 @@ const mainController = {
           },
           {
             model: Ingredient,
-            through: RecipeIngredient,
-            attributes: ["nom_ingredient", "unite_mesure"],
+            attributes: ["nom_ingredient", "unite_mesure"], // Récupère le nom et l'unité
+            through: { attributes: ["quantite"] } // Récupère la quantité depuis RecipeIngredient
           },
           {
             model: Utensil,
