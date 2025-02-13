@@ -26,7 +26,7 @@ services:
         condition: service_healthy
 
     env_file:
-      - .env.docker-compose
+      - .env.docker-compose.prod
 
     command: [ "bash", "-c", "./config-prod.sh" ]
 
@@ -49,7 +49,7 @@ services:
     # dans le docker-compose, on peut les mettre
     # dans un fichier d'environnement
     env_file:
-      - .env.docker-compose
+      - .env.docker-compose.prod
 
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]

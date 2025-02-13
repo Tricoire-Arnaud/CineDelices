@@ -13,6 +13,15 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+
+🚀 CineDélices - Serveur de production lancé avec succès ! 🎬
+=========================================
+📅 Date : $(date)
+🔧 Mode : Production
+🌍 URL :  http://poirier-jerome-server.eddi.cloud
+📂 Logs : Consultez les logs pour plus de détails.
+=========================================
+
 echo "Lancement en production"
 npm run start
 if [ $? -ne 0 ]; then

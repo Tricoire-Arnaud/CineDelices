@@ -4,7 +4,8 @@ package-lock.json
 
 # Environment
 .env
-.env.docker-compose
+.env.docker-compose.dev
+.env.docker-compose.prod
 
 # Logs
 logs
