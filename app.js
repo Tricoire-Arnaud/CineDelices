@@ -99,14 +99,23 @@ async function startServer() {
     await sequelize.sync();
     console.log("Base de données synchronisée");
 
-    app.listen(PORT, () => {
-      console.log(`Serveur démarré sur le port ${PORT}`);
-      console.log(`Environnement: ${process.env.NODE_ENV || "development"}`);
-    });
+    if (process.env.NODE_ENV !== "test") {
+      app.listen(PORT, () => {
+        console.log(`Serveur démarré sur le port ${PORT}`);
+        console.log(`Environnement: ${process.env.NODE_ENV || "development"}`);
+      });
+    }
   } catch (error) {
     console.error("Erreur lors du démarrage du serveur:", error);
-    process.exit(1);
+    if (process.env.NODE_ENV !== "test") {
+      process.exit(1);
+    }
   }
 }
 
-startServer();
+// Ne démarrer le serveur que si ce n'est pas un test
+if (process.env.NODE_ENV !== "test") {
+  startServer();
+}
+
+module.exports = app;
