@@ -174,7 +174,7 @@ const recipeController = {
         difficulte: Number.parseInt(difficulte),
         etapes: JSON.stringify(etapes),
         anecdote,
-        image: `public/uploads/recipes/${req.file.filename}` || null, //objet de l'image via upload (voir le middleware)
+        image: req.file ? `uploads/recipes/${req.file.filename}` : null,
         statut: "en attente",
         id_categorie: Number.parseInt(id_categorie),
         id_oeuvre: Number.parseInt(id_oeuvre),
