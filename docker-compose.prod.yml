@@ -1,26 +1,22 @@
 services:
 
   # nom du service sur le réseau docker => server:3000
-  cinedelices-app:
-    container_name: cinedelices-app
+  app.prod:
+    container_name: cinedelices-app-prod
 
     # informations relatives à l'image (=> construire une image Docker à partir de notre code pour pouvoir ensuite le faire tourner dans un conteneur)
     build:
       # le répertoire de build du projet
       context: .
       # le nom du Dockerfile
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
 
     # on déclare que le service doit être accessible sur le port
     # 3000 de l'hôte qui correspond au port 3000 du conteneur.
     # C'est l'équivalent de l'option -p de docker run
     ports:
       # port-hôte:port-conteneur
-      - 3000:3000
-
-    volumes:
-      - .:/app
-      - /app/node_modules
+      - 80:3000
 
     # notre conteneur app utilise le service db
     # qui doit donc être lancé avant l'application

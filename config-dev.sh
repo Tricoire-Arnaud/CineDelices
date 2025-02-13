@@ -6,14 +6,14 @@
 # se déroule correctement. 
 # Si une étape échoue, il affiche un message d'erreur et arrête l'exécution.
 
-echo "Lancement de setup-dev"
+echo "Lancement du setup-dev (init-db & tailwind)"
 npm run setup-dev
 if [ $? -ne 0 ]; then
   echo "Erreur lors de l'exécution de setup-dev"
   exit 1
 fi
 
-echo "Lancement de dev"
+echo "Lancement en developpement"
 npm run dev
 if [ $? -ne 0 ]; then
   echo "Erreur lors de l'exécution de start-dev"
