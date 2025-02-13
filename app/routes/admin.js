@@ -37,6 +37,7 @@ router.delete("/utensils/:id", utensilController.deleteUtensil);
 router.get("/recette", adminController.getRecipes);
 router.get("/recette-moderation", adminController.getRecipesToValidate);
 router.post("/recettes/valider/:id", adminController.validateRecipes);
+router.delete("/recipes/:id", recipeController.deleteRecipe);
 router.post("/recipes/:id/delete", recipeController.deleteRecipe);
 router.post("/recipes/:id", (req, res) => {
   if (req.query._method === "DELETE") {
