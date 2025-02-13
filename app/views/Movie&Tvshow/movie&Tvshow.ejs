@@ -1,98 +1,120 @@
 <div class="max-w-6xl mx-auto px-4 py-8">
   <% if (isSearch) { %>
-    <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6">Résultats de recherche</h2>
-      <% if (searchResults.length> 0) { %>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <% searchResults.forEach(movie=> { %>
-            <div class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
-              <div class="p-6">
-                <h3 class="text-xl font-semibold mb-2">
-                  <%= movie.titre %>
-                </h3>
-                <p class="text-gray-600 mb-4">
-                  <%= movie.annee %>
-                </p>
-                <p class="text-gray-500 mb-4 line-clamp-2">
-                  <%= movie.description %>
-                </p>
-                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  <span class="font-medium">
-                    <%= movie.recipes.length %> recettes
-                  </span>
-                </div>
-                <a href="/films-series/<%= movie.id_oeuvre %>/recettes"
-                  class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300">
-                  Voir les recettes
-                </a>
-              </div>
-            </div>
-            <% }) %>
+  <section class="mb-8 sm:mb-12">
+    <h2 class="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6">
+      Résultats de recherche
+    </h2>
+    <% if (searchResults.length> 0) { %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+      <% searchResults.forEach(movie=> { %>
+      <div
+        class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 p-4 sm:p-6"
+      >
+        <div class="flex flex-col h-full">
+          <h3 class="text-lg sm:text-xl font-semibold mb-2">
+            <%= movie.titre %>
+          </h3>
+          <p class="text-gray-600 text-sm sm:text-base mb-2">
+            <%= movie.annee %>
+          </p>
+          <p class="text-gray-500 text-sm sm:text-base mb-4 line-clamp-2">
+            <%= movie.description %>
+          </p>
+          <div
+            class="flex items-center justify-between text-sm text-gray-500 mb-4 mt-auto"
+          >
+            <span class="font-medium">
+              <%= movie.recipes.length %> recettes
+            </span>
+          </div>
+          <a
+            href="/films-series/<%= movie.id_oeuvre %>/recettes"
+            class="block text-center py-2 sm:py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300"
+          >
+            Voir les recettes
+          </a>
         </div>
-        <% } else { %>
-          <p class="text-gray-600">Aucun résultat trouvé pour votre recherche.</p>
-          <% } %>
-    </section>
+      </div>
+      <% }) %>
+    </div>
     <% } else { %>
-      <!-- Affichage normal si pas de recherche -->
-      <section class="mb-12">
-        <h2 class="text-2xl font-semibold mb-6">Films</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <% movies.forEach(movie=> { %>
-            <div class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
-              <div class="p-6">
-                <h3 class="text-xl font-semibold mb-2">
-                  <%= movie.titre %>
-                </h3>
-                <p class="text-gray-600 mb-4">
-                  <%= movie.annee %>
-                </p>
-                <p class="text-gray-500 mb-4 line-clamp-2">
-                  <%= movie.description %>
-                </p>
-                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  <span class="font-medium">
-                    <%= movie.recipes.length %> recettes
-                  </span>
-                </div>
-                <a href="/films-series/<%= movie.id_oeuvre %>/recettes"
-                  class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300">
-                  Voir les recettes
-                </a>
-              </div>
-            </div>
-            <% }) %>
+    <p class="text-gray-600 text-center py-8">
+      Aucun résultat trouvé pour votre recherche.
+    </p>
+    <% } %>
+  </section>
+  <% } else { %>
+  <!-- Affichage normal si pas de recherche -->
+  <section class="mb-8 sm:mb-12">
+    <h2 class="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6">Films</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+      <% movies.forEach(movie=> { %>
+      <div
+        class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 p-4 sm:p-6"
+      >
+        <div class="flex flex-col h-full">
+          <h3 class="text-lg sm:text-xl font-semibold mb-2">
+            <%= movie.titre %>
+          </h3>
+          <p class="text-gray-600 text-sm sm:text-base mb-2">
+            <%= movie.annee %>
+          </p>
+          <p class="text-gray-500 text-sm sm:text-base mb-4 line-clamp-2">
+            <%= movie.description %>
+          </p>
+          <div
+            class="flex items-center justify-between text-sm text-gray-500 mb-4 mt-auto"
+          >
+            <span class="font-medium">
+              <%= movie.recipes.length %> recettes
+            </span>
+          </div>
+          <a
+            href="/films-series/<%= movie.id_oeuvre %>/recettes"
+            class="block text-center py-2 sm:py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300"
+          >
+            Voir les recettes
+          </a>
         </div>
-      </section>
+      </div>
+      <% }) %>
+    </div>
+  </section>
 
-      <section>
-        <h2 class="text-2xl font-semibold mb-6">Séries</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <% tvShows.forEach(show=> { %>
-            <div class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
-              <div class="p-6">
-                <h3 class="text-xl font-semibold mb-2">
-                  <%= show.titre %>
-                </h3>
-                <p class="text-gray-600 mb-4">
-                  <%= show.annee %>
-                </p>
-                <p class="text-gray-500 mb-4 line-clamp-2">
-                  <%= show.description %>
-                </p>
-                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  <span class="font-medium">
-                    <%= show.recipes.length %> recettes
-                  </span>
-                </div>
-                <a href="/films-series/<%= show.id_oeuvre %>/recettes"
-                  class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300">
-                  Voir les recettes
-                </a>
-              </div>
-            </div>
-            <% }) %>
+  <section>
+    <h2 class="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6">Séries</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+      <% tvShows.forEach(show=> { %>
+      <div
+        class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 p-4 sm:p-6"
+      >
+        <div class="flex flex-col h-full">
+          <h3 class="text-lg sm:text-xl font-semibold mb-2">
+            <%= show.titre %>
+          </h3>
+          <p class="text-gray-600 text-sm sm:text-base mb-2">
+            <%= show.annee %>
+          </p>
+          <p class="text-gray-500 text-sm sm:text-base mb-4 line-clamp-2">
+            <%= show.description %>
+          </p>
+          <div
+            class="flex items-center justify-between text-sm text-gray-500 mb-4 mt-auto"
+          >
+            <span class="font-medium">
+              <%= show.recipes.length %> recettes
+            </span>
+          </div>
+          <a
+            href="/films-series/<%= show.id_oeuvre %>/recettes"
+            class="block text-center py-2 sm:py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300"
+          >
+            Voir les recettes
+          </a>
         </div>
-      </section>
-      <% } %>
+      </div>
+      <% }) %>
+    </div>
+  </section>
+  <% } %>
 </div>

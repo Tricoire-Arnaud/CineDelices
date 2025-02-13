@@ -1,103 +1,259 @@
 <!-- Gestion des films et séries (admin) -->
 <%- contentFor('body') %> <%- include('../partials/flash') %>
 
-<main class="bg-gray-100 min-h-screen py-8">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-gray-900 mb-4">
+<main class="bg-gray-100 min-h-screen py-4 sm:py-8">
+  <div class="max-w-7xl mx-auto px-4">
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
       Gestion des Films & Séries
     </h1>
 
     <!-- Statistiques -->
-    <div class="mb-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-lg shadow p-6">
-          <p class="text-sm font-medium text-gray-600">Total Films & Séries</p>
-          <p class="text-2xl font-semibold text-gray-900">
-            <%= movies.length %>
-          </p>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600">
+              Total Films & Séries
+            </p>
+            <p class="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
+              <%= movies.length %>
+            </p>
+          </div>
+          <div class="bg-orange-100 p-2 sm:p-3 rounded-lg">
+            <svg
+              class="w-5 h-5 sm:w-6 sm:h-6 text-orange-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+              ></path>
+            </svg>
+          </div>
         </div>
-        <div class="bg-white rounded-lg shadow p-6">
-          <p class="text-sm font-medium text-gray-600">Films</p>
-          <p class="text-2xl font-semibold text-gray-900">
-            <%= movies.filter(m => m.type === 'film').length %>
-          </p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600">Films</p>
+            <p class="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
+              <%= movies.filter(m => m.type === 'film').length %>
+            </p>
+          </div>
+          <div class="bg-orange-100 p-2 sm:p-3 rounded-lg">
+            <svg
+              class="w-5 h-5 sm:w-6 sm:h-6 text-orange-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+              ></path>
+            </svg>
+          </div>
         </div>
-        <div class="bg-white rounded-lg shadow p-6">
-          <p class="text-sm font-medium text-gray-600">Séries</p>
-          <p class="text-2xl font-semibold text-gray-900">
-            <%= movies.filter(m => m.type === 'série').length %>
-          </p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600">Séries</p>
+            <p class="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
+              <%= movies.filter(m => m.type === 'série').length %>
+            </p>
+          </div>
+          <div class="bg-orange-100 p-2 sm:p-3 rounded-lg">
+            <svg
+              class="w-5 h-5 sm:w-6 sm:h-6 text-orange-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Barre d'actions -->
-    <div class="bg-white rounded-lg shadow mb-6 p-4">
-      <div class="flex justify-between items-center">
-        <input
-          type="text"
-          placeholder="Rechercher un film ou une série..."
-          class="w-full max-w-md px-4 py-2 border rounded-lg"
-        />
+    <div class="bg-white rounded-xl shadow-lg mb-6 p-4 sm:p-6">
+      <div class="flex flex-col sm:flex-row gap-4 items-center">
+        <div class="w-full sm:flex-1">
+          <input
+            type="text"
+            placeholder="Rechercher un film ou une série..."
+            class="w-full px-4 py-2 sm:py-3 border rounded-lg focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all"
+          />
+        </div>
         <a
           href="/admin/films-series/ajouter"
-          class="ml-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-200 flex items-center"
+          class="w-full sm:w-auto px-6 py-2 sm:py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-300 text-center"
         >
-          <svg
-            class="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          Ajouter une œuvre
+          Nouvelle Œuvre
         </a>
       </div>
     </div>
 
     <!-- Liste des films et séries -->
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-      <% if (movies && movies.length > 0) { %>
-      <div class="divide-y divide-gray-200">
-        <% movies.forEach(function(movie) { %>
-        <div class="p-6 hover:bg-gray-50 transition-colors duration-200">
-          <div class="flex justify-between items-center">
-            <div>
-              <h2 class="text-xl font-semibold text-gray-900">
-                <%= movie.titre %>
-              </h2>
-              <div
-                class="mt-1 flex items-center space-x-4 text-sm text-gray-500"
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <!-- Vue desktop -->
+      <div class="hidden sm:block overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                class="px-4 sm:px-6 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
               >
+                Titre
+              </th>
+              <th
+                class="hidden sm:table-cell px-6 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Type
+              </th>
+              <th
+                class="hidden lg:table-cell px-6 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Année
+              </th>
+              <th
+                class="px-4 sm:px-6 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Recettes
+              </th>
+              <th
+                class="px-4 sm:px-6 py-3 text-right text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% movies.forEach(movie => { %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div
+                    class="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-orange-100 flex items-center justify-center"
+                  >
+                    <svg
+                      class="w-4 h-4 sm:w-5 sm:h-5 text-orange-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <div class="text-sm sm:text-base font-medium text-gray-900">
+                      <%= movie.titre %>
+                    </div>
+                    <div class="text-xs sm:text-sm text-gray-500 sm:hidden">
+                      <%= movie.type %>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
                 <span
-                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= movie.type === 'film' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' %>"
+                  class="px-2 inline-flex text-xs sm:text-sm leading-5 font-semibold rounded-full <%= movie.type === 'film' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' %>"
                 >
-                  <%= movie.type.charAt(0).toUpperCase() + movie.type.slice(1)
-                  %>
+                  <%= movie.type %>
                 </span>
-                <span><%= movie.annee %></span>
-                <span
-                  ><%= movie.recipes ? movie.recipes.length : 0 %>
-                  recettes</span
-                >
-              </div>
-              <p class="mt-2 text-sm text-gray-600 line-clamp-2">
-                <%= movie.description %>
-              </p>
-            </div>
-            <div class="flex gap-2">
-              <a
-                href="/admin/films-series/modifier/<%= movie.id_oeuvre %>"
-                class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+              </td>
+              <td
+                class="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm sm:text-base text-gray-500"
+              >
+                <%= movie.annee %>
+              </td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
+                <div class="text-sm sm:text-base text-gray-900">
+                  <%= movie.recipes.length %> recettes
+                </div>
+              </td>
+              <td
+                class="px-4 sm:px-6 py-4 whitespace-nowrap text-right text-sm sm:text-base font-medium"
+              >
+                <div class="flex justify-end gap-2">
+                  <a
+                    href="/admin/films-series/modifier/<%= movie.id_oeuvre %>"
+                    class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 bg-orange-100 text-orange-600 rounded-md hover:bg-orange-200 transition-colors duration-200"
+                  >
+                    <svg
+                      class="w-4 h-4 sm:hidden"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                      />
+                    </svg>
+                    <span class="hidden sm:inline">Modifier</span>
+                  </a>
+                  <button
+                    onclick="deleteMovie('<%= movie.id_oeuvre %>')"
+                    class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition-colors duration-200"
+                  >
+                    <svg
+                      class="w-4 h-4 sm:hidden"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                    <span class="hidden sm:inline">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Vue mobile -->
+      <div class="sm:hidden divide-y divide-gray-200">
+        <% movies.forEach(movie => { %>
+        <div class="p-4 space-y-3">
+          <!-- En-tête avec titre et type -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div
+                class="h-10 w-10 rounded-lg bg-orange-100 flex items-center justify-center"
               >
                 <svg
-                  class="w-4 h-4 mr-2"
+                  class="w-5 h-5 text-orange-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -106,66 +262,91 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                  />
+                    d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+                  ></path>
                 </svg>
-                Modifier
-              </a>
-              <form
-                action="/admin/movies/<%= movie.id_oeuvre %>?_method=DELETE"
-                method="POST"
-                class="inline"
-                onsubmit="return confirm('Voulez-vous vraiment supprimer cette œuvre ?')"
-              >
-                <button
-                  type="submit"
-                  class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              </div>
+              <div>
+                <h3 class="font-medium text-gray-900"><%= movie.titre %></h3>
+                <span
+                  class="inline-flex px-2 text-xs font-medium rounded-full <%= movie.type === 'film' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' %>"
                 >
-                  <svg
-                    class="w-4 h-4 mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    />
-                  </svg>
-                  Supprimer
-                </button>
-              </form>
+                  <%= movie.type %>
+                </span>
+              </div>
             </div>
           </div>
+
+          <!-- Informations -->
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <span class="text-gray-500">Année</span>
+              <p class="font-medium text-gray-900"><%= movie.annee %></p>
+            </div>
+            <div>
+              <span class="text-gray-500">Recettes</span>
+              <p class="font-medium text-gray-900">
+                <%= movie.recipes.length %>
+              </p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex justify-end space-x-2 pt-2">
+            <a
+              href="/admin/films-series/modifier/<%= movie.id_oeuvre %>"
+              class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-orange-100 text-orange-600 rounded-md hover:bg-orange-200 transition-colors duration-200"
+            >
+              <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                />
+              </svg>
+              Modifier
+            </a>
+            <button
+              onclick="deleteMovie('<%= movie.id_oeuvre %>')"
+              class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition-colors duration-200"
+            >
+              <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+              Supprimer
+            </button>
+          </div>
         </div>
-        <% }); %>
+        <% }) %>
       </div>
-      <% } else { %>
-      <div class="p-6 text-center">
-        <p class="text-gray-500 mb-4">Aucun film ou série disponible</p>
-        <a
-          href="/admin/films-series/ajouter"
-          class="inline-flex items-center px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-200"
-        >
-          <svg
-            class="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          Ajouter une œuvre
-        </a>
-      </div>
-      <% } %>
     </div>
   </div>
 </main>
+
+<script>
+  function deleteMovie(id) {
+    if (confirm("Êtes-vous sûr de vouloir supprimer cette œuvre ?")) {
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = `/admin/movies/${id}?_method=DELETE`;
+      document.body.appendChild(form);
+      form.submit();
+    }
+  }
+</script>

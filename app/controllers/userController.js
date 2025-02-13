@@ -285,6 +285,7 @@ const userController = {
         movies,
         ingredients,
         utensils,
+        recipe: null,
       });
     } catch (error) {
       console.error("Erreur lors du chargement du formulaire:", error);
@@ -296,87 +297,91 @@ const userController = {
   //proposer une recette (à partir du profil user uniquement)
   proposeRecipe: async (req, res) => {
     try {
+      // Vérification des données requises
+      if (
+        !req.body.titre ||
+        !req.body.description ||
+        !req.body.etapes ||
+        !req.body.temps_preparation ||
+        !req.body.temps_cuisson ||
+        !req.body.difficulte ||
+        !req.body.id_oeuvre ||
+        !req.body.id_categorie
+      ) {
+        req.flash("error", "Veuillez remplir tous les champs obligatoires");
+        return res.redirect("/mon-profil/proposition-recette");
+      }
+
       // Création de la recette
       const recipe = await Recipe.create({
         titre: req.body.titre,
         description: req.body.description,
-        etapes: JSON.stringify(req.body.etapes), // Si c'est un tableau
+        etapes: JSON.stringify(req.body.etapes),
         temps_preparation: req.body.temps_preparation,
         temps_cuisson: req.body.temps_cuisson,
         difficulte: req.body.difficulte,
-        anecdote: req.body.anecdote,
-        image: `uploads/recipes/${req.file.filename}` || null, //objet de l'image via upload (voir le middleware)
+        anecdote: req.body.anecdote || null,
+        image: req.file ? `uploads/recipes/${req.file.filename}` : null,
         statut: "en attente",
         id_oeuvre: req.body.id_oeuvre,
         id_categorie: req.body.id_categorie,
         id_utilisateur: req.session.user.id,
       });
 
-      // Convertir req.body.ingredients en tableau exploitable (là ce sont des numéros 6,2,8)
-      const ingredientsArray = Array.isArray(req.body.ingredients)
-        ? req.body.ingredients // Si c'est déjà un tableau
-        : req.body.ingredients.split(","); // Convertir une chaîne CSV en tableau
-
-      console.log("Ingrédients après parsing:", ingredientsArray);
-
       console.log("Recette créée avec l'ID :", recipe.id_recette);
 
-      // Vérifier que la recette crée a bien un ID avant de poursuivre (notamment pour les ingrédients + ustensiles)
+      // Vérifier que la recette crée a bien un ID avant de poursuivre
       if (!recipe.id_recette) {
-        throw new Error("L'ID de la recette est indéfini après la création.");
+        req.flash("error", "Erreur lors de la création de la recette");
+        return res.redirect("/mon-profil/proposition-recette");
       }
 
-      //contrôle pour s'assurer que chaque ingrédient a un id valide avant de tenter de l'insérer dans la base de données
-      // sinon il ne s'insère pas et ne provoque pas d'erreur
+      // Gestion des ingrédients
       if (req.body.ingredients && req.body.ingredients.length > 0) {
-        const recipeIngredients = req.body.ingredients.map((ingredientId) => {
-          return {
-            id_recette: recipe.id_recette,
-            id_ingredient: ingredientId,
-            quantite: req.body.quantities?.[ingredientId] || 1, // Récupérer la quantité, sinon 1 par défaut
-          };
-        });
+        const ingredientsArray = Array.isArray(req.body.ingredients)
+          ? req.body.ingredients
+          : [req.body.ingredients];
+
+        console.log("Ingrédients après parsing:", ingredientsArray);
+
+        const recipeIngredients = ingredientsArray.map((ingredientId) => ({
+          id_recette: recipe.id_recette,
+          id_ingredient: ingredientId,
+          quantite: req.body.quantities?.[ingredientId] || 1,
+        }));
+
         await RecipeIngredient.bulkCreate(recipeIngredients);
         console.log("Ingrédients avec quantités ajoutés !");
-      } else {
-        console.log("Aucun ingrédient valide à ajouter.");
       }
 
-      //contrôle pour s'assurer que chaque ustensile a un id valide avant de tenter de l'insérer dans la base de données
-      // sinon il ne s'insère pas et ne provoque pas d'erreur
+      // Gestion des ustensiles
       if (req.body.utensils && req.body.utensils.length > 0) {
-        // Filtrer les ustensiles invalides (ceux sans ID)
-        const recipeUtensils = req.body.utensils
-          .filter((ut) => ut) // Ne garder que les valeurs non nulles
+        const utensilsArray = Array.isArray(req.body.utensils)
+          ? req.body.utensils
+          : [req.body.utensils];
+
+        const recipeUtensils = utensilsArray
+          .filter((ut) => ut)
           .map((ut) => ({
             id_recette: recipe.id_recette,
-            id_ustensile: ut, // Assurer que `ut` est un id valide
+            id_ustensile: ut,
           }));
 
         if (recipeUtensils.length > 0) {
-          await RecipeUtensil.bulkCreate(recipeUtensils); // envoyer les infos sur RecipeUtensil
+          await RecipeUtensil.bulkCreate(recipeUtensils);
           console.log("Ustensiles ajoutés !");
-        } else {
-          console.log("Aucun ustensile valide à ajouter.");
         }
       }
 
-      // Récupérer la recette complète avec ses relations
-      // const fullRecipe = await Recipe.findByPk(recipe.id_recette, {
-      //   include: [
-      //     { model: Ingredient, through: { attributes: ['quantite'] } },
-      //     { model: Utensil }
-      //   ]
-      // });
-      // console.log("recette complète" + fullRecipe);
-
-      req.flash("success", "Recette envoyée en modération");
+      req.flash("success", "Votre recette a été envoyée en modération");
       res.redirect("/mon-profil");
     } catch (error) {
       console.error("Erreur lors de la proposition de la recette :", error);
-      res
-        .status(500)
-        .json({ message: "Erreur lors de la proposition de la recette" });
+      req.flash(
+        "error",
+        "Une erreur est survenue lors de la création de la recette"
+      );
+      res.redirect("/mon-profil/proposition-recette");
     }
   },
 };

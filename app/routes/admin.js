@@ -37,6 +37,12 @@ router.delete("/utensils/:id", utensilController.deleteUtensil);
 router.get("/recette", adminController.getRecipes);
 router.get("/recette-moderation", adminController.getRecipesToValidate);
 router.post("/recettes/valider/:id", adminController.validateRecipes);
+router.post("/recipes/:id/delete", recipeController.deleteRecipe);
+router.post("/recipes/:id", (req, res) => {
+  if (req.query._method === "DELETE") {
+    recipeController.deleteRecipe(req, res);
+  }
+});
 router.get("/recettes/ajouter", recipeController.getAddRecipeForm);
 router.get("/recettes/modifier/:id", recipeController.getEditRecipeForm);
 router.post("/recipes", upload.single("image"), recipeController.createRecipe);
@@ -45,7 +51,6 @@ router.put(
   upload.single("image"),
   recipeController.updateRecipe
 );
-router.delete("/recipes/:id", recipeController.deleteRecipe);
 
 // Routes de gestion des films/séries
 router.get("/films-series", movieController.getAllMoviesAdmin);
