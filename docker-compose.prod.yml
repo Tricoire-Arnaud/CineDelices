@@ -32,7 +32,7 @@ services:
     env_file:
       - .env.docker-compose
 
-    command: npm run setup
+    command: [ "bash", "-c", "./config-prod.sh" ]
 
   # service pour la base de données
   db:
