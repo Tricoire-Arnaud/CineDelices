@@ -6,8 +6,11 @@
 
 FROM node:20-alpine
 
+# Installer bash
+RUN apk add --no-cache curl bash
+
 # créer un répertoire de travail et s'y déplacer
-WORKDIR /app
+WORKDIR /cinedelices
 
 # on récupère le package.json depuis le dossier de build (./ => "server" => le "context" dans mon docker-compose)
 COPY ./package*.json /cinedelices/
@@ -18,8 +21,11 @@ RUN npm i --omit=dev
 # on copie le reste des fichiers de l'application
 COPY . /cinedelices/
 
+# Donner les droits d'exécution au script
+RUN chmod +x /cinedelices/config-prod.sh
+
 # rendre utilisable le port de l'app
 EXPOSE 3000
 
 # Commande de démarrage
-CMD ["node", "app.js"]
+CMD [ "bash", "-c", "./config-prod.sh" ]

@@ -22,4 +22,4 @@ COPY . /cinedelices/
 EXPOSE 3000
 
 # on lance l'application en dev
-CMD ["bash", "-c","nodemon", "app.js"]
+CMD ["bash", "-c", "./config-dev.sh"]
