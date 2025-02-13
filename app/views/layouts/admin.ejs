@@ -13,9 +13,33 @@
   </head>
   <body class="bg-gray-50">
     <div class="flex h-screen">
+      <!-- Bouton menu burger (visible uniquement sur mobile) -->
+      <button
+        id="sidebar-toggle"
+        class="lg:hidden fixed top-4 left-4 z-20 p-2 rounded-lg bg-white shadow-lg hover:bg-gray-100 focus:outline-none"
+      >
+        <svg
+          class="w-6 h-6 text-gray-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+
+      <!-- Overlay pour fermer le menu sur mobile -->
+      <div id="sidebar-overlay" class="fixed inset-0 bg-black opacity-50 z-10 hidden lg:hidden"></div>
+
       <!-- Barre latérale -->
       <aside
-        class="w-64 bg-white fixed h-full shadow-lg border-r border-gray-200 z-10"
+        id="sidebar"
+        class="w-64 bg-white fixed h-full shadow-lg border-r border-gray-200 z-20 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out"
       >
         <!-- Logo -->
         <div
@@ -188,7 +212,7 @@
       </aside>
 
       <!-- Contenu principal -->
-      <main class="ml-64 flex-1 p-8">
+      <main class="lg:ml-64 flex-1 p-4 lg:p-8">
         <!-- En-tête de la page -->
         <div class="mb-8">
           <% if (messages.success && messages.success.length > 0) { %>
@@ -210,5 +234,23 @@
     </div>
 
     <%- defineContent('script') %>
+    
+    <!-- Script pour le menu mobile -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        function toggleSidebar() {
+          sidebar.classList.toggle('-translate-x-full');
+          overlay.classList.toggle('hidden');
+          document.body.classList.toggle('overflow-hidden');
+        }
+
+        sidebarToggle.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+      });
+    </script>
   </body>
 </html>

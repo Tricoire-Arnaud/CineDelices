@@ -1,83 +1,303 @@
 <!-- Gestion des recettes (admin) -->
 <%- include('../partials/flash') %>
-<main class="bg-gray-100 min-h-screen py-8">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-gray-900 mb-4">Gestion des Recettes</h1>
+<main class="bg-gray-100 min-h-screen py-4 sm:py-8">
+  <div class="max-w-7xl mx-auto px-4">
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+      Gestion des Recettes
+    </h1>
 
     <!-- Statistiques -->
-    <div class="mb-8">
-      <div class="bg-white rounded-lg shadow p-6">
-        <p class="text-sm font-medium text-gray-600">Total Recettes</p>
-        <p class="text-2xl font-semibold text-gray-900">
-          <%= recipes.length %>
-        </p>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 sm:mb-8"
+    >
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600">Total Recettes</p>
+            <p class="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
+              <%= recipes.length %>
+            </p>
+          </div>
+          <div class="bg-orange-100 p-2 sm:p-3 rounded-lg">
+            <svg
+              class="w-5 h-5 sm:w-6 sm:h-6 text-orange-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              ></path>
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Barre d'actions -->
-    <div class="bg-white rounded-lg shadow mb-6 p-4">
-      <div class="flex justify-between items-center">
-        <input
-          type="text"
-          placeholder="Rechercher une recette..."
-          class="w-full max-w-md px-4 py-2 border rounded-lg"
-        />
+    <div class="bg-white rounded-xl shadow-lg mb-6 p-4 sm:p-6">
+      <div class="flex flex-col sm:flex-row gap-4 items-center">
+        <div class="w-full sm:flex-1">
+          <input
+            type="text"
+            placeholder="Rechercher une recette..."
+            class="w-full px-4 py-2 sm:py-3 border rounded-lg focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all"
+          />
+        </div>
         <a
           href="/admin/recettes/ajouter"
-          class="ml-4 px-4 py-2 bg-orange-500 text-white rounded-lg"
-          >Nouvelle Recette</a
+          class="w-full sm:w-auto px-6 py-2 sm:py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-300 text-center"
         >
+          Nouvelle Recette
+        </a>
       </div>
     </div>
 
     <!-- Liste des recettes -->
-    <div class="bg-white rounded-lg shadow">
-      <% if (recipes && recipes.length > 0) { %>
-      <div class="divide-y divide-gray-200">
-        <% recipes.forEach(function(recipe) { %>
-        <div class="p-6">
-          <div class="flex justify-between items-center">
-            <div>
-              <h2 class="text-xl font-semibold"><%= recipe.titre %></h2>
-              <p class="text-gray-600">
-                <%= recipe.category ? recipe.category.libelle : 'Non catégorisé'
-                %> | <%= recipe.oeuvre ? recipe.oeuvre.titre : 'Non associé' %>
-              </p>
-            </div>
-            <div class="flex gap-2">
-              <a
-                href="/admin/recettes/modifier/<%= recipe.id_recette %>"
-                class="px-3 py-1 bg-blue-500 text-white rounded"
-                >Modifier</a
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <!-- Vue desktop -->
+      <div class="hidden sm:block overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                class="px-4 sm:px-6 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
               >
-              <form
-                action="/admin/recipes/<%= recipe.id_recette %>?_method=DELETE"
-                method="POST"
-                class="inline"
-                onsubmit="return confirm('Voulez-vous vraiment supprimer cette recette ?')"
+                Titre
+              </th>
+              <th
+                class="hidden sm:table-cell px-6 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
               >
-                <button
-                  type="submit"
-                  class="px-3 py-1 bg-red-500 text-white rounded"
+                Auteur
+              </th>
+              <th
+                class="hidden lg:table-cell px-6 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Date
+              </th>
+              <th
+                class="px-4 sm:px-6 py-3 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Statut
+              </th>
+              <th
+                class="px-4 sm:px-6 py-3 text-right text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% recipes.forEach(recipe => { %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div
+                    class="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-orange-100 flex items-center justify-center"
+                  >
+                    <svg
+                      class="w-4 h-4 sm:w-5 sm:h-5 text-orange-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <div class="text-sm sm:text-base font-medium text-gray-900">
+                      <%= recipe.titre %>
+                    </div>
+                    <div class="text-xs sm:text-sm text-gray-500 sm:hidden">
+                      Par <%= recipe.author.nom_utilisateur %>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
+                <div class="text-sm sm:text-base text-gray-900">
+                  <%= recipe.author.nom_utilisateur %>
+                </div>
+              </td>
+              <td
+                class="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm sm:text-base text-gray-500"
+              >
+                <%= new Date(recipe.created_at).toLocaleDateString('fr-FR') %>
+              </td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
+                <span
+                  class="px-2 inline-flex text-xs sm:text-sm leading-5 font-semibold rounded-full <%= recipe.statut === 'validée' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>"
                 >
-                  Supprimer
-                </button>
-              </form>
+                  <%= recipe.statut === 'validée' ? 'Publié' : 'En attente' %>
+                </span>
+              </td>
+              <td
+                class="px-4 sm:px-6 py-4 whitespace-nowrap text-right text-sm sm:text-base font-medium"
+              >
+                <div class="flex justify-end gap-2">
+                  <a
+                    href="/admin/recettes/modifier/<%= recipe.id_recette %>"
+                    class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 bg-orange-100 text-orange-600 rounded-md hover:bg-orange-200 transition-colors duration-200"
+                  >
+                    <svg
+                      class="w-4 h-4 sm:hidden"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                      />
+                    </svg>
+                    <span class="hidden sm:inline">Modifier</span>
+                  </a>
+                  <button
+                    onclick="deleteRecipe('<%= recipe.id_recette %>')"
+                    class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition-colors duration-200"
+                  >
+                    <svg
+                      class="w-4 h-4 sm:hidden"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                    <span class="hidden sm:inline">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Vue mobile -->
+      <div class="sm:hidden divide-y divide-gray-200">
+        <% recipes.forEach(recipe => { %>
+        <div class="p-4 space-y-3">
+          <!-- En-tête avec titre -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div
+                class="h-10 w-10 rounded-lg bg-orange-100 flex items-center justify-center"
+              >
+                <svg
+                  class="w-5 h-5 text-orange-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-medium text-gray-900"><%= recipe.titre %></h3>
+                <span class="text-sm text-gray-500"
+                  >Par <%= recipe.author.nom_utilisateur %></span
+                >
+              </div>
             </div>
           </div>
+
+          <!-- Informations -->
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <span class="text-gray-500">Date</span>
+              <p class="font-medium text-gray-900">
+                <%= new Date(recipe.created_at).toLocaleDateString('fr-FR') %>
+              </p>
+            </div>
+            <div>
+              <span class="text-gray-500">Statut</span>
+              <p>
+                <span
+                  class="inline-flex px-2 py-1 text-xs font-medium rounded-full <%= recipe.statut === 'validée' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>"
+                >
+                  <%= recipe.statut === 'validée' ? 'Publié' : 'En attente' %>
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex justify-end space-x-2 pt-2">
+            <a
+              href="/admin/recettes/modifier/<%= recipe.id_recette %>"
+              class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-orange-100 text-orange-600 rounded-md hover:bg-orange-200 transition-colors duration-200"
+            >
+              <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                />
+              </svg>
+              Modifier
+            </a>
+            <button
+              onclick="deleteRecipe('<%= recipe.id_recette %>')"
+              class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition-colors duration-200"
+            >
+              <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+              Supprimer
+            </button>
+          </div>
         </div>
-        <% }); %>
+        <% }) %>
       </div>
-      <% } else { %>
-      <div class="p-6 text-center">
-        <p class="text-gray-500">Aucune recette disponible</p>
-        <a
-          href="/admin/recettes/ajouter"
-          class="mt-4 inline-block px-4 py-2 bg-orange-500 text-white rounded-lg"
-          >Ajouter une recette</a
-        >
-      </div>
-      <% } %>
     </div>
   </div>
 </main>
+
+<script>
+  function deleteRecipe(id) {
+    if (confirm("Êtes-vous sûr de vouloir supprimer cette recette ?")) {
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = `/admin/recipes/${id}?_method=DELETE`;
+      document.body.appendChild(form);
+      form.submit();
+    }
+  }
+</script>

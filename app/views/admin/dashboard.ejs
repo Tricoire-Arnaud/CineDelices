@@ -2,12 +2,14 @@
 
 <!-- Contenu principal -->
 <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="max-w-7xl mx-auto px-4">
     <!-- En-tête avec animation -->
-    <div class="flex justify-between items-center mb-8 animate-fade-in">
+    <div
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 animate-fade-in gap-4"
+    >
       <div>
         <h1
-          class="text-4xl font-bold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400"
+          class="text-2xl sm:text-4xl font-bold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400"
         >
           Tableau de bord
         </h1>
@@ -15,7 +17,7 @@
           Vue d'ensemble de votre plateforme
         </p>
       </div>
-      <div class="flex items-center space-x-4">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div
           class="bg-white p-2 rounded-lg shadow-sm flex items-center space-x-2"
         >
@@ -58,11 +60,13 @@
     </div>
 
     <!-- Statistiques principales avec animations -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8"
+    >
       <!-- Utilisateurs -->
       <div class="transform hover:scale-105 transition-all duration-300">
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div class="p-6 relative">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-6">
+          <div class="relative">
             <div
               class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-orange-500/10 to-orange-600/10 rounded-full -mr-10 -mt-10"
             ></div>
@@ -70,13 +74,13 @@
               <div class="flex items-center justify-between mb-4">
                 <div>
                   <p class="text-sm font-medium text-gray-600">Utilisateurs</p>
-                  <p class="text-3xl font-bold text-gray-900">
+                  <p class="text-2xl sm:text-3xl font-bold text-gray-900">
                     <%= usersCount %>
                   </p>
                 </div>
-                <div class="bg-orange-100 p-3 rounded-lg">
+                <div class="bg-orange-100 p-2 sm:p-3 rounded-lg">
                   <svg
-                    class="w-6 h-6 text-orange-600"
+                    class="w-5 h-5 sm:w-6 sm:h-6 text-orange-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -263,16 +267,18 @@
     </div>
 
     <!-- Activités récentes -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
       <!-- Nouveaux utilisateurs -->
       <div
         class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
       >
-        <div class="p-6">
-          <div class="flex items-center justify-between mb-6">
-            <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+        <div class="p-4 sm:p-6">
+          <div class="flex items-center justify-between mb-4 sm:mb-6">
+            <h3
+              class="text-base sm:text-lg font-semibold text-gray-800 flex items-center"
+            >
               <svg
-                class="w-5 h-5 mr-2 text-orange-500"
+                class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-orange-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -293,19 +299,19 @@
               Voir tout
             </a>
           </div>
-          <div class="space-y-4">
+          <div class="space-y-3 sm:space-y-4">
             <% recentActivities.recentUsers.forEach(user => { %>
             <div
-              class="flex items-center justify-between p-3 hover:bg-orange-50 rounded-lg transition-colors duration-150"
+              class="flex items-center justify-between p-2 sm:p-3 hover:bg-orange-50 rounded-lg transition-colors duration-150"
             >
               <div class="flex items-center">
                 <div
-                  class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-medium shadow-sm"
+                  class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-medium shadow-sm"
                 >
                   <%= user.nom_utilisateur.charAt(0).toUpperCase() %>
                 </div>
                 <div class="ml-3">
-                  <span class="text-gray-800 font-medium"
+                  <span class="text-sm sm:text-base text-gray-800 font-medium"
                     ><%= user.nom_utilisateur %></span
                   >
                   <p class="text-xs text-gray-500">
@@ -324,9 +330,9 @@
       </div>
 
       <!-- Nouvelles recettes -->
-      <div class="bg-white p-6 rounded-xl shadow-lg">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-6">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-lg font-semibold text-gray-800">
+          <h3 class="text-base sm:text-lg font-semibold text-gray-800">
             Nouvelles recettes
           </h3>
           <a
@@ -336,17 +342,17 @@
             Voir tout
           </a>
         </div>
-        <div class="space-y-4">
+        <div class="space-y-3 sm:space-y-4">
           <% recentActivities.recentRecipes.forEach(recipe => { %>
           <div
-            class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors duration-150"
+            class="flex items-center justify-between p-2 sm:p-3 hover:bg-gray-50 rounded-lg transition-colors duration-150"
           >
             <div class="flex items-center">
               <div
-                class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600"
+                class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600"
               >
                 <svg
-                  class="w-4 h-4"
+                  class="w-3 h-3 sm:w-4 sm:h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -359,9 +365,11 @@
                   ></path>
                 </svg>
               </div>
-              <span class="ml-3 text-gray-600"><%= recipe.titre %></span>
+              <span class="ml-3 text-sm sm:text-base text-gray-600"
+                ><%= recipe.titre %></span
+              >
             </div>
-            <span class="text-sm text-gray-400">
+            <span class="text-xs sm:text-sm text-gray-400">
               <%= new Date(recipe.created_at).toLocaleDateString('fr-FR', { day:
               'numeric', month: 'short' }) %>
             </span>
@@ -370,10 +378,10 @@
         </div>
       </div>
 
-      <!-- Recettes à valider-->
-      <div class="bg-white p-6 rounded-xl shadow-lg">
+      <!-- Recettes à valider -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-6">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-lg font-semibold text-gray-800">
+          <h3 class="text-base sm:text-lg font-semibold text-gray-800">
             Recettes à valider
           </h3>
           <a
@@ -383,18 +391,17 @@
             Voir tout
           </a>
         </div>
-        <div class="space-y-4">
+        <div class="space-y-3 sm:space-y-4">
           <% recipesToValidate.recipesToValidate.forEach(recipe => { %>
-          <!-- changer en liste de recettes à valider -->
           <div
-            class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors duration-150"
+            class="flex items-center justify-between p-2 sm:p-3 hover:bg-gray-50 rounded-lg transition-colors duration-150"
           >
             <div class="flex items-center">
               <div
-                class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600"
+                class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600"
               >
                 <svg
-                  class="w-4 h-4"
+                  class="w-3 h-3 sm:w-4 sm:h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -407,9 +414,11 @@
                   ></path>
                 </svg>
               </div>
-              <span class="ml-3 text-gray-600"><%= recipe.titre %></span>
+              <span class="ml-3 text-sm sm:text-base text-gray-600"
+                ><%= recipe.titre %></span
+              >
             </div>
-            <span class="text-sm text-gray-400">
+            <span class="text-xs sm:text-sm text-gray-400">
               <%= new Date(recipe.created_at).toLocaleDateString('fr-FR', { day:
               'numeric', month: 'short' }) %>
             </span>
