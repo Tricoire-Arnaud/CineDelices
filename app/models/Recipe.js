@@ -54,8 +54,8 @@ const Recipe = sequelize.define(
     },
     // Statut de la recette, utile pour valider celles proposées par les users
     statut: {
-      type: DataTypes.ENUM('en attente', 'validée', 'rejetée'),
-      defaultValue: 'en attente',
+      type: DataTypes.ENUM("en attente", "validée", "rejetée"),
+      defaultValue: "en attente",
     },
     // Référence à l'œuvre associée
     id_oeuvre: {

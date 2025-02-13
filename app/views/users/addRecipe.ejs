@@ -26,7 +26,8 @@
 
     <!-- Formulaire -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-      <form action="/mon-profil/proposition-recette" method="POST" enctype="multipart/form-data" class="divide-y divide-gray-200">
+      <form action="/mon-profil/proposition-recette" method="POST" enctype="multipart/form-data"
+        class="divide-y divide-gray-200">
         <div class="p-6 space-y-8">
           <!-- Informations de base -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -57,7 +58,8 @@
                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200">
                 <option value="">Sélectionner une catégorie</option>
                 <% categories.forEach(category=> { %>
-                  <option value="<%= category.id_categorie %>"><%=category.libelle %>
+                  <option value="<%= category.id_categorie %>">
+                    <%=category.libelle %>
                   </option>
                   <% }) %>
               </select>
@@ -137,8 +139,9 @@
               <select id="difficulte" name="difficulte" required
                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200">
                 <% for(let i=1; i <=5; i++) { %>
-                  <option value="<%= i %>" >
-                    <%= i %> <%= i===1 ? '(Très facile)' : i===5 ? '(Très difficile)' : '' %>
+                  <option value="<%= i %>">
+                    <%= i %>
+                      <%= i===1 ? '(Très facile)' : i===5 ? '(Très difficile)' : '' %>
                   </option>
                   <% } %>
               </select>
@@ -166,29 +169,34 @@
           </div>
 
 
-          <!-- Ingredients associés -->
+          <!-- Ingredients associés avec cases à cocher -->
           <div class="space-y-2">
-            <label for="id_ingredient" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
+            <label class="block text-sm font-medium text-gray-700 flex items-center gap-2">
               <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                  d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1 1v14a1 1 0 001 1z" />
               </svg>
-              Ingredients associés
+              Ingrédients associés
             </label>
-            <select id="id_ingredient" name="id_ingredient" multiple required
-              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200">
-              <option value="">Sélectionner les ingrédients</option>
+
+            <div id="ingredientsList" class="grid grid-cols-2 gap-2">
               <% ingredients.forEach(ingredient=> { %>
-                <option value="<%= ingredient.id_ingredient%>">
-                  <%= ingredient.nom_ingredient %> (<%= ingredient.unite_mesure %>)
-                </option>
+                <div class="flex items-center">
+                  <input type="checkbox" id="ingredient_<%= ingredient.id_ingredient %>" name="ingredients[]"
+                    value="<%= ingredient.id_ingredient %>" class="mr-2">
+                  <label for="ingredient_<%= ingredient.id_ingredient %>" class="text-sm text-gray-700">
+                    <%= ingredient.nom_ingredient %> (<%= ingredient.unite_mesure %>)
+                  </label>
+                </div>
                 <% }) %>
-            </select>
-          </select>
+            </div>
+
+            <!-- Champ pour saisir les quantités -->
+            <div id="quantitiesContainer" class="mt-4 space-y-2"></div>
           </div>
 
-           <!-- Ustensils associés -->
-           <div class="space-y-2">
+          <!-- Ustensils associés -->
+          <div class="space-y-2">
             <label for="id_ingredient" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
               <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -196,15 +204,16 @@
               </svg>
               Ustensiles associés
             </label>
-            <select id="id_utensil" name="utensils[]" multiple required  class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200">
-              <% utensils.forEach(utensil => { %>
-                  <option value="<%= utensil.id_ustensile %>">  
-                    <%= utensil.nom_ustensile %>
-                  </option>
-              <% }); %>
-          </select>
+            <select id="id_utensil" name="utensils[]" multiple required
+              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200">
+              <% utensils.forEach(utensil=> { %>
+                <option value="<%= utensil.id_ustensile %>">
+                  <%= utensil.nom_ustensile %>
+                </option>
+                <% }); %>
+            </select>
 
-           
+
           </div>
 
           <!-- Étapes de préparation -->
@@ -272,7 +281,7 @@
           </a>
           <button type="submit"
             class="px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200">
-           Créer la recette
+            Créer la recette
           </button>
         </div>
       </form>
@@ -280,6 +289,7 @@
   </div>
 
   <script>
+    //script pour ajouter des étapes sur click du bouton
     function addEtape() {
       const container = document.getElementById('etapes-container');
       const etapes = container.children;
@@ -315,8 +325,38 @@
         etape.querySelector('span').textContent = index + 1;
       });
     }
+
+    // script pour ajouter les quantités de chaque ingrédient
+    document.querySelectorAll('input[name="ingredients[]"]').forEach(checkbox => {
+      checkbox.addEventListener("change", function () {
+        let container = document.getElementById("quantitiesContainer");
+        let ingredientId = this.value;
+        let label = this.nextElementSibling.textContent;
+
+        if (this.checked) {
+          // Ajouter le champ de quantité
+          let div = document.createElement("div");
+          div.setAttribute("id", `quantityDiv_${ingredientId}`);
+          div.classList.add("mt-2");
+
+          div.innerHTML = `
+        <label for="quantity_${ingredientId}" class="block text-sm font-medium text-gray-700">
+          Quantité pour ${label} :
+        </label>
+        <input type="number" name="quantities[${ingredientId}]" id="quantity_${ingredientId}" 
+          class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 transition-all duration-200"
+          placeholder="Entrez la quantité">
+      `;
+
+          container.appendChild(div);
+        } else {
+          // Supprimer le champ de quantité
+          document.getElementById(`quantityDiv_${ingredientId}`).remove();
+        }
+      });
+    });
+
   </script>
 
 
-  
   <%# - include('../partials/footer') %>

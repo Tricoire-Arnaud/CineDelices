@@ -18,11 +18,11 @@ const initAssociations = () => {
   const models = require("./");
 
   // Initialiser les associations pour chaque modèle
-  Object.values(models).forEach((model) => {
+  for (const model of Object.values(models)) {
     if (model.associate) {
       model.associate(models);
     }
-  });
+  }
 };
 
 /**

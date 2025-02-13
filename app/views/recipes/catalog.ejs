@@ -90,7 +90,7 @@
       <% recipes.forEach((recipe, index) => { %>
             <!-- Gestion scrolling horizontal sur mobile-->
       <article
-      class=" min-w-[250px] md:min-w-0 recipe-card bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
+      class=" min-w-[250px] md:min-w-0 recipe-card bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group flex flex-col h-full"
         data-category="<%= recipe.id_categorie %>"
       >
         <div class="relative aspect-video overflow-hidden">
@@ -106,7 +106,7 @@
           </span>
         </div>
 
-        <div class="p-6">
+        <div class="p-6 flex flex-col flex-grow">
           <h3
             class="text-xl font-semibold mb-2 group-hover:text-orange-500 transition-colors duration-200"
           >
@@ -155,7 +155,7 @@
 
           <a
             href="/recette/<%= recipe.id_recette %>"
-            class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300 transform hover:-translate-y-0.5"
+            class="block text-center py-3 px-4 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-all duration-300 transform hover:-translate-y-0.5 mt-auto"
           >
             Voir la recette
           </a>

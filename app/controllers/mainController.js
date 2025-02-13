@@ -62,8 +62,8 @@ const mainController = {
 
   getCatalog: async (req, res) => {
     try {
-      let whereClause = { statut: "validée" }; // Filtrer par statut "validée"
-      let includeClause = [
+      const whereClause = { statut: "validée" }; // Filtrer par statut "validée"
+      const includeClause = [
         {
           model: Movie,
           as: "oeuvre",
@@ -212,7 +212,9 @@ const mainController = {
         searchResults, // Résultats de la recherche si existants
         movies,
         tvShows,
-        noResults: searchResults?.length === 0 || (movies.length === 0 && tvShows.length === 0),
+        noResults:
+          searchResults?.length === 0 ||
+          (movies.length === 0 && tvShows.length === 0),
         user: req.session.user,
         isSearch: !!queryFilms, // Permet d'afficher la bonne section dans la vue
       });
@@ -431,36 +433,18 @@ const mainController = {
   // Page de détail d'une recette
   getRecipeDetails: async (req, res) => {
     try {
-      const recipeId = req.params.id;
-
-      const recipe = await Recipe.findByPk(recipeId, {
+      const { id } = req.params;
+      const recipe = await Recipe.findByPk(id, {
         include: [
-          {
-            model: Movie,
-            as: "oeuvre",
-            attributes: ["titre", "annee"],
-          },
-          {
-            model: Category,
-            as: "category",
-            attributes: ["libelle"],
-          },
-          {
-            model: Ingredient,
-            through: RecipeIngredient,
-            attributes: ["nom_ingredient", "unite_mesure"],
-          },
-          {
-            model: Utensil,
-            through: RecipeUtensil,
-            attributes: ["nom_ustensile"],
-          },
+          { model: Movie, as: "oeuvre" },
+          { model: Category, as: "category" },
+          { model: Ingredient },
+          { model: Utensil },
         ],
       });
 
       if (!recipe) {
-        req.flash("error", "Recette non trouvée");
-        return res.redirect("/catalogue");
+        return res.status(404).render("errors/404", { user: req.session.user });
       }
 
       // Récupérer les recettes similaires (même catégorie)
@@ -479,11 +463,10 @@ const mainController = {
       res.render("recipes/index", {
         recipe,
         similarRecipes,
-        title: recipe.titre,
         user: req.session.user,
       });
     } catch (error) {
-      console.error("Erreur détails recette:", error);
+      console.error("Erreur lors de la récupération de la recette:", error);
       res.status(500).render("errors/500", { user: req.session.user });
     }
   },

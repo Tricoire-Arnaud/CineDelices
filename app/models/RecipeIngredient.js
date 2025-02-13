@@ -13,7 +13,8 @@ const RecipeIngredient = sequelize.define('RecipeIngredient', {
         references: {
             model: 'recettes',
             key: 'id_recette'
-        }
+        },
+        onDelete: 'CASCADE' // Supprime automatiquement les entrées associées
     },
     // Référence à l'ingrédient
     id_ingredient: {
