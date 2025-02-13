@@ -11,8 +11,10 @@
     "reseed": "node scripts/reseed.js",
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "build:css": "npx tailwindcss -i ./public/CSS/input.css -o ./public/CSS/output.css --minify",
     "dev:css": "npx tailwindcss -i ./public/CSS/input.css -o ./public/CSS/output.css --watch",
+    "setup-dev": "node scripts/initDb.js & npx tailwindcss -i ./public/CSS/input.css -o ./public/CSS/output.css --watch",
+    "build:css": "npx tailwindcss -i ./public/CSS/input.css -o ./public/CSS/output.css --minify",
+    "setup-prod": "node scripts/initDb.js & npx tailwindcss -i ./public/CSS/input.css -o ./public/CSS/output.css --minify",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
