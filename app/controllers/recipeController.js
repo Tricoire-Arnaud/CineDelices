@@ -175,7 +175,7 @@ const recipeController = {
         etapes: JSON.stringify(etapes),
         anecdote,
         image: req.file ? `uploads/recipes/${req.file.filename}` : null,
-        statut: "en attente",
+        statut: req.user.role === "admin" ? "validée" : "en attente",
         id_categorie: Number.parseInt(id_categorie),
         id_oeuvre: Number.parseInt(id_oeuvre),
         id_utilisateur: req.user.id,
