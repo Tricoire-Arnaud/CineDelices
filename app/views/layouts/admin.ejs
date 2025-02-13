@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CinéDélices Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <%- defineContent('head') %>
+  </head>
+  <body class="bg-gray-50">
+    <div class="flex h-screen">
+      <!-- Barre latérale -->
+      <aside
+        class="w-64 bg-white fixed h-full shadow-lg border-r border-gray-200 z-10"
+      >
+        <!-- Logo -->
+        <div
+          class="flex items-center justify-center h-20 bg-gradient-to-r from-orange-500 to-orange-600 relative overflow-hidden"
+        >
+          <div class="absolute inset-0 bg-black/10"></div>
+          <a
+            href="/admin/tableau-de-bord"
+            class="text-white text-xl font-bold relative flex items-center gap-2"
+          >
+            <svg
+              class="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            CinéDélices Admin
+          </a>
+        </div>
+
+        <!-- Bouton retour au site -->
+        <a
+          href="/"
+          class="flex items-center px-4 py-3 mx-4 mt-4 text-gray-700 bg-orange-50 hover:bg-orange-100 rounded-lg transition-all duration-200 group"
+        >
+          <svg
+            class="w-5 h-5 mr-3 text-orange-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          Retour au site
+        </a>
+
+        <!-- Menu de navigation -->
+        <nav class="mt-4 px-4">
+          <div class="space-y-2">
+            <!-- Tableau de bord -->
+            <a
+              href="/admin/tableau-de-bord"
+              class="flex items-center px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all duration-200 group <%= path === '/admin/tableau-de-bord' ? 'bg-orange-50 text-orange-600 border-l-4 border-orange-500' : '' %>"
+            >
+              <svg
+                class="w-5 h-5 mr-3 <%= path === '/admin/tableau-de-bord' ? 'text-orange-500' : 'text-gray-400 group-hover:text-orange-500' %>"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                />
+              </svg>
+              Tableau de bord
+            </a>
+
+            <!-- Utilisateurs -->
+            <a
+              href="/admin/utilisateur"
+              class="flex items-center px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all duration-200 group <%= path === '/admin/utilisateur' ? 'bg-orange-50 text-orange-600 border-l-4 border-orange-500' : '' %>"
+            >
+              <svg
+                class="w-5 h-5 mr-3 <%= path === '/admin/utilisateur' ? 'text-orange-500' : 'text-gray-400 group-hover:text-orange-500' %>"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                />
+              </svg>
+              Utilisateurs
+            </a>
+
+            <!-- Recettes -->
+            <a
+              href="/admin/recette"
+              class="flex items-center px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all duration-200 group <%= path === '/admin/recette' ? 'bg-orange-50 text-orange-600 border-l-4 border-orange-500' : '' %>"
+            >
+              <svg
+                class="w-5 h-5 mr-3 <%= path === '/admin/recette' ? 'text-orange-500' : 'text-gray-400 group-hover:text-orange-500' %>"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+                />
+              </svg>
+              Recettes
+            </a>
+
+            <!-- Films & Séries -->
+            <a
+              href="/admin/films-series"
+              class="flex items-center px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all duration-200 group <%= path === '/admin/films-series' ? 'bg-orange-50 text-orange-600 border-l-4 border-orange-500' : '' %>"
+            >
+              <svg
+                class="w-5 h-5 mr-3 <%= path === '/admin/films-series' ? 'text-orange-500' : 'text-gray-400 group-hover:text-orange-500' %>"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+                />
+              </svg>
+              Films & Séries
+            </a>
+
+            <!-- Catégories -->
+            <a
+              href="/admin/categories"
+              class="flex items-center px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all duration-200 group <%= path === '/admin/categories' ? 'bg-orange-50 text-orange-600 border-l-4 border-orange-500' : '' %>"
+            >
+              <svg
+                class="w-5 h-5 mr-3 <%= path === '/admin/categories' ? 'text-orange-500' : 'text-gray-400 group-hover:text-orange-500' %>"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                />
+              </svg>
+              Catégories
+            </a>
+          </div>
+        </nav>
+
+        <!-- Profil admin -->
+        <div
+          class="absolute bottom-0 w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 border-t border-orange-400"
+        >
+          <div class="flex items-center space-x-4">
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-white truncate">
+                <%= user.username %>
+              </p>
+              <p class="text-sm text-white/75 truncate">Administrateur</p>
+            </div>
+            <a
+              href="/auth/logout"
+              class="text-white/90 hover:text-white transition-colors duration-200 transform hover:scale-110"
+              title="Déconnexion"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Contenu principal -->
+      <main class="ml-64 flex-1 p-8">
+        <!-- En-tête de la page -->
+        <div class="mb-8">
+          <% if (messages.success && messages.success.length > 0) { %>
+          <div
+            class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 rounded"
+          >
+            <%= messages.success %>
+          </div>
+          <% } %> <% if (messages.error && messages.error.length > 0) { %>
+          <div
+            class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded"
+          >
+            <%= messages.error %>
+          </div>
+          <% } %>
+        </div>
+        <%- body %>
+      </main>
+    </div>
+
+    <%- defineContent('script') %>
+  </body>
+</html>

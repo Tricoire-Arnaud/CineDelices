@@ -1,0 +1,75 @@
+<!-- Cette page ne marche pas car dans les routes, recipes/catalog marche uniquement-->
+
+<%- include('../partials/nav') %> 
+   
+
+
+  <!-- Barre de recherche et informations -->
+  <section class="">
+    <form class="">
+      <label for="search" class="">Chercher une recette</label>
+      <input type="search" id="search" name="search" placeholder="Chercher une recette" class="">
+      <button type="submit" class="">Rechercher</button>
+    </form>
+
+    <p class="">Affichage de 1 à 12 sur 24 Recette(s)</p>
+    <p class="">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+      incididunt ut labore et dolore magna aliqua.
+    </p>
+  </section>
+
+  <!-- Filtres et tri -->
+  <section class="">
+    <div class="">
+      <button class="">Tous</button>
+      <button class="">Entrées</button>
+      <button class="">Plat principal</button>
+      <button class="">Dessert</button>
+      <button class="">Boissons</button>
+    </div>
+    <div class="">
+      <label for="sort" class="">Trier par</label>
+      <select id="sort" name="sort" class="">
+        <option value="recent">Les plus récentes</option>
+        <option value="populaires">Les plus populaires</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Liste des recettes -->
+  <main class="">
+
+    <div id="recipes-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+      <% recipes.forEach(recipe => { %>
+        <%- include('../partials/recipe-card', { recipe }) %>
+      <% }) %>
+    </div>
+
+
+    <article class="">
+      <img src="ratatouille.jpg" alt="Ratatouille" class="">
+      <div class="">
+        <h2 class="">Ratatouille</h2>
+        <p class="">Ratatouille (2007)</p>
+        <p class="">La fameuse ratatouille qui a conquis le coeur de tous !</p>
+        <a href="#" class="">Voir la recette</a>
+      </div>
+    </article>
+
+    <article class="">
+      <img src="ratatouille.jpg" alt="Ratatouille" class="">
+      <div class="">
+        <h2 class="">Ratatouille</h2>
+        <p class="">Ratatouille (2007)</p>
+        <p class="">La fameuse ratatouille qui a conquis le coeur de tous !</p>
+        <a href="#" class="">Voir la recette</a>
+      </div>
+    </article>
+    
+    <!-- Répétez autant de fois que nécessaire pour afficher toutes les recettes -->
+  </main>
+
+
+
+

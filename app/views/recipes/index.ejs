@@ -1,1 +1,94 @@
-<!-- Liste des recettes --> 
+<main class="mx-auto max-w-4xl p-4 md:p-8">
+  <article class="rounded-lg bg-white p-6 shadow-md">
+    <img
+      src="/images/<%= recipe.image %>"
+      alt="<%= recipe.titre %>"
+      class="mb-4 w-full rounded-lg"
+    />
+    <h2 class="mb-2 text-2xl font-bold text-gray-800"><%= recipe.titre%></h2>
+
+    <div class="flex text-orange-600">
+      <% for (let i = 0; i < recipe.difficulte; i++) { %>
+      <span>&#9733;</span>
+      <% } %> <% for (let i = recipe.difficulte; i < 5; i++) { %>
+      <span class="text-gray-300">&#9733;</span>
+      <% } %>
+    </div>
+
+    <div>
+      <ul class="list-disc list-inside text-sm mb-6">
+        <li>🍴 Catégorie : <%= recipe.category.libelle %></li>
+        <li>🕒 Temps de préparation : <%= recipe.temps_preparation %> min</li>
+        <li>🕒 Temps de cuisson : <%= recipe.temps_cuisson %> min</li>
+      </ul>
+    </div>
+
+    <section class="mb-6 pt-50 grid gap-4 md:grid-cols-2">
+      <div>
+        <h3 class="mb-3 text-xl font-semibold text-orange-600">Ingrédients</h3>
+          <% if (recipe.dataValues.Ingredients && recipe.dataValues.Ingredients.length) { %>
+            <ul class="space-y-2 rounded-lg bg-red-50 p-4 list-disc list-inside">
+              <% recipe.dataValues.Ingredients.forEach(ingredient => { %>
+                <li><%= ingredient.dataValues.nom_ingredient %> ( <%= ingredient.dataValues.RecipeIngredient.quantite %> <%= ingredient.dataValues.unite_mesure %>)</li>
+              <% }); %>
+            </ul>
+          <!-- en cas ou l'user n'a pas ajouter d'ingredient -->
+        <% } else { %>
+          <p>Aucun ingrédient disponible.</p>
+        <% } %>
+      </div>
+      <div>
+        <h3 class="mb-3 text-xl font-semibold text-orange-600">Ustensiles</h3>
+        <% if (recipe.dataValues.Utensils && recipe.dataValues.Utensils.length) { %>
+          <ul class="space-y-2 rounded-lg bg-red-50 p-4 list-disc list-inside">
+            <% recipe.dataValues.Utensils.forEach(utensil => { %>
+              <li><%- utensil.dataValues.nom_ustensile %></li>
+            <% }) %>
+          </ul> 
+        <% } else { %>
+          <p>Aucun ustensile requis.</p>
+        <% } %>
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h3 class="mb-3 text-xl font-semibold text-orange-600">Instructions</h3>
+      <ol class="list-inside list-decimal space-y-2 rounded-lg bg-red-50 p-4">
+        <% JSON.parse(recipe.etapes).forEach(etape => { %>
+        <li><%= etape %></li>
+        <% }) %>
+      </ol>
+    </section>
+
+    <% if (recipe.anecdote) { %>
+    <section>
+      <h3 class="mb-3 text-xl font-semibold text-orange-600">Anecdote</h3>
+      <p class="mb-6 text-gray-700"><%= recipe.anecdote %></p>
+    </section>
+    <% } %> <% if (similarRecipes && similarRecipes.length > 0) { %>
+    <section>
+      <h3 class="mb-3 text-xl font-semibold text-orange-600">
+        Recettes similaires
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <% similarRecipes.forEach(similar => { %>
+        <a href="/recette/<%= similar.id_recette %>" class="hover:opacity-75">
+          <div class="rounded-lg overflow-hidden shadow-sm">
+            <img
+              src="/images/<%= similar.image %>"
+              alt="<%= similar.titre %>"
+              class="w-full h-32 object-cover"
+            />
+            <div class="p-2">
+              <h4 class="font-medium"><%= similar.titre %></h4>
+            </div>
+          </div>
+        </a>
+        <% }) %>
+      </div>
+    </section>
+    <% } %>
+  </article>
+</main>
+
+<!-- Footer -->

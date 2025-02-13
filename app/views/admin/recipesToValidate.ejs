@@ -1,0 +1,87 @@
+<!-- Gestion des recettes à valider (admin) -->
+<%- include('../partials/flash') %>
+<main class="bg-gray-100 min-h-screen py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">Gestion des Recettes à valider</h1>
+
+    <!-- Statistiques -->
+    <div class="mb-8">
+      <div class="bg-white rounded-lg shadow p-6">
+        <p class="text-sm font-medium text-gray-600">Total Recettes</p>
+        <p class="text-2xl font-semibold text-gray-900">
+          <%= recipes.length %>
+        </p>
+      </div>
+    </div>
+
+    <!-- Barre d'actions -->
+    <div class="bg-white rounded-lg shadow mb-6 p-4">
+      <div class="flex justify-between items-center">
+        <input
+          type="text"
+          placeholder="Rechercher une recette..."
+          class="w-full max-w-md px-4 py-2 border rounded-lg"
+        />
+        <a
+          href="/admin/recettes/ajouter"
+          class="ml-4 px-4 py-2 bg-orange-500 text-white rounded-lg"
+          >Nouvelle Recette</a
+        >
+      </div>
+    </div>
+
+    <!-- Liste des recettes à valider -->
+    <div class="bg-white rounded-lg shadow">
+      <% if (recipes && recipes.length > 0) { %>
+      <div class="divide-y divide-gray-200">
+        <% recipes.forEach(function(recipe) { %>
+        <div class="p-6">
+          <div class="flex justify-between items-center">
+            <div>
+              <h2 class="text-xl font-semibold"><%= recipe.titre %></h2>
+              <p class="text-gray-600">
+                <%= recipe.category ? recipe.category.libelle : 'Non catégorisé'
+                %> | <%= recipe.oeuvre ? recipe.oeuvre.titre : 'Non associé'%> | <%= recipe.author ? recipe.author.nom_utilisateur : 'Pas de propriétaire' %>
+              </p>
+            </div>
+            <div class="flex gap-2">
+                <a
+                href="/admin/recettes/modifier/<%= recipe.id_recette %>"
+                class="px-3 py-1 bg-blue-500 text-white rounded"
+                >Voir/Modifier</a
+              >
+              <form action="/admin/recettes/valider/<%= recipe.id_recette %>" method="POST">
+                <button type="submit" class="px-3 py-1 bg-green-500  text-white rounded">Valider</button>
+              </form>
+              
+              <form
+                action="/admin/recipes/<%= recipe.id_recette %>?_method=DELETE"
+                method="POST"
+                class="inline"
+                onsubmit="return confirm('Voulez-vous vraiment supprimer cette recette ?')"
+              >
+                <button
+                  type="submit"
+                  class="px-3 py-1 bg-red-500 text-white rounded"
+                >
+                  Supprimer
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+      <% } else { %>
+      <div class="p-6 text-center">
+        <p class="text-gray-500">Aucune recette disponible</p>
+        <a
+          href="/admin/recettes/ajouter"
+          class="mt-4 inline-block px-4 py-2 bg-orange-500 text-white rounded-lg"
+          >Ajouter une recette</a
+        >
+      </div>
+      <% } %>
+    </div>
+  </div>
+</main>

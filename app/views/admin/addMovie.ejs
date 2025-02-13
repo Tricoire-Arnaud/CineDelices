@@ -1,0 +1,171 @@
+<!-- Ajouter ou modifier un film ou une série (admin) -->
+<%- contentFor('body') %>
+<main class="bg-gray-100 min-h-screen py-8">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">
+              <%= movie ? 'Modifier' : 'Ajouter' %> un Film ou une Série
+            </h1>
+            <p class="mt-1 text-sm text-gray-500">
+              <%= movie ? 'Modifiez les informations ci-dessous' : 'Remplissez les informations ci-dessous pour ajouter une nouvelle œuvre' %>
+            </p>
+          </div>
+          <div class="flex-shrink-0">
+            <svg
+              class="h-12 w-12 text-orange-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <form action="<%= movie ? `/admin/movies/${movie.id_oeuvre}?_method=PUT` : '/admin/movies' %>" 
+              method="POST" 
+              class="space-y-6">
+          <% if (movie) { %>
+            <input type="hidden" name="_method" value="PUT">
+          <% } %>
+          
+          <!-- Titre -->
+          <div>
+            <label for="titre" class="block text-sm font-medium text-gray-700">
+              Titre
+            </label>
+            <div class="mt-1">
+              <input
+                type="text"
+                name="titre"
+                id="titre"
+                required
+                value="<%= movie ? movie.titre : '' %>"
+                placeholder="Ex: Inception"
+                class="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+              />
+            </div>
+          </div>
+
+          <!-- Type et Année sur la même ligne -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Type -->
+            <div>
+              <label for="type" class="block text-sm font-medium text-gray-700">
+                Type
+              </label>
+              <div class="mt-1">
+                <select
+                  name="type"
+                  id="type"
+                  required
+                  class="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                >
+                  <option value="film" <%= movie && movie.type === 'film' ? 'selected' : '' %>>Film</option>
+                  <option value="série" <%= movie && movie.type === 'série' ? 'selected' : '' %>>Série</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Année -->
+            <div>
+              <label
+                for="annee"
+                class="block text-sm font-medium text-gray-700"
+              >
+                Année de sortie
+              </label>
+              <div class="mt-1">
+                <input
+                  type="number"
+                  name="annee"
+                  id="annee"
+                  required
+                  value="<%= movie ? movie.annee : '' %>"
+                  min="1900"
+                  max="2030"
+                  placeholder="Ex: 2010"
+                  class="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label
+              for="description"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Description
+            </label>
+            <div class="mt-1">
+              <textarea
+                name="description"
+                id="description"
+                rows="4"
+                required
+                placeholder="Brève description du film ou de la série"
+                class="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+              ><%= movie ? movie.description : '' %></textarea>
+            </div>
+            <p class="mt-2 text-sm text-gray-500">
+              Une description claire et concise qui donne envie de découvrir
+              l'œuvre
+            </p>
+          </div>
+
+          <!-- Boutons d'action -->
+          <div class="flex items-center justify-between pt-6">
+            <a
+              href="/admin/films-series"
+              class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+            >
+              <svg
+                class="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                />
+              </svg>
+              Retour à la liste
+            </a>
+            <button
+              type="submit"
+              class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+            >
+              <svg
+                class="h-5 w-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="<%= movie ? 'M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12' : 'M12 4v16m8-8H4' %>"
+                />
+              </svg>
+              <%= movie ? 'Enregistrer les modifications' : 'Ajouter l\'œuvre' %>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

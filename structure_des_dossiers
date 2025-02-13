@@ -3,57 +3,49 @@
 │   ├── controllers/
 │   │   ├── adminController.js
 │   │   ├── authController.js
+│   │   ├── ingredientController.js
+│   │   ├── movieController.js
 │   │   ├── recipeController.js
 │   │   ├── userController.js
-│   │   └── movieController.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Recipe.js
-│   │   ├── Movie.js
-│   │   ├── Category.js
-│   │   └── Comment.js
+│   │   └── utensilController.js
 │   ├── middlewares/
-│   │   ├── auth.js
 │   │   ├── admin.js
+│   │   ├── auth.js
 │   │   └── upload.js
+│   ├── models/
+│   │   ├── Category.js
+│   │   ├── Comment.js
+│   │   ├── Favorite.js
+│   │   ├── Ingredient.js
+│   │   ├── Movie.js
+│   │   ├── Rating.js
+│   │   ├── Recipe.js
+│   │   ├── User.js
+│   │   ├── Utensil.js
+│   │   └── index.js
 │   ├── routes/
 │   │   ├── admin.js
 │   │   ├── auth.js
 │   │   ├── recipe.js
 │   │   └── user.js
-│   └── views/
-│       ├── partials/
-│       │   ├── header.ejs
-│       │   ├── footer.ejs
-│       │   └── nav.ejs
-│       ├── admin/
-│       │   ├── dashboard.ejs
-│       │   ├── recipes.ejs
-│       │   └── users.ejs
-│       ├── auth/
-│       │   ├── login.ejs
-│       │   └── register.ejs
-│       ├── recipes/
-│       │   ├── index.ejs
-│       │   ├── show.ejs
-│       │   └── create.ejs
-│       └── users/
-│           └── profile.ejs
+│   ├── views/
+│   │   ├── errors/
+│   │   │   ├── 404.ejs
+│   │   │   └── 500.ejs
+│   │   └── home.ejs
+│   └── seeders/
+│       └── seed.js
 ├── config/
-│   ├── database.js
-│   └── app.js
+│   ├── app.js
+│   └── database.js
 ├── public/
 │   ├── css/
-│   │   └── style.css
 │   ├── js/
-│   │   └── main.js
-│   └── images/
-├── tests/
-│   ├── integration/
-│   └── unit/
+│   ├── images/
+│   └── uploads/
 ├── .env
 ├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-├── package.json
-└── server.js 
+├── app.js
+└── package.json 
+
+test

@@ -1,0 +1,25 @@
+# Dockerfile pour la partie applicative du 
+#  projet Cinedelices en dev
+
+FROM node:20-alpine
+
+# Installer bash
+RUN apk add --no-cache curl bash
+
+# créer un répertoire de travail et s'y déplacer
+WORKDIR /cinedelices
+
+# on récupère le package.json depuis le dossier de build (./ => "server" => le "context" dans mon docker-compose)
+COPY ./package*.json /cinedelices/
+
+RUN npm i
+# on a besoin de nodemon pour relancer
+# automatiquement le serveur en dev
+RUN npm i -g nodemon
+
+COPY . /cinedelices/
+
+EXPOSE 3000
+
+# on lance l'application en dev
+CMD ["bash", "-c","nodemon", "app.js"]

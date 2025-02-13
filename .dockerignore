@@ -1,0 +1,7 @@
+# Dans le .dockerignore on peut indiquer
+# des dossiers ou fichiers qui doivent être ignorés par Docker
+
+attendus
+node_modules
+README.md
+structure_des_dossiers

@@ -1,1 +1,29 @@
 <!-- Pied de page du site --> 
+
+    <script src="DOM/main.js"></script>
+</body>
+
+<footer class="footer">
+    <nav id="menu-footer" class="bg-orange-50 shadow-md text-black flex flex-col items-center justify-center p-6">
+        <!-- Logo -->
+        <div class="mb-4">
+            <img class="logo w-20 mb-6" src="/images/CineDelice_logo_120px.svg" alt="logo-cine-delice">
+        </div>
+        <!-- Liens du footer -->
+        <div class="grid grid-cols-1 md:flex md:space-x-6 gap-4 text-center">
+            <p><a href="/catalogue" class="hover:text-orange-600">Catalogue</a></p>
+            <p><a href="/films-series" class="hover:text-orange-600">Film & Série</a></p>
+            <p><a href="/CGU" class="hover:text-orange-600">CGU</a></p>
+            <p><a href="/mentions-legales" class="hover:text-orange-600">Mentions Légales</a></p>
+        </div>
+
+        <!-- Copyright -->
+        <p class="mt-5 text-orange-600 text-center"> Ciné Délice. Tous droits réservés.</p>
+        <p class="mt-2 text-orange-600">Copyright &copy; <span id="current-year"></span></p>
+    </nav>
+</footer>
+<script>
+    // année actuelle et l'afficher dans l'élément span avec l'ID "current-year"
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+</html>
