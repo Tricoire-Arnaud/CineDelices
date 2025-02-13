@@ -13,7 +13,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-
 🚀 CineDélices - Serveur de production lancé avec succès ! 🎬
 =========================================
 📅 Date : $(date)
