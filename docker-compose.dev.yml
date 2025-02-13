@@ -34,7 +34,7 @@ services:
     env_file:
       - .env.docker-compose
 
-    command: [ "bash", "-c", "./start-dev.sh" ]
+    command: [ "bash", "-c", "./config-dev.sh" ]
 
     restart: always
 
