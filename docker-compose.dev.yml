@@ -34,7 +34,7 @@ services:
     env_file:
       - .env.docker-compose
 
-    command: [ "bash", "-c", "node scripts/initDb.js && nodemon app.js" ]
+    command: [ "bash", "-c", "./start-dev.sh" ]
 
     restart: always
 
