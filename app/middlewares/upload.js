@@ -1,17 +1,17 @@
 const multer = require("multer");
-const path = require("path");
+const path = require("node:path");
 
 // Configuration du stockage
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, "public/images/uploads/recipes"); // on a un dossier uploads dans le dossier images pour les recettes proposées par user/admin
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     // Générer un nom de fichier unique avec timestamp
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
     cb(
       null,
-      file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
+      `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`
     );
   },
 });

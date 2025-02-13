@@ -284,7 +284,7 @@ const userController = {
         categories,
         movies,
         ingredients,
-        utensils
+        utensils,
       });
     } catch (error) {
       console.error("Erreur lors du chargement du formulaire:", error);
@@ -292,7 +292,6 @@ const userController = {
       res.redirect("/mon-profil");
     }
   },
-
 
   //proposer une recette (à partir du profil user uniquement)
   proposeRecipe: async (req, res) => {
@@ -307,21 +306,18 @@ const userController = {
         difficulte: req.body.difficulte,
         anecdote: req.body.anecdote,
         image: `uploads/recipes/${req.file.filename}` || null, //objet de l'image via upload (voir le middleware)
-        statut: 'en attente',
+        statut: "en attente",
         id_oeuvre: req.body.id_oeuvre,
         id_categorie: req.body.id_categorie,
-        id_utilisateur: req.session.user.id
+        id_utilisateur: req.session.user.id,
       });
 
       // Convertir req.body.ingredients en tableau exploitable (là ce sont des numéros 6,2,8)
       const ingredientsArray = Array.isArray(req.body.ingredients)
-      ? req.body.ingredients // Si c'est déjà un tableau
-      : req.body.ingredients.split(','); // Convertir une chaîne CSV en tableau
+        ? req.body.ingredients // Si c'est déjà un tableau
+        : req.body.ingredients.split(","); // Convertir une chaîne CSV en tableau
 
       console.log("Ingrédients après parsing:", ingredientsArray);
-
-      console.log("ingrédients du body" + req.body.ingredients);
-      console.log("session du user" + req.session.user.id);
 
       console.log("Recette créée avec l'ID :", recipe.id_recette);
 
@@ -333,30 +329,30 @@ const userController = {
       //contrôle pour s'assurer que chaque ingrédient a un id valide avant de tenter de l'insérer dans la base de données
       // sinon il ne s'insère pas et ne provoque pas d'erreur
       if (req.body.ingredients && req.body.ingredients.length > 0) {
-        const recipeIngredients = req.body.ingredients.map(ingredientId => {
+        const recipeIngredients = req.body.ingredients.map((ingredientId) => {
           return {
             id_recette: recipe.id_recette,
             id_ingredient: ingredientId,
-            quantite: req.body.quantities?.[ingredientId] || 1  // Récupérer la quantité, sinon 1 par défaut
+            quantite: req.body.quantities?.[ingredientId] || 1, // Récupérer la quantité, sinon 1 par défaut
           };
         });
         await RecipeIngredient.bulkCreate(recipeIngredients);
         console.log("Ingrédients avec quantités ajoutés !");
-        } else {
-          console.log("Aucun ingrédient valide à ajouter.");
-        };
+      } else {
+        console.log("Aucun ingrédient valide à ajouter.");
+      }
 
       //contrôle pour s'assurer que chaque ustensile a un id valide avant de tenter de l'insérer dans la base de données
       // sinon il ne s'insère pas et ne provoque pas d'erreur
       if (req.body.utensils && req.body.utensils.length > 0) {
         // Filtrer les ustensiles invalides (ceux sans ID)
         const recipeUtensils = req.body.utensils
-          .filter(ut => ut) // Ne garder que les valeurs non nulles
-          .map(ut => ({
+          .filter((ut) => ut) // Ne garder que les valeurs non nulles
+          .map((ut) => ({
             id_recette: recipe.id_recette,
-            id_ustensile: ut // Assurer que `ut` est un id valide
+            id_ustensile: ut, // Assurer que `ut` est un id valide
           }));
-      
+
         if (recipeUtensils.length > 0) {
           await RecipeUtensil.bulkCreate(recipeUtensils); // envoyer les infos sur RecipeUtensil
           console.log("Ustensiles ajoutés !");
@@ -373,15 +369,16 @@ const userController = {
       //   ]
       // });
       // console.log("recette complète" + fullRecipe);
- 	    
+
       req.flash("success", "Recette envoyée en modération");
       res.redirect("/mon-profil");
     } catch (error) {
       console.error("Erreur lors de la proposition de la recette :", error);
-      res.status(500).json({ message: 'Erreur lors de la proposition de la recette' });
+      res
+        .status(500)
+        .json({ message: "Erreur lors de la proposition de la recette" });
     }
   },
-
 };
 
 module.exports = userController;

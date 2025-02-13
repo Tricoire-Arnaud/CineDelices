@@ -62,8 +62,8 @@ const mainController = {
 
   getCatalog: async (req, res) => {
     try {
-      let whereClause = { statut: "validée" }; // Filtrer par statut "validée"
-      let includeClause = [
+      const whereClause = { statut: "validée" }; // Filtrer par statut "validée"
+      const includeClause = [
         {
           model: Movie,
           as: "oeuvre",

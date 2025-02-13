@@ -158,15 +158,15 @@ const {
         const recipe = await Recipe.create({
           titre,
           description,
-          temps_preparation: parseInt(temps_preparation),
-          temps_cuisson: parseInt(temps_cuisson),
-          difficulte: parseInt(difficulte),
+          temps_preparation: Number.parseInt(temps_preparation),
+          temps_cuisson: Number.parseInt(temps_cuisson),
+          difficulte: Number.parseInt(difficulte),
           etapes: JSON.stringify(etapes),
           anecdote,
           image: `uploads/recipes/${req.file.filename}` || null, //objet de l'image via upload (voir le middleware)
           statut: 'validée',
-          id_categorie: parseInt(id_categorie),
-          id_oeuvre: parseInt(id_oeuvre),
+          id_categorie: Number.parseInt(id_categorie),
+          id_oeuvre: Number.parseInt(id_oeuvre),
           id_utilisateur: req.user.id,
         });
         // Convertir req.body.ingredients en tableau exploitable (là ce sont des numéros 6,2,8)
@@ -176,8 +176,6 @@ const {
 
       console.log("Ingrédients après parsing:", ingredientsArray);
 
-      console.log("ingrédients du body" + req.body.ingredients);
-      console.log("session du user" + req.session.user.id);
 
       console.log("Recette créée avec l'ID :", recipe.id_recette);
 
@@ -261,14 +259,14 @@ const {
         await recipe.update({
           titre,
           description,
-          temps_preparation: parseInt(temps_preparation),
-          temps_cuisson: parseInt(temps_cuisson),
-          difficulte: parseInt(difficulte),
+          temps_preparation: Number.parseInt(temps_preparation),
+          temps_cuisson: Number.parseInt(temps_cuisson),
+          difficulte: Number.parseInt(difficulte),
           etapes: JSON.stringify(etapes),
           anecdote,
           image,
-          id_categorie: parseInt(id_categorie),
-          id_oeuvre: parseInt(id_oeuvre),
+          id_categorie: Number.parseInt(id_categorie),
+          id_oeuvre: Number.parseInt(id_oeuvre),
         });
   
         req.flash("success", "Recette mise à jour avec succès");
