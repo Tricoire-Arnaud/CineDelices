@@ -301,7 +301,18 @@ const recipeController = {
         return res.redirect("/admin/recette");
       }
 
+      // Supprimer d'abord tous les éléments associés
+      await Promise.all([
+        Comment.destroy({ where: { id_recette: id } }),
+        Rating.destroy({ where: { id_recette: id } }),
+        Favorite.destroy({ where: { id_recette: id } }),
+        RecipeIngredient.destroy({ where: { id_recette: id } }),
+        RecipeUtensil.destroy({ where: { id_recette: id } }),
+      ]);
+
+      // Puis supprimer la recette
       await recipe.destroy();
+
       req.flash("success", "Recette supprimée avec succès");
       res.redirect("/admin/recette");
     } catch (error) {

@@ -164,10 +164,10 @@
                   </a>
                   <button
                     onclick="deleteRecipe('<%= recipe.id_recette %>')"
-                    class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition-colors duration-200"
+                    class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition-colors duration-200"
                   >
                     <svg
-                      class="w-4 h-4 sm:hidden"
+                      class="w-4 h-4 mr-2"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -291,11 +291,11 @@
 </main>
 
 <script>
-  function deleteRecipe(id) {
+  function deleteRecipe(recipeId) {
     if (confirm("Êtes-vous sûr de vouloir supprimer cette recette ?")) {
       const form = document.createElement("form");
       form.method = "POST";
-      form.action = `/admin/recipes/${id}?_method=DELETE`;
+      form.action = `/admin/recipes/${recipeId}/delete`;
       document.body.appendChild(form);
       form.submit();
     }
