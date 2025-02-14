@@ -48,4 +48,38 @@
 ├── app.js
 └── package.json 
 
-test
+Flux de données :
+Les requêtes arrivent via app.js
+Sont routées via les fichiers dans routes/
+Traitées par les controllers/
+Qui interagissent avec les models/ pour la BDD
+Et renvoient les résultats aux views/
+
+Authentification :
+authController.js gère login/register
+middlewares/auth.js vérifie les sessions
+middlewares/admin.js vérifie les droits admin
+
+Gestion des recettes :
+Recipe.js définit le modèle
+Relations avec Ingredient.js, Utensil.js, Category.js
+recipeController.js gère la logique
+Vues dans views/recipes/
+
+Gestion des films :
+Movie.js définit le modèle
+Relations avec Comment.js et Rating.js
+movieController.js gère la logique
+
+Système de notation et commentaires :
+Rating.js et Comment.js liés aux recettes et films
+Relations avec User.js pour l'attribution
+
+Gestion des fichiers :
+middlewares/upload.js gère les uploads
+Stockage dans public/uploads/
+
+Interface admin :
+Routes protégées dans routes/admin.js
+Vérification via middlewares/admin.js
+Vues spécifiques dans views/admin/
