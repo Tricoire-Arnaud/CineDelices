@@ -13,13 +13,15 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-🚀 CineDélices - Serveur de production lancé avec succès ! 🎬
-=========================================
-📅 Date : $(date)
-🔧 Mode : Production
-🌍 URL :  http://poirier-jerome-server.eddi.cloud
-📂 Logs : Consultez les logs pour plus de détails.
-=========================================
+echo "================================================================"
+echo "🚀 CineDélices - Serveur de production lancé avec succès ! 🎬"
+echo "================================================================"
+echo "📅 Date : $(date)"
+echo "🔧 Mode : Production"
+echo "🌍 URL : http://poirier-jerome-server.eddi.cloud"
+echo "📂 Logs : Consultez les logs pour plus de détails."
+echo "================================================================="
+
 
 echo "Lancement en production"
 npm run start

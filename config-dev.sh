@@ -13,12 +13,12 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo "-----------------------------------------------------------"
+echo "============================================================================"
 echo " 🚀 Bienvenue dans l'environnement de développement de Cinedélices !"
 echo " 🌱 Prêt à contribuer et à améliorer le projet ?"
 echo " 🖥️ Serveur de développement en cours d'exécution sur http://localhost:3000"
 echo " 📜 Pour voir la documentation du projet, consultez le README."
-echo " -----------------------------------------------------------"
+echo " ==========================================================================="
 
 echo "Lancement en developpement"
 npm run dev
