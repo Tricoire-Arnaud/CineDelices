@@ -20,11 +20,12 @@ public/CSS/input.css  # ⚠️ On ignore le fichier source de Tailwind
 
 # Ignorer les fichiers de configuration et secrets sensibles
 .env
-.env.example
-.env.local
-.env.development
+.env.dev
+.env.docker-compose.dev.example
+.env.docker-compose.prod.example
+.env.docker-compose.dev
+.env.docker-compose.prod
 .env.test
-.env.production
 
 # Ignorer les fichiers Docker inutiles
 .dockerignore

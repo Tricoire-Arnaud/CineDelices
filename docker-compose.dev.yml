@@ -32,7 +32,7 @@ services:
       - node_modules:/cinedelices/node_modules
 
     env_file:
-      - .env.docker-compose
+      - .env.docker-compose.dev
 
     command: [ "bash", "-c", "./config-dev.sh" ]
 
@@ -58,7 +58,7 @@ services:
     # dans le docker-compose, on peut les mettre
     # dans un fichier d'environnement
     env_file:
-      - .env.docker-compose
+      - .env.docker-compose.dev
 
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
