@@ -1,8 +1,9 @@
 # Dans le .dockerignore on peut indiquer
 # des dossiers ou fichiers qui doivent être ignorés par Docker
 attendus
-README.md
 structure_des_dossiers
+*.md
+.vscode/
 
 # Ignorer les dépendances installées localement
 node_modules/
@@ -23,13 +24,15 @@ public/CSS/input.css  # ⚠️ On ignore le fichier source de Tailwind
 .env.dev
 .env.docker-compose.dev.example
 .env.docker-compose.prod.example
-.env.docker-compose.dev
-.env.docker-compose.prod
-.env.test
+
 
 # Ignorer les fichiers Docker inutiles
 .dockerignore
 Dockerfile.dev
-Dockerfile.prod
 docker-compose.dev.yml
-docker-compose.prod.yml
+docker-compose.override.yml
+
+# Ignorer les tests en production
+tests/
+coverage/
+jest.config.js
