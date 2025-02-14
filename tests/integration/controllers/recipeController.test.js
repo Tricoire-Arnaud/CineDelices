@@ -64,6 +64,15 @@ describe("Tests du Contrôleur de Recettes", () => {
   // Avant chaque test, on prépare l'environnement
   beforeEach(async () => {
     try {
+      // Création du dossier pour les uploads s'il n'existe pas
+      const uploadDir = path.join(
+        __dirname,
+        "../../../public/images/uploads/recipes"
+      );
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+
       // Création d'un agent pour gérer les sessions
       agent = request.agent(app);
 
